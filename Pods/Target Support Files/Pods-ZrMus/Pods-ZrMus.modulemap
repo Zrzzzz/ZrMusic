@@ -1,0 +1,6 @@
+framework module Pods_ZrMus {
+  umbrella header "Pods-ZrMus-umbrella.h"
+
+  export *
+  module * { export * }
+}

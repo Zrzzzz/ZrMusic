@@ -22,9 +22,11 @@ class Homepage: UIViewController {
         
         
     }
-    
+}
+
+extension Homepage {
     func isRegistered() {
-        let userid = UserDefaults.standard.string(forKey: "zzx")
+        let userid = UserDefaults.standard.string(forKey: "zrzz")
         if userid == nil {
             navigationController?.pushViewController(Login(), animated: true)
         }

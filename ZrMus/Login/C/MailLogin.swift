@@ -10,9 +10,9 @@ import UIKit
 
 class MailLogin: UIViewController {
     
-    let mailTF = TF.nameTF
-    let passwordTF = TF.passwordTF
-    let checkBtn = UIButton()
+    let mailTF = ZrTF()
+    let passwordTF = ZrTF()
+    let checkBtn = ZrBtn()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,39 +22,49 @@ class MailLogin: UIViewController {
         view.addSubview(passwordTF)
         view.addSubview(checkBtn)
         
+        drawTFs()
+        drawBtns()
+        
+        
+    }
+}
+
+extension MailLogin {
+    
+    func drawTFs() {
         mailTF.placeholder = "请输入邮箱"
         mailTF.snp.updateConstraints { (make) in
-            make.centerX.equalToSuperview()
+            make.width.equalTo(150)
+            make.height.equalTo(40)
             make.centerY.equalTo(300)
         }
         passwordTF.placeholder = "请输入密码"
+        passwordTF.isSecureTextEntry = true
         passwordTF.snp.updateConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.centerY.equalTo(400)
+            make.width.equalTo(150)
+            make.height.equalTo(40)
+            make.centerY.equalTo(350)
         }
-        
+    }
+    
+    func drawBtns() {
+        checkBtn.setTitle("登录", for: .normal)
+        checkBtn.backgroundColor = .cyan
         checkBtn.addTarget(self, action: #selector(check), for: .touchUpInside)
         
         checkBtn.snp.updateConstraints { (make) in
-            make.centerX.equalToSuperview()
+            make.width.equalTo(50)
+            make.height.equalTo(40)
             make.centerY.equalTo(450)
         }
     }
     
+}
+
+extension MailLogin {
     @objc func check() {
-        let param1 = mailTF.text
-        let param2 = passwordTF.text
-//        Alamofire.request("/login?email=\(param1)&password=\(param2)").responseJSON(completionHandler: a)
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+            let param1 = mailTF.text
+            let param2 = passwordTF.text
+    //        Alamofire.request("http://localhost:3000/login?email=\(param1)&password=\(param2)").responseJSON(completionHandler: a)
+        }
 }

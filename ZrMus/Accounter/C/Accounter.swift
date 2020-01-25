@@ -9,19 +9,25 @@
 import UIKit
 import SnapKit
 import Alamofire
+import SDWebImage
 
 class Accounter: UIViewController {
     
     let width = UIScreen.main.bounds.width
     let height = UIScreen.main.bounds.height
-    var tableView: UITableView
+    var tableView: UITableView!
+    let uD = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(tableView)
+        
 //        初始化tableView
         setupTV()
+        drawFreshBtn()
+        view.addSubview(tableView)
+
+        
         
         
         
@@ -33,6 +39,16 @@ extension Accounter {
         tableView = UITableView(frame: CGRect(x: 0, y: 70, width: width, height: height - 70), style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    func drawFreshBtn() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+    }
+}
+
+extension Accounter {
+    @objc func refresh() {
+        tableView.reloadData()
     }
 }
 
@@ -57,17 +73,40 @@ extension Accounter: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let uDDic = uD.dictionary(forKey: "dS")
+        
         switch indexPath.section {
         case 0:
             let cell = nicknameCell()
-            
+            cell.avatar.sd_setImage(with: URL(string: uDDic?["avatarURL"] as! String)
+                , placeholderImage: UIImage(named: "default_avatar"))
+            cell.nickname.text = uDDic?["nickname"] as? String ?? "没有登录哦"
+            return cell
+        case 1:
+            let cell = fansCell()
+            let c1 = uDDic?["followeds"] as? Int ?? 0
+            cell.followeds.text = "粉丝\n\(c1)"
+            let c2 = uDDic?["follows"] as? Int ?? 0
+            cell.follows.text = "关注\n\(c2)"
+            return cell
         default:
-            <#code#>
+            let cell = UITableViewCell()
+            cell.textLabel?.text = "退出登录"
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = .red
+            return cell
         }
-        
-        
-        
-        
-        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+//            数据放空
+            uD.set(nil, forKey: "zrzz")
+            uD.set(nil, forKey: "dS")
+//            退出登录，刷新数据
+            Alamofire.request("http://localhost:3000/logout")
+            tableView.reloadData()
+        }
     }
 }

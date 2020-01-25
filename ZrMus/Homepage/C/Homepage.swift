@@ -15,12 +15,18 @@ class Homepage: UIViewController {
         //判断登录状态
         isRegistered()
         
-        navigationController?.title = "发现"
         view.backgroundColor = .white
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(removeAll))
         
         
-        
+    }
+}
+
+extension Homepage {
+    @objc func removeAll() {
+        UserDefaults.standard.set(nil, forKey: "zrzz")
+        navigationController?.pushViewController(Login(), animated: true)
     }
 }
 

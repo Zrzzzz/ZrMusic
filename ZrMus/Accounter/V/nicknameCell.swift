@@ -11,26 +11,25 @@ import UIKit
 
 class nicknameCell: UITableViewCell {
 
-    let avatar: UIImageView!
-    let nickname: UILabel!
+    var avatar: UIImageView!
+    var nickname: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        avatar = UIImageView(frame: CGRect(x: 5, y: 5, width:90, height: 90))
         contentView.addSubview(avatar)
-        avatar.layer.cornerRadius = 30
-        avatar.layer.masksToBounds = true
-        avatar.snp.makeConstraints { (m) in
-            m.left.equalTo(5)
-            m.top.equalTo(5)
-            m.width.height.equalTo(40)
-        }
+        avatar.layer.cornerRadius = avatar.frame.width / 2
+        avatar.clipsToBounds = true
         
+        nickname = UILabel()
         contentView.addSubview(nickname)
         nickname.textColor = .black
+        nickname.font = .systemFont(ofSize: 26)
         nickname.snp.makeConstraints { (m) in
-            m.left.equalTo(70)
+            m.left.equalTo(100)
             m.top.equalTo(5)
-            m.width.equalTo(100)
+            m.width.equalTo(200)
             m.height.equalTo(20)
         }
     }

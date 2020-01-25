@@ -16,11 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        
-        
-//        self.window = UIWindow.init(frame: UIScreen.main.bounds)
-//        self.window?.backgroundColor = .white
-//
+        self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        self.window?.backgroundColor = .white
+
         //发现页面
         let homepage = Homepage()
         let HomepageNC = UINavigationController.init(rootViewController: homepage)

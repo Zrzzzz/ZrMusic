@@ -34,14 +34,14 @@ extension MailLogin {
     func drawTFs() {
         mailTF.placeholder = "请输入邮箱"
         mailTF.snp.updateConstraints { (make) in
-            make.width.equalTo(150)
+            make.width.equalTo(200)
             make.height.equalTo(40)
             make.centerY.equalTo(300)
         }
         passwordTF.placeholder = "请输入密码"
         passwordTF.isSecureTextEntry = true
         passwordTF.snp.updateConstraints { (make) in
-            make.width.equalTo(150)
+            make.width.equalTo(200)
             make.height.equalTo(40)
             make.centerY.equalTo(350)
         }

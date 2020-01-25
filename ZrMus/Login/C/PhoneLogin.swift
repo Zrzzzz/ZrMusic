@@ -35,20 +35,14 @@ class PhoneLogin: UIViewController {
 extension PhoneLogin {
     
     func drawTFs() {
+        phoneNumTF.frame = CGRect(x: 0, y: 300, width: 200, height: 40)
         phoneNumTF.placeholder = "请输入手机号"
         phoneNumTF.keyboardType = .numberPad
-        phoneNumTF.snp.updateConstraints { (make) in
-            make.width.equalTo(150)
-            make.height.equalTo(40)
-            make.centerY.equalTo(300)
-        }
+
+        passwordTF.frame = CGRect(x: 0, y: 350, width: 200, height: 40)
         passwordTF.placeholder = "请输入密码"
         passwordTF.isSecureTextEntry = true
-        passwordTF.snp.updateConstraints { (make) in
-            make.width.equalTo(150)
-            make.height.equalTo(40)
-            make.centerY.equalTo(350)
-        }
+        
     }
     
     func drawBtns() {
@@ -81,7 +75,7 @@ extension PhoneLogin {
         
 //        储存数据
         let uD = UserDefaults.standard
-        
+        var dataSource = [String: Any]()
 //        发送并获取数据
         Alamofire.request("http://localhost:3000/login/cellphone?phone=18570743258&password=xixi1005").responseJSON { (d) in
             do {
@@ -97,19 +91,25 @@ extension PhoneLogin {
                     self.phoneNumTF.placeholder = "请正确输入"
                     isPass = false
                 }
-                
+                print("correct")
 //                储存数据
-//                TODO: 这里应该用字典全部存，明天再弄
-                uD.set("2233", forKey: "zrzz")
-                uD.set(datas.profile.nickname, forKey: "nickname")
-                uD.set(datas.profile.avatarURL, forKey: "avatarURL")
-                uD.set(datas.profile.backgroundURL, forKey: "bgURL")
+                dataSource["uid"] = datas.profile.userID
+                dataSource["nickname"] = datas.profile.nickname
+                dataSource["avatarURL"] = datas.profile.avatarURL
+                dataSource["bgURL"] = datas.profile.backgroundURL
+                dataSource["followeds"] = datas.profile.followeds
+                dataSource["follows"] = datas.profile.follows
+                uD.set(datas.profile.userID, forKey: "zrzz")
+                uD.set(dataSource, forKey: "dS")
+//                可以通过
+                isPass = true
+                print("pass")
             } catch {
                 print("error")
             }
         }
-        if isPass {
-            navigationController?.popViewController(animated: true)
+        if isPass == true {
+            navigationController?.popToViewController(Homepage(), animated: true)
         }
     }
 }

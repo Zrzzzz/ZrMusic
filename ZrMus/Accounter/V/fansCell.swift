@@ -10,34 +10,29 @@ import UIKit
 
 class fansCell: UITableViewCell {
     
-    let followeds: UILabel!
-    let follows: UILabel!
+    var followeds: UILabel!
+    var follows: UILabel!
+    let width = UIScreen.main.bounds.width
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        followeds = UILabel(frame: CGRect(x: 70, y: 5, width: 70, height: 70))
         contentView.addSubview(followeds)
-        followeds.layer.cornerRadius = 90.0
-        followeds.layer.masksToBounds = true
+        followeds.layer.cornerRadius = followeds.frame.width / 2
+        followeds.clipsToBounds = true
         followeds.backgroundColor = .red
         followeds.numberOfLines = 2
         followeds.textAlignment = .center
-        followeds.snp.makeConstraints { (make) in
-            make.left.equalTo(70)
-            make.top.equalTo(5)
-            make.width.height.equalTo(60)
-        }
         
+        
+        follows = UILabel(frame: CGRect(x: width - 140, y: 5, width: 70, height: 70))
         contentView.addSubview(follows)
-        follows.layer.cornerRadius = 90.0
-        follows.layer.masksToBounds = true
+        follows.layer.cornerRadius = follows.frame.width / 2
+        follows.clipsToBounds = true
         follows.backgroundColor = .red
         follows.numberOfLines = 2
         follows.textAlignment = .center
-        follows.snp.makeConstraints { (make) in
-            make.right.equalTo(70)
-            make.top.equalTo(5)
-            make.width.height.equalTo(60)
-        }
     }
     
     required init?(coder: NSCoder) {

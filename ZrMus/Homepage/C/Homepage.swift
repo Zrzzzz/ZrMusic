@@ -24,13 +24,6 @@ class Homepage: UIViewController {
 }
 
 extension Homepage {
-    @objc func removeAll() {
-        UserDefaults.standard.set(nil, forKey: "zrzz")
-        navigationController?.pushViewController(Login(), animated: true)
-    }
-}
-
-extension Homepage {
     func isRegistered() {
         let userid = UserDefaults.standard.string(forKey: "zrzz")
         if userid == nil {
@@ -38,3 +31,11 @@ extension Homepage {
         }
     }
 }
+
+extension Homepage {
+    @objc func removeAll() {
+        UserDefaults.standard.set(nil, forKey: "zrzz")
+        navigationController?.pushViewController(Login(), animated: true)
+    }
+}
+

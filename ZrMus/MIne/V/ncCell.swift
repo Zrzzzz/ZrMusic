@@ -10,7 +10,7 @@ import UIKit
 
 class ncCell: UITableViewCell {
     
-    var leftLabel: UIImageView!
+    var leftView: UIImageView!
     var titilLabel: UILabel!
     var countLabel: UILabel!
     let width = UIScreen.main.bounds.width
@@ -18,8 +18,8 @@ class ncCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        leftLabel = UIImageView(frame: CGRect(x: 5, y: 5, width: 70, height: 70))
-        contentView.addSubview(leftLabel)
+        leftView = UIImageView(frame: CGRect(x: 5, y: 5, width: 70, height: 70))
+        contentView.addSubview(leftView)
         
         titilLabel = UILabel(frame: CGRect(x: 90, y: 10, width: 100, height: 50))
         contentView.addSubview(titilLabel)

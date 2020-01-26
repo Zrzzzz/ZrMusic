@@ -50,9 +50,9 @@ extension listCell {
         contentView.addSubview(arrowImg)
 //        判断是否是打开的
         if isExpand {
-            arrowImg.image = UIImage(named: "arrow_down")?.withRenderingMode(.alwaysOriginal)
+            arrowImg.image = UIImage(named: "lC_arrow_down")?.withRenderingMode(.alwaysOriginal)
         } else {
-            arrowImg.image = UIImage(named: "arrow_right")?.withRenderingMode(.alwaysOriginal)
+            arrowImg.image = UIImage(named: "lC_arrow_right")?.withRenderingMode(.alwaysOriginal)
         }
         
         titleLabel = UILabel(frame: CGRect(x: 60, y: 5, width: 150, height: 50))

@@ -74,7 +74,7 @@ extension PhoneLogin {
         }
         
 //        储存数据
-        let uD = UserDefaults.standard
+        let ud = UserDefaults.standard
         var dataSource = [String: Any]()
 //        发送并获取数据
         Alamofire.request("http://localhost:3000/login/cellphone?phone=18570743258&password=xixi1005").responseJSON { (d) in
@@ -82,7 +82,7 @@ extension PhoneLogin {
                 let datas = try JSONDecoder().decode(LoginGet.self, from:
                 d.data!)
                 
-                print("success")
+                print("成功登录")
                 
 //                判断密码是否错误
                 if datas.code == 502 || datas.code == 400 {
@@ -91,7 +91,7 @@ extension PhoneLogin {
                     self.phoneNumTF.placeholder = "请正确输入"
                     isPass = false
                 }
-                print("correct")
+                print("密码正确")
 //                储存数据
                 dataSource["uid"] = datas.profile.userID
                 dataSource["nickname"] = datas.profile.nickname
@@ -99,13 +99,13 @@ extension PhoneLogin {
                 dataSource["bgURL"] = datas.profile.backgroundURL
                 dataSource["followeds"] = datas.profile.followeds
                 dataSource["follows"] = datas.profile.follows
-                uD.set(datas.profile.userID, forKey: "zrzz")
-                uD.set(dataSource, forKey: "dS")
+                ud.set(datas.profile.userID, forKey: "zrzz")
+                ud.set(dataSource, forKey: "dS")
 //                可以通过
                 isPass = true
-                print("pass")
+                print("进行跳转")
             } catch {
-                print("error")
+                print("登录失败")
             }
         }
         if isPass == true {

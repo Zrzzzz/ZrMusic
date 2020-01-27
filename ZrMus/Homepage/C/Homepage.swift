@@ -25,7 +25,7 @@ class Homepage: UIViewController {
 
 extension Homepage {
     func isRegistered() {
-        let userid = UserDefaults.standard.string(forKey: "zrzz")
+        let userid = UserDefaults.standard.string(forKey: "uid")
         if userid == nil {
             navigationController?.pushViewController(Login(), animated: true)
         }
@@ -34,7 +34,7 @@ extension Homepage {
 
 extension Homepage {
     @objc func removeAll() {
-        UserDefaults.standard.set(nil, forKey: "zrzz")
+        UserDefaults.standard.set(nil, forKey: "uid")
         navigationController?.pushViewController(Login(), animated: true)
     }
 }

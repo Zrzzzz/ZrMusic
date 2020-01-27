@@ -77,12 +77,11 @@ extension PhoneLogin {
         let ud = UserDefaults.standard
         var dataSource = [String: Any]()
 //        发送并获取数据
-        Alamofire.request("http://localhost:3000/login/cellphone?phone=18570743258&password=xixi1005").responseJSON { (d) in
+        Alamofire.request("http://localhost:3000/login/cellphone?phone=\(param1)&password=\(param2)").responseJSON { (d) in
             do {
-                let datas = try JSONDecoder().decode(LoginGet.self, from:
-                d.data!)
+                let datas = try JSONDecoder().decode(LoginGet.self, from: d.data!)
                 
-                print("成功登录")
+                print("成功连接")
                 
 //                判断密码是否错误
                 if datas.code == 502 || datas.code == 400 {
@@ -99,7 +98,7 @@ extension PhoneLogin {
                 dataSource["bgURL"] = datas.profile.backgroundURL
                 dataSource["followeds"] = datas.profile.followeds
                 dataSource["follows"] = datas.profile.follows
-                ud.set(datas.profile.userID, forKey: "zrzz")
+                ud.set(datas.profile.userID, forKey: "uid")
                 ud.set(dataSource, forKey: "dS")
 //                可以通过
                 isPass = true

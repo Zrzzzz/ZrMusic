@@ -79,8 +79,9 @@ extension Accounter: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let cell = nicknameCell()
-            cell.avatar.sd_setImage(with: URL(string: udDic?["avatarURL"] as! String)
-                , placeholderImage: UIImage(named: "ac_default_avatar"))
+            let imgUrl = udDic?["avatarURL"] == nil ? "https://tva1.sinaimg.cn/large/006tNbRwgy1gbbgcnsc6zj30hm0fqngx.jpg" : udDic?["avatarURL"]
+            cell.avatar.sd_setImage(with: URL(string: imgUrl as! String)
+                , placeholderImage: UIImage(named: "default"))
             cell.nickname.text = udDic?["nickname"] as? String ?? "没有登录哦"
             return cell
         case 1:
@@ -102,7 +103,7 @@ extension Accounter: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
 //            数据放空
-            ud.set(nil, forKey: "zrzz")
+            ud.set(nil, forKey: "uid")
             ud.set(nil, forKey: "dS")
 //            退出登录，刷新数据
             Alamofire.request("http://localhost:3000/logout")

@@ -24,7 +24,7 @@ class listCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-                
+        drawUI()
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +45,9 @@ class listCell: UITableViewCell {
 
 extension listCell {
     func drawUI() {
-        
+//        需要启用来遮住下方
+        self.layer.masksToBounds = true
+//        这个是不用更改的
         arrowImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 50, height: 50))
         contentView.addSubview(arrowImg)
 //        判断是否是打开的

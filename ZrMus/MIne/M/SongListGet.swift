@@ -27,24 +27,23 @@ struct Playlist: Codable {
     let titleImageURL, englishTitle: JSONNull?
     let opRecommend: Bool
     let recommendInfo: JSONNull?
-    let adType, trackNumberUpdateTime, subscribedCount, cloudTrackCount: Int
     let createTime: Int
     let highQuality: Bool
-    let privacy, trackUpdateTime, userID: Int
-    let coverImgID: Double
-    let updateTime: Int
-    let newImported, anonimous: Bool
-    let totalDuration, specialType: Int
-    let coverImgURL: String
-    let trackCount: Int
-    let commentThreadID: String
-    let playCount: Int
+    let subscribedCount, cloudTrackCount, adType, trackNumberUpdateTime: Int
+    let trackUpdateTime: Int
     let tags: [String]
     let ordered: Bool
+    let userID, specialType: Int
+    let coverImgID: Double
+    let coverImgURL: String
+    let updateTime, privacy, totalDuration, trackCount: Int
+    let playCount: Int
+    let commentThreadID: String
+    let newImported, anonimous: Bool
     let playlistDescription: String?
     let status: Int
     let name: String
-    let id: String
+    let id: Int
     let coverImgIDStr: String?
 
     enum CodingKeys: String, CodingKey {
@@ -53,14 +52,14 @@ struct Playlist: Codable {
         case backgroundCoverURL = "backgroundCoverUrl"
         case titleImage
         case titleImageURL = "titleImageUrl"
-        case englishTitle, opRecommend, recommendInfo, adType, trackNumberUpdateTime, subscribedCount, cloudTrackCount, createTime, highQuality, privacy, trackUpdateTime
+        case englishTitle, opRecommend, recommendInfo, createTime, highQuality, subscribedCount, cloudTrackCount, adType, trackNumberUpdateTime, trackUpdateTime, tags, ordered
         case userID = "userId"
+        case specialType
         case coverImgID = "coverImgId"
-        case updateTime, newImported, anonimous, totalDuration, specialType
         case coverImgURL = "coverImgUrl"
-        case trackCount
+        case updateTime, privacy, totalDuration, trackCount, playCount
         case commentThreadID = "commentThreadId"
-        case playCount, tags, ordered
+        case newImported, anonimous
         case playlistDescription = "description"
         case status, name, id
         case coverImgIDStr = "coverImgId_str"
@@ -76,6 +75,7 @@ struct Creator: Codable {
     let accountStatus, gender, city, birthday: Int
     let userID, userType: Int
     let nickname, signature: String
+    let creatorDescription, detailDescription: Description
     let avatarImgID, backgroundImgID: Double
     let backgroundURL: String
     let authority: Int
@@ -93,6 +93,8 @@ struct Creator: Codable {
         case accountStatus, gender, city, birthday
         case userID = "userId"
         case userType, nickname, signature
+        case creatorDescription = "description"
+        case detailDescription
         case avatarImgID = "avatarImgId"
         case backgroundImgID = "backgroundImgId"
         case backgroundURL = "backgroundUrl"
@@ -101,4 +103,9 @@ struct Creator: Codable {
         case backgroundImgIDStr = "backgroundImgIdStr"
         case creatorAvatarImgIDStr = "avatarImgId_str"
     }
+}
+
+enum Description: String, Codable {
+    case avex爱贝克思官方账号 = "avex爱贝克思官方账号"
+    case empty = ""
 }

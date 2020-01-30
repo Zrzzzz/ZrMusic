@@ -18,10 +18,6 @@ class listsCell: UITableViewCell {
     var listView: UITableView!
     var lists: [SongList] = []
     var listsCount: Int?
-
-    
-//    伸缩布尔
-    var isExpand = false
     let width = UIScreen.main.bounds.width
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -54,29 +50,31 @@ class listsCell: UITableViewCell {
 
 extension listsCell {
     func drawUI() {
-//        需要启用来实现展开功能
+//        需要启用来实现展开功能，这里卡了一会
+//        应该使用clips剪裁超出frame的部分而不是使用layer的mask
 //        self.layer.masksToBounds = true
+        self.clipsToBounds = true
 
-        arrowImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 50, height: 50))
+        arrowImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 70, height: 70))
         contentView.addSubview(arrowImg)
         
-        titleLabel = UILabel(frame: CGRect(x: 60, y: 5, width: 150, height: 50))
+        titleLabel = UILabel(frame: CGRect(x: 60, y: 5, width: 150, height: 70))
         contentView.addSubview(titleLabel)
         titleLabel.font = .boldSystemFont(ofSize: 20)
         titleLabel.textAlignment = .center
         titleLabel.adjustsFontSizeToFitWidth = true
         
-        listsCountLabel = UILabel(frame: CGRect(x: width - 100, y: 5, width: 70, height: 50))
+        listsCountLabel = UILabel(frame: CGRect(x: width - 100, y: 5, width: 70, height: 70))
         contentView.addSubview(listsCountLabel)
         listsCountLabel.font = .systemFont(ofSize: 14)
         listsCountLabel.adjustsFontSizeToFitWidth = true
         
-        addBtn = UIButton(frame: CGRect(x: width - 55, y: 5, width: 50, height: 50))
+        addBtn = UIButton(frame: CGRect(x: width - 55, y: 5, width: 70, height: 70))
         contentView.addSubview(addBtn)
         addBtn.addTarget(self, action: #selector(addList), for: .touchUpInside)
         addBtn.setImage(UIImage(systemName: "plus"), for: .normal)
         
-        listView = UITableView(frame: CGRect(x: 0, y: 60, width: width, height: CGFloat((listsCount ?? 0) * 80)))
+        listView = UITableView(frame: CGRect(x: 0, y: 80, width: width, height: CGFloat((listsCount ?? 0) * 80)))
         contentView.addSubview(listView)
         listView.dataSource = self
         listView.delegate = self
@@ -117,6 +115,7 @@ extension listsCell: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
     }
 }
 extension listsCell {

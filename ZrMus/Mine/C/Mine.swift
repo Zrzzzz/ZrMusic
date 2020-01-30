@@ -179,9 +179,9 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
                 let count2 = subscribedLists.count
                 switch indexPath.row {
                 case 0:
-                    return CGFloat(60 + count1 * 80)
+                    return CGFloat(80 + count1 * 80)
                 default:
-                    return CGFloat(60 + count2 * 80)
+                    return CGFloat(80 + count2 * 80)
                 }
             }
             return 80
@@ -196,6 +196,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             cell.leftView.image = UIImage(named: "mine_music")
             cell.titilLabel.text = "本地音乐"
             cell.countLabel.text = "(0)"
+            cell.selectionStyle = .none
             return cell
         default:
 //            分类解析
@@ -215,8 +216,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
 //                描绘cell
                 cell.listsCountLabel.text = "(\(myLists.count))"
                 cell.reloadData(lists: myLists)
-                
-                cell.layer.masksToBounds = true
+    
                 
                 return cell
 
@@ -233,7 +233,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
 //                描绘cell
                 cell.listsCountLabel.text = "(\(subscribedLists.count))"
                 cell.reloadData(lists: subscribedLists)
-                cell.layer.masksToBounds = true
+                
                 
                 return cell
             }

@@ -10,14 +10,16 @@ import UIKit
 import CoreData
 
 @objc (SongListTransformer)
-class SongListTransformer: ValueTransformer {
+public class SongListTransformer: ValueTransformer {
     
-    override func transformedValue(_ value: Any?) -> Any? {
+    override public func transformedValue(_ value: Any?) -> Any? {
         return SongList.self
     }
     
-    override func reverseTransformedValue(_ value: Any?) -> Any? {
+    override public func reverseTransformedValue(_ value: Any?) -> Any? {
         return NSKeyedUnarchiver.unarchiveObject(with: value as! Data)
     }
+    
+    
     
 }

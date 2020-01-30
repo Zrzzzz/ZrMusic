@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SongList: Codable {
+struct SongList {
     let name: String
     let id: Int
     let imgUrl: URL

@@ -40,7 +40,7 @@ class Mine: UIViewController {
 extension Mine {
     
     func drawUI() {
-        tableView = UITableView(frame: CGRect(x: 0, y: 70, width: width, height: height - 70))
+        tableView = UITableView(frame: UIScreen.main.bounds)
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
@@ -56,6 +56,9 @@ extension Mine {
 extension Mine {
     
     func getData(someCloure: @escaping() -> Void) {
+//        清空数据
+        deleteData()
+        
         let url = "http://localhost:3000/user/playlist?uid=\(ud.string(forKey: "uid")!)"
         Alamofire.request(url).responseJSON { (d) in
             do {
@@ -65,9 +68,7 @@ extension Mine {
                 
                 
                 for playList in playLists {
-                    let list = SongList(
-                        name: playList.name, id: playList.id, imgUrl: URL(string: playList.coverImgURL)!, count: playList.trackCount, subscribed: playList.subscribed
-                    )
+                    let list = SongList(name: playList.name, id: playList.id, imgUrl: URL(string: playList.coverImgURL)!, count: playList.trackCount, subscribed: playList.subscribed)
 //                    db保存
                     self.saveList(list)
                 }
@@ -77,6 +78,26 @@ extension Mine {
                 print("获取歌单失败")
                 print(error)
             }
+        }
+    }
+    
+    func deleteData() {
+//        Step1: 获取托管对象总管
+        let managedObjectContext = db.persistentContainer.viewContext
+//        Step2: 建立一个获取的请求
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SongLists")
+//        Step3: 执行请求
+        do {
+            if let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+//                Step4: 删除数据
+                for fetchedResult in fetchedResults {
+                    managedObjectContext.delete(fetchedResult)
+                }
+                try managedObjectContext.save()
+//                Step5: 更新数据
+            }
+        } catch {
+            fatalError("删除失败")
         }
     }
     
@@ -90,11 +111,11 @@ extension Mine {
             let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject]
             if let results = fetchedResults {
                 for result in results {
-                    guard let list: SongList = result.value(forKey: "songlist") as! SongList else { return }
-                    if list.subscribed == false {
-                        myLists.append(list)
+                    guard let songlist = translateData(obj: result) else { return }
+                    if songlist.subscribed == false {
+                        myLists.append(songlist)
                     } else {
-                        subscribedLists.append(list)
+                        subscribedLists.append(songlist)
                     }
                 }
             }
@@ -103,20 +124,32 @@ extension Mine {
         }
     }
     
-    func saveList(_ sth: SongList) {
+    func saveList(_ songlist: SongList) {
 //        Step1: 获取托管对象总管
         let managedObjectContext = db.persistentContainer.viewContext
 //        Step2: 建立一个entity
         let entity = NSEntityDescription.entity(forEntityName: "SongLists", in: managedObjectContext)
-        let songlists = NSManagedObject(entity: entity!, insertInto: managedObjectContext)
-//        Step3: 保存Dic到songlists
-        songlists.setValue(sth, forKey: "songlist")
+        let songlists = NSManagedObject(entity: entity! , insertInto: managedObjectContext)
+//        Step3: 保存songlist到songlists
+        songlists.setValue(songlist.name, forKey: "name")
+        songlists.setValue(songlist.id, forKey: "id")
+        songlists.setValue(songlist.imgUrl, forKey: "imgUrl")
+        songlists.setValue(songlist.count, forKey: "count")
+        songlists.setValue(songlist.subscribed, forKey: "subscribed")
 //        Step4: 保存entity到托管对象中；如果保存失败抛出异常
         do {
             try managedObjectContext.save()
         } catch {
             fatalError("无法保存")
         }
+    }
+    
+    func translateData(obj: NSManagedObject) -> (SongList?) {
+        if let name = obj.value(forKey: "name"), let id = obj.value(forKey: "id"), let count = obj.value(forKey: "count"), let imgUrl = obj.value(forKey: "imgUrl"), let subscribed = obj.value(forKey: "subscribed") {
+            let songlist = SongList(name: name as! String, id: id as! Int, imgUrl: imgUrl as! URL, count: count as! Int, subscribed: subscribed as! Bool)
+            return songlist
+        }
+        return nil
     }
 }
 
@@ -146,9 +179,9 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
                 let count2 = subscribedLists.count
                 switch indexPath.row {
                 case 0:
-                    return CGFloat(80 + (count1 ?? 0) * 80)
+                    return CGFloat(60 + count1 * 80)
                 default:
-                    return CGFloat(80 + (count2 ?? 0) * 80)
+                    return CGFloat(60 + count2 * 80)
                 }
             }
             return 80
@@ -156,6 +189,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch indexPath.section {
         case 0:
             let cell = ncCell()
@@ -164,34 +198,50 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             cell.countLabel.text = "(0)"
             return cell
         default:
-            let index = indexPath.row
-            tableView.register(listCell.self, forCellReuseIdentifier: reuseID)
-            var cell: listCell = tableView.dequeueReusableCell(withIdentifier: reuseID) as! listCell
-            if cell == nil {
-                cell = listCell(style: .default, reuseIdentifier: reuseID)
-        }
 //            分类解析
-            switch index {
-            case 0:
+            switch indexPath {
+//                IndexPath为[, ]形式，前面是section，后面是row
+            case [1, 0]:
 //                设定分类
+                let cell = listsCell(count: myLists.count, style: .default, reuseIdentifier: "cell1")
+                
                 cell.titleLabel.text = "创建歌单"
+//                箭头方向
+                if selectedCellIndexPaths.contains(indexPath) {
+                    cell.arrowImg.image = UIImage(named: "lC_arrow_down")?.withRenderingMode(.alwaysOriginal)
+                } else {
+                    cell.arrowImg.image = UIImage(named: "lC_arrow_right")?.withRenderingMode(.alwaysOriginal)
+                }
 //                描绘cell
-                cell.countLabel.text = "(\(myLists[index].count))"
-                cell.imgView.sd_setImage(with: myLists[index].imgUrl, placeholderImage: UIImage(named: "default"))
-                cell.nameLabel.text = myLists[index].name
+                cell.listsCountLabel.text = "(\(myLists.count))"
+                cell.reloadData(lists: myLists)
+                
+                cell.layer.masksToBounds = true
+                
+                return cell
+
             default:
 //                设定分类
+                let cell = listsCell(count: subscribedLists.count, style: .default, reuseIdentifier: "cell2")
                 cell.titleLabel.text = "收藏歌单"
+//                箭头方向
+                if selectedCellIndexPaths.contains(indexPath) {
+                    cell.arrowImg.image = UIImage(named: "lC_arrow_down")?.withRenderingMode(.alwaysOriginal)
+                } else {
+                    cell.arrowImg.image = UIImage(named: "lC_arrow_right")?.withRenderingMode(.alwaysOriginal)
+                }
 //                描绘cell
-                cell.countLabel.text = "(\(subscribedLists[index].count))"
-                cell.imgView.sd_setImage(with: subscribedLists[index].imgUrl, placeholderImage: UIImage(named: "default"))
-                cell.nameLabel.text = subscribedLists[index].name
+                cell.listsCountLabel.text = "(\(subscribedLists.count))"
+                cell.reloadData(lists: subscribedLists)
+                cell.layer.masksToBounds = true
+                
+                return cell
             }
-            return cell
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         switch indexPath.section {
         case 0:
             tableView.deselectRow(at: indexPath, animated: true)
@@ -204,6 +254,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             }else{
                 selectedCellIndexPaths.append(indexPath)
             }
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
 }

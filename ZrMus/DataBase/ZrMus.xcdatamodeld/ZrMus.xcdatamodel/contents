@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="SongLists" representedClassName="SongLists" syncable="YES" codeGenerationType="class">
-        <attribute name="songlist" optional="YES" attributeType="Transformable" valueTransformerName="SongListTransformer" customClassName=".SongList"/>
+        <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imgUrl" optional="YES" attributeType="URI"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="subscribed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <fetchedProperty name="fetchedProperty" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="SongLists"/>
+        </fetchedProperty>
     </entity>
     <elements>
-        <element name="SongLists" positionX="-54" positionY="-9" width="128" height="58"/>
+        <element name="SongLists" positionX="-54" positionY="-9" width="128" height="146"/>
     </elements>
 </model>

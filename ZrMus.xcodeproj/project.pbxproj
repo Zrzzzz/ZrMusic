@@ -16,7 +16,7 @@
 		D355957723DADAE90000826D /* ZrTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = D355957623DADAE90000826D /* ZrTF.swift */; };
 		D36FCEED23DB4BC700B0A18E /* nicknameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FCEEC23DB4BC700B0A18E /* nicknameCell.swift */; };
 		D36FCEEF23DB4BDC00B0A18E /* fansCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FCEEE23DB4BDC00B0A18E /* fansCell.swift */; };
-		D36FCEFB23DC757700B0A18E /* listCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FCEFA23DC757700B0A18E /* listCell.swift */; };
+		D36FCEFB23DC757700B0A18E /* listsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FCEFA23DC757700B0A18E /* listsCell.swift */; };
 		D36FCEFD23DC9D7800B0A18E /* ncCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FCEFC23DC9D7800B0A18E /* ncCell.swift */; };
 		D36FCEFF23DD66F600B0A18E /* SongListGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FCEFE23DD66F600B0A18E /* SongListGet.swift */; };
 		D36FCF0123DD6CBE00B0A18E /* ListDetailGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FCF0023DD6CBE00B0A18E /* ListDetailGet.swift */; };
@@ -27,11 +27,38 @@
 		D37B286123D74588006C360E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D37B285F23D74588006C360E /* LaunchScreen.storyboard */; };
 		D37B286923D74689006C360E /* Accounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37B286823D74689006C360E /* Accounter.swift */; };
 		D37B286B23D74692006C360E /* Mine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37B286A23D74692006C360E /* Mine.swift */; };
-		D37B286D23D746B3006C360E /* Homepage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37B286C23D746B3006C360E /* Homepage.swift */; };
+		D37B286D23D746B3006C360E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37B286C23D746B3006C360E /* Player.swift */; };
 		D384C33E23E070730087D3D4 /* SongList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D384C33D23E070730087D3D4 /* SongList.swift */; };
 		D38B81E823DDDFBC0098B7F2 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38B81E723DDDFBC0098B7F2 /* DataBase.swift */; };
 		D3AAABC523E07CCE00D3DA3D /* ZrMus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3AAABC323E07CCE00D3DA3D /* ZrMus.xcdatamodeld */; };
 		D3AE843C23E0853C001C6483 /* SongListTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE843B23E0853C001C6483 /* SongListTransformer.swift */; };
+		D3AF41D223E1C06800014FCA /* listCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF41D123E1C06800014FCA /* listCell.swift */; };
+		D3AF41FF23E2E4D300014FCA /* DetailedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF41FE23E2E4D300014FCA /* DetailedList.swift */; };
+		D3AF420723E2E76E00014FCA /* DLCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF420623E2E76E00014FCA /* DLCell2.swift */; };
+		D3AF420923E2E77900014FCA /* DLCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF420823E2E77900014FCA /* DLCell1.swift */; };
+		D3AF420B23E3150700014FCA /* ZrExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF420A23E3150700014FCA /* ZrExtension.swift */; };
+		D3AF428423E44AB800014FCA /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428323E44AB800014FCA /* Song.swift */; };
+		D3AF428623E465EB00014FCA /* STKQueueEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF426E23E429CB00014FCA /* STKQueueEntry.m */; };
+		D3AF428723E465EB00014FCA /* STKAutoRecoveringHTTPDataSource.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF426F23E429CB00014FCA /* STKAutoRecoveringHTTPDataSource.h */; };
+		D3AF428823E465EB00014FCA /* STKDataSourceWrapper.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427023E429CB00014FCA /* STKDataSourceWrapper.h */; };
+		D3AF428923E465EB00014FCA /* STKAudioPlayer.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427123E429CB00014FCA /* STKAudioPlayer.h */; };
+		D3AF428A23E465EB00014FCA /* STKHTTPDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427223E429CB00014FCA /* STKHTTPDataSource.m */; };
+		D3AF428B23E465EB00014FCA /* STKDataSource.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427323E429CB00014FCA /* STKDataSource.h */; };
+		D3AF428C23E465EB00014FCA /* STKLocalFileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427423E429CB00014FCA /* STKLocalFileDataSource.m */; };
+		D3AF428D23E465EB00014FCA /* NSMutableArray+STKAudioPlayer.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427523E429CB00014FCA /* NSMutableArray+STKAudioPlayer.h */; };
+		D3AF428E23E465EB00014FCA /* STKCoreFoundationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427623E429CB00014FCA /* STKCoreFoundationDataSource.m */; };
+		D3AF428F23E465EB00014FCA /* STKAutoRecoveringHTTPDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427723E429CB00014FCA /* STKAutoRecoveringHTTPDataSource.m */; };
+		D3AF429023E465EB00014FCA /* STKQueueEntry.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427823E429CB00014FCA /* STKQueueEntry.h */; };
+		D3AF429123E465EB00014FCA /* STKHTTPDataSource.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427923E429CB00014FCA /* STKHTTPDataSource.h */; };
+		D3AF429223E465EB00014FCA /* STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427A23E429CB00014FCA /* STKAudioPlayer.m */; };
+		D3AF429323E465EB00014FCA /* STKDataSourceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427B23E429CB00014FCA /* STKDataSourceWrapper.m */; };
+		D3AF429423E465EB00014FCA /* STKLocalFileDataSource.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427C23E429CB00014FCA /* STKLocalFileDataSource.h */; };
+		D3AF429523E465EB00014FCA /* STKMacro.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427D23E429CB00014FCA /* STKMacro.h */; };
+		D3AF429623E465EB00014FCA /* STKDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427E23E429CB00014FCA /* STKDataSource.m */; };
+		D3AF429723E465EB00014FCA /* STKCoreFoundationDataSource.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF427F23E429CB00014FCA /* STKCoreFoundationDataSource.h */; };
+		D3AF429823E465EB00014FCA /* STKSpinLock.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428023E429CB00014FCA /* STKSpinLock.h */; };
+		D3AF429923E465EB00014FCA /* NSMutableArray+STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428123E429CB00014FCA /* NSMutableArray+STKAudioPlayer.m */; };
+		D3AF429A23E465EB00014FCA /* StreamingKit-Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +73,7 @@
 		D355957623DADAE90000826D /* ZrTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZrTF.swift; sourceTree = "<group>"; };
 		D36FCEEC23DB4BC700B0A18E /* nicknameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nicknameCell.swift; sourceTree = "<group>"; };
 		D36FCEEE23DB4BDC00B0A18E /* fansCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fansCell.swift; sourceTree = "<group>"; };
-		D36FCEFA23DC757700B0A18E /* listCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listCell.swift; sourceTree = "<group>"; };
+		D36FCEFA23DC757700B0A18E /* listsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listsCell.swift; sourceTree = "<group>"; };
 		D36FCEFC23DC9D7800B0A18E /* ncCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ncCell.swift; sourceTree = "<group>"; };
 		D36FCEFE23DD66F600B0A18E /* SongListGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListGet.swift; sourceTree = "<group>"; };
 		D36FCF0023DD6CBE00B0A18E /* ListDetailGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailGet.swift; sourceTree = "<group>"; };
@@ -59,11 +86,38 @@
 		D37B286223D74588006C360E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D37B286823D74689006C360E /* Accounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accounter.swift; sourceTree = "<group>"; };
 		D37B286A23D74692006C360E /* Mine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mine.swift; sourceTree = "<group>"; };
-		D37B286C23D746B3006C360E /* Homepage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homepage.swift; sourceTree = "<group>"; };
+		D37B286C23D746B3006C360E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		D384C33D23E070730087D3D4 /* SongList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongList.swift; sourceTree = "<group>"; };
 		D38B81E723DDDFBC0098B7F2 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		D3AAABC423E07CCE00D3DA3D /* ZrMus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZrMus.xcdatamodel; sourceTree = "<group>"; };
 		D3AE843B23E0853C001C6483 /* SongListTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListTransformer.swift; sourceTree = "<group>"; };
+		D3AF41D123E1C06800014FCA /* listCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listCell.swift; sourceTree = "<group>"; };
+		D3AF41FE23E2E4D300014FCA /* DetailedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedList.swift; sourceTree = "<group>"; };
+		D3AF420623E2E76E00014FCA /* DLCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLCell2.swift; sourceTree = "<group>"; };
+		D3AF420823E2E77900014FCA /* DLCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLCell1.swift; sourceTree = "<group>"; };
+		D3AF420A23E3150700014FCA /* ZrExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZrExtension.swift; sourceTree = "<group>"; };
+		D3AF426E23E429CB00014FCA /* STKQueueEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKQueueEntry.m; sourceTree = "<group>"; };
+		D3AF426F23E429CB00014FCA /* STKAutoRecoveringHTTPDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKAutoRecoveringHTTPDataSource.h; sourceTree = "<group>"; };
+		D3AF427023E429CB00014FCA /* STKDataSourceWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKDataSourceWrapper.h; sourceTree = "<group>"; };
+		D3AF427123E429CB00014FCA /* STKAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKAudioPlayer.h; sourceTree = "<group>"; };
+		D3AF427223E429CB00014FCA /* STKHTTPDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKHTTPDataSource.m; sourceTree = "<group>"; };
+		D3AF427323E429CB00014FCA /* STKDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKDataSource.h; sourceTree = "<group>"; };
+		D3AF427423E429CB00014FCA /* STKLocalFileDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKLocalFileDataSource.m; sourceTree = "<group>"; };
+		D3AF427523E429CB00014FCA /* NSMutableArray+STKAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+STKAudioPlayer.h"; sourceTree = "<group>"; };
+		D3AF427623E429CB00014FCA /* STKCoreFoundationDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKCoreFoundationDataSource.m; sourceTree = "<group>"; };
+		D3AF427723E429CB00014FCA /* STKAutoRecoveringHTTPDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKAutoRecoveringHTTPDataSource.m; sourceTree = "<group>"; };
+		D3AF427823E429CB00014FCA /* STKQueueEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKQueueEntry.h; sourceTree = "<group>"; };
+		D3AF427923E429CB00014FCA /* STKHTTPDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKHTTPDataSource.h; sourceTree = "<group>"; };
+		D3AF427A23E429CB00014FCA /* STKAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKAudioPlayer.m; sourceTree = "<group>"; };
+		D3AF427B23E429CB00014FCA /* STKDataSourceWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKDataSourceWrapper.m; sourceTree = "<group>"; };
+		D3AF427C23E429CB00014FCA /* STKLocalFileDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKLocalFileDataSource.h; sourceTree = "<group>"; };
+		D3AF427D23E429CB00014FCA /* STKMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKMacro.h; sourceTree = "<group>"; };
+		D3AF427E23E429CB00014FCA /* STKDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STKDataSource.m; sourceTree = "<group>"; };
+		D3AF427F23E429CB00014FCA /* STKCoreFoundationDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKCoreFoundationDataSource.h; sourceTree = "<group>"; };
+		D3AF428023E429CB00014FCA /* STKSpinLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STKSpinLock.h; sourceTree = "<group>"; };
+		D3AF428123E429CB00014FCA /* NSMutableArray+STKAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+STKAudioPlayer.m"; sourceTree = "<group>"; };
+		D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StreamingKit-Prefix.pch"; sourceTree = "<group>"; };
+		D3AF428323E44AB800014FCA /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,14 +188,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		D326002B23D9E81D00BE0967 /* Homepage */ = {
+		D326002B23D9E81D00BE0967 /* Player */ = {
 			isa = PBXGroup;
 			children = (
 				D36FCEE823DB3A0F00B0A18E /* M */,
 				D36FCEE723DB3A0900B0A18E /* V */,
 				D36FCEE623DB3A0400B0A18E /* C */,
 			);
-			path = Homepage;
+			path = Player;
 			sourceTree = "<group>";
 		};
 		D326002C23D9E82900BE0967 /* Mine */ = {
@@ -165,7 +219,7 @@
 		D36FCEE623DB3A0400B0A18E /* C */ = {
 			isa = PBXGroup;
 			children = (
-				D37B286C23D746B3006C360E /* Homepage.swift */,
+				D37B286C23D746B3006C360E /* Player.swift */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -180,6 +234,7 @@
 		D36FCEE823DB3A0F00B0A18E /* M */ = {
 			isa = PBXGroup;
 			children = (
+				D3AF428323E44AB800014FCA /* Song.swift */,
 			);
 			name = M;
 			sourceTree = "<group>";
@@ -219,7 +274,8 @@
 			isa = PBXGroup;
 			children = (
 				D36FCEFC23DC9D7800B0A18E /* ncCell.swift */,
-				D36FCEFA23DC757700B0A18E /* listCell.swift */,
+				D36FCEFA23DC757700B0A18E /* listsCell.swift */,
+				D3AF41D123E1C06800014FCA /* listCell.swift */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -236,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				D36FCEFE23DD66F600B0A18E /* SongListGet.swift */,
-				D36FCF0023DD6CBE00B0A18E /* ListDetailGet.swift */,
 				D384C33D23E070730087D3D4 /* SongList.swift */,
 				D3AE843B23E0853C001C6483 /* SongListTransformer.swift */,
 			);
@@ -247,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				D36FCF0523DD71CE00B0A18E /* JSONHandle.swift */,
+				D3AF420A23E3150700014FCA /* ZrExtension.swift */,
 			);
 			path = TotalModel;
 			sourceTree = "<group>";
@@ -274,17 +330,20 @@
 			isa = PBXGroup;
 			children = (
 				D37B285423D74587006C360E /* AppDelegate.swift */,
-				D38B81E623DDDFA20098B7F2 /* DataBase */,
-				D36FCF0423DD71AB00B0A18E /* TotalModel */,
-				D36FCEF023DBF61200B0A18E /* TotalView */,
-				D326002223D8590800BE0967 /* Login */,
-				D326002B23D9E81D00BE0967 /* Homepage */,
-				D326002C23D9E82900BE0967 /* Mine */,
-				D326001F23D8583300BE0967 /* Accounter */,
 				D37B285A23D74587006C360E /* Main.storyboard */,
 				D37B285D23D74588006C360E /* Assets.xcassets */,
 				D37B285F23D74588006C360E /* LaunchScreen.storyboard */,
 				D37B286223D74588006C360E /* Info.plist */,
+				D38B81E623DDDFA20098B7F2 /* DataBase */,
+				D3AF426D23E429CB00014FCA /* StreamingKit */,
+				D36FCF0423DD71AB00B0A18E /* TotalModel */,
+				D36FCEF023DBF61200B0A18E /* TotalView */,
+				D326002223D8590800BE0967 /* Login */,
+				D3AF420E23E427A000014FCA /* Comment */,
+				D326002B23D9E81D00BE0967 /* Player */,
+				D326002C23D9E82900BE0967 /* Mine */,
+				D3AF41F723E2E25900014FCA /* DetailedList */,
+				D326001F23D8583300BE0967 /* Accounter */,
 			);
 			path = ZrMus;
 			sourceTree = "<group>";
@@ -292,10 +351,105 @@
 		D38B81E623DDDFA20098B7F2 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
-				D38B81E723DDDFBC0098B7F2 /* DataBase.swift */,
 				D3AAABC323E07CCE00D3DA3D /* ZrMus.xcdatamodeld */,
+				D38B81E723DDDFBC0098B7F2 /* DataBase.swift */,
 			);
 			path = DataBase;
+			sourceTree = "<group>";
+		};
+		D3AF41F723E2E25900014FCA /* DetailedList */ = {
+			isa = PBXGroup;
+			children = (
+				D3AF41FA23E2E28800014FCA /* M */,
+				D3AF41F923E2E28600014FCA /* V */,
+				D3AF41F823E2E28300014FCA /* C */,
+			);
+			path = DetailedList;
+			sourceTree = "<group>";
+		};
+		D3AF41F823E2E28300014FCA /* C */ = {
+			isa = PBXGroup;
+			children = (
+				D3AF41FE23E2E4D300014FCA /* DetailedList.swift */,
+			);
+			path = C;
+			sourceTree = "<group>";
+		};
+		D3AF41F923E2E28600014FCA /* V */ = {
+			isa = PBXGroup;
+			children = (
+				D3AF420823E2E77900014FCA /* DLCell1.swift */,
+				D3AF420623E2E76E00014FCA /* DLCell2.swift */,
+			);
+			path = V;
+			sourceTree = "<group>";
+		};
+		D3AF41FA23E2E28800014FCA /* M */ = {
+			isa = PBXGroup;
+			children = (
+				D36FCF0023DD6CBE00B0A18E /* ListDetailGet.swift */,
+			);
+			path = M;
+			sourceTree = "<group>";
+		};
+		D3AF420E23E427A000014FCA /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				D3AF421123E428E500014FCA /* M */,
+				D3AF421023E428E300014FCA /* V */,
+				D3AF420F23E428B000014FCA /* C */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
+		D3AF420F23E428B000014FCA /* C */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = C;
+			sourceTree = "<group>";
+		};
+		D3AF421023E428E300014FCA /* V */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = V;
+			sourceTree = "<group>";
+		};
+		D3AF421123E428E500014FCA /* M */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = M;
+			path = "New Group1/M";
+			sourceTree = "<group>";
+		};
+		D3AF426D23E429CB00014FCA /* StreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				D3AF426E23E429CB00014FCA /* STKQueueEntry.m */,
+				D3AF426F23E429CB00014FCA /* STKAutoRecoveringHTTPDataSource.h */,
+				D3AF427023E429CB00014FCA /* STKDataSourceWrapper.h */,
+				D3AF427123E429CB00014FCA /* STKAudioPlayer.h */,
+				D3AF427223E429CB00014FCA /* STKHTTPDataSource.m */,
+				D3AF427323E429CB00014FCA /* STKDataSource.h */,
+				D3AF427423E429CB00014FCA /* STKLocalFileDataSource.m */,
+				D3AF427523E429CB00014FCA /* NSMutableArray+STKAudioPlayer.h */,
+				D3AF427623E429CB00014FCA /* STKCoreFoundationDataSource.m */,
+				D3AF427723E429CB00014FCA /* STKAutoRecoveringHTTPDataSource.m */,
+				D3AF427823E429CB00014FCA /* STKQueueEntry.h */,
+				D3AF427923E429CB00014FCA /* STKHTTPDataSource.h */,
+				D3AF427A23E429CB00014FCA /* STKAudioPlayer.m */,
+				D3AF427B23E429CB00014FCA /* STKDataSourceWrapper.m */,
+				D3AF427C23E429CB00014FCA /* STKLocalFileDataSource.h */,
+				D3AF427D23E429CB00014FCA /* STKMacro.h */,
+				D3AF427E23E429CB00014FCA /* STKDataSource.m */,
+				D3AF427F23E429CB00014FCA /* STKCoreFoundationDataSource.h */,
+				D3AF428023E429CB00014FCA /* STKSpinLock.h */,
+				D3AF428123E429CB00014FCA /* NSMutableArray+STKAudioPlayer.m */,
+				D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */,
+			);
+			path = StreamingKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,10 +567,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AF428623E465EB00014FCA /* STKQueueEntry.m in Sources */,
+				D3AF428723E465EB00014FCA /* STKAutoRecoveringHTTPDataSource.h in Sources */,
+				D3AF428823E465EB00014FCA /* STKDataSourceWrapper.h in Sources */,
+				D3AF428923E465EB00014FCA /* STKAudioPlayer.h in Sources */,
+				D3AF428A23E465EB00014FCA /* STKHTTPDataSource.m in Sources */,
+				D3AF428B23E465EB00014FCA /* STKDataSource.h in Sources */,
+				D3AF428C23E465EB00014FCA /* STKLocalFileDataSource.m in Sources */,
+				D3AF428D23E465EB00014FCA /* NSMutableArray+STKAudioPlayer.h in Sources */,
+				D3AF428E23E465EB00014FCA /* STKCoreFoundationDataSource.m in Sources */,
+				D3AF428F23E465EB00014FCA /* STKAutoRecoveringHTTPDataSource.m in Sources */,
+				D3AF429023E465EB00014FCA /* STKQueueEntry.h in Sources */,
+				D3AF429123E465EB00014FCA /* STKHTTPDataSource.h in Sources */,
+				D3AF429223E465EB00014FCA /* STKAudioPlayer.m in Sources */,
+				D3AF429323E465EB00014FCA /* STKDataSourceWrapper.m in Sources */,
+				D3AF429423E465EB00014FCA /* STKLocalFileDataSource.h in Sources */,
+				D3AF429523E465EB00014FCA /* STKMacro.h in Sources */,
+				D3AF429623E465EB00014FCA /* STKDataSource.m in Sources */,
+				D3AF429723E465EB00014FCA /* STKCoreFoundationDataSource.h in Sources */,
+				D3AF429823E465EB00014FCA /* STKSpinLock.h in Sources */,
+				D3AF429923E465EB00014FCA /* NSMutableArray+STKAudioPlayer.m in Sources */,
+				D3AF429A23E465EB00014FCA /* StreamingKit-Prefix.pch in Sources */,
+				D3AF428423E44AB800014FCA /* Song.swift in Sources */,
 				D384C33E23E070730087D3D4 /* SongList.swift in Sources */,
 				D36FCF0623DD71CE00B0A18E /* JSONHandle.swift in Sources */,
+				D3AF420723E2E76E00014FCA /* DLCell2.swift in Sources */,
 				D36FCEFD23DC9D7800B0A18E /* ncCell.swift in Sources */,
 				D37B285523D74587006C360E /* AppDelegate.swift in Sources */,
+				D3AF420B23E3150700014FCA /* ZrExtension.swift in Sources */,
 				D36FCEEF23DB4BDC00B0A18E /* fansCell.swift in Sources */,
 				D326002123D8585E00BE0967 /* Login.swift in Sources */,
 				D326002423D8592E00BE0967 /* PhoneLogin.swift in Sources */,
@@ -425,14 +603,17 @@
 				D38B81E823DDDFBC0098B7F2 /* DataBase.swift in Sources */,
 				D36FCEFF23DD66F600B0A18E /* SongListGet.swift in Sources */,
 				D3AAABC523E07CCE00D3DA3D /* ZrMus.xcdatamodeld in Sources */,
-				D36FCEFB23DC757700B0A18E /* listCell.swift in Sources */,
+				D36FCEFB23DC757700B0A18E /* listsCell.swift in Sources */,
 				D3AE843C23E0853C001C6483 /* SongListTransformer.swift in Sources */,
+				D3AF41FF23E2E4D300014FCA /* DetailedList.swift in Sources */,
 				D37B286923D74689006C360E /* Accounter.swift in Sources */,
 				D355957323DAD66F0000826D /* LoginGet.swift in Sources */,
 				D37B286B23D74692006C360E /* Mine.swift in Sources */,
-				D37B286D23D746B3006C360E /* Homepage.swift in Sources */,
+				D37B286D23D746B3006C360E /* Player.swift in Sources */,
 				D36FCF0123DD6CBE00B0A18E /* ListDetailGet.swift in Sources */,
+				D3AF41D223E1C06800014FCA /* listCell.swift in Sources */,
 				D36FCEED23DB4BC700B0A18E /* nicknameCell.swift in Sources */,
+				D3AF420923E2E77900014FCA /* DLCell1.swift in Sources */,
 				D355957723DADAE90000826D /* ZrTF.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +769,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = zzx.ZrMus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = ZrMus/StreamingKit/STKAudioPlayer.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -608,6 +790,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = zzx.ZrMus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = ZrMus/StreamingKit/STKAudioPlayer.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

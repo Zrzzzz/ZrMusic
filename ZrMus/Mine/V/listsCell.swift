@@ -13,7 +13,7 @@ class listsCell: UITableViewCell {
     var arrowImg: UIImageView!
     var titleLabel: UILabel!
     var listsCountLabel: UILabel!
-    var addBtn: UIButton!//这个之后再完善
+    var addBtn: UIButton!//TODO: 这个之后再完善
     
     var listView: UITableView!
     var lists: [SongList] = []
@@ -115,7 +115,9 @@ extension listsCell: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        let vc = DetailedList()
+        vc.listId = lists[indexPath.row].id
+        UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true)
     }
 }
 extension listsCell {

@@ -10,46 +10,41 @@ import Foundation
 
 // MARK: - ListDetailGet
 struct ListDetailGet: Codable {
-    let code: Int
+    let code: Int?
     let relatedVideos: JSONNull?
-    let playlist: DPlaylist
+    let playlist: DPlaylist?
     let urls: JSONNull?
-    let privileges: [Privilege]
+    let privileges: [Privilege]?
 }
 
 // MARK: - Playlist
 struct DPlaylist: Codable {
-    let subscribers: [JSONAny]
-    let subscribed: Bool
-    let creator: DCreator
-    let tracks: [Track]
-    let trackIDS: [TrackID]
+    let subscribers: [DCreator]?
+    let subscribed: Bool?
+    let creator: DCreator?
+    let tracks: [Track]?
+    let trackIDS: [TrackID]?
     let updateFrequency: JSONNull?
-    let backgroundCoverID: Int
+    let backgroundCoverID: Int?
     let backgroundCoverURL: JSONNull?
-    let titleImage: Int
+    let titleImage: Int?
     let titleImageURL, englishTitle: JSONNull?
-    let opRecommend: Bool
-    let subscribedCount, cloudTrackCount, adType, trackNumberUpdateTime: Int
-    let createTime: Int
-    let highQuality: Bool
-    let privacy, trackUpdateTime, userID: Int
-    let coverImgID: Double
-    let updateTime: Int
-    let newImported: Bool
-    let specialType: Int
-    let coverImgURL: String
-    let trackCount: Int
-    let commentThreadID: String
-    let playCount: Int
-    let tags: [JSONAny]
-    let ordered: Bool
-    let playlistDescription: JSONNull?
-    let status: Int
-    let name: String
-    let id, shareCount: Int
-    let coverImgIDStr: String
-    let commentCount: Int
+    let opRecommend: Bool?
+    let userID, trackNumberUpdateTime, createTime: Int?
+    let highQuality: Bool?
+    let coverImgID, updateTime: Int?
+    let newImported: Bool?
+    let coverImgURL: String?
+    let specialType, trackCount: Int?
+    let commentThreadID: String?
+    let privacy, trackUpdateTime, playCount, adType: Int?
+    let subscribedCount, cloudTrackCount: Int?
+    let tags: [String]?
+    let playlistDescription: String?
+    let status: Int?
+    let ordered: Bool?
+    let name: String?
+    let id, shareCount, commentCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case subscribers, subscribed, creator, tracks
@@ -59,39 +54,38 @@ struct DPlaylist: Codable {
         case backgroundCoverURL = "backgroundCoverUrl"
         case titleImage
         case titleImageURL = "titleImageUrl"
-        case englishTitle, opRecommend, subscribedCount, cloudTrackCount, adType, trackNumberUpdateTime, createTime, highQuality, privacy, trackUpdateTime
+        case englishTitle, opRecommend
         case userID = "userId"
+        case trackNumberUpdateTime, createTime, highQuality
         case coverImgID = "coverImgId"
-        case updateTime, newImported, specialType
+        case updateTime, newImported
         case coverImgURL = "coverImgUrl"
-        case trackCount
+        case specialType, trackCount
         case commentThreadID = "commentThreadId"
-        case playCount, tags, ordered
+        case privacy, trackUpdateTime, playCount, adType, subscribedCount, cloudTrackCount, tags
         case playlistDescription = "description"
-        case status, name, id, shareCount
-        case coverImgIDStr = "coverImgId_str"
-        case commentCount
+        case status, ordered, name, id, shareCount, commentCount
     }
 }
 
 // MARK: - Creator
 struct DCreator: Codable {
-    let defaultAvatar: Bool
-    let province, authStatus: Int
-    let followed: Bool
-    let avatarURL: String
-    let accountStatus, gender, city, birthday: Int
-    let userID, userType: Int
-    let nickname, signature, creatorDescription, detailDescription: String
-    let avatarImgID: Double
-    let backgroundImgID: Int
-    let backgroundURL: String
-    let authority: Int
-    let mutual: Bool
-    let expertTags, experts: JSONNull?
-    let djStatus, vipType: Int
+    let defaultAvatar: Bool?
+    let province, authStatus: Int?
+    let followed: Bool?
+    let avatarURL: String?
+    let accountStatus, gender, city, birthday: Int?
+    let userID, userType: Int?
+    let nickname, signature, creatorDescription, detailDescription: String?
+    let avatarImgID, backgroundImgID: Double?
+    let backgroundURL: String?
+    let authority: Int?
+    let mutual: Bool?
+    let expertTags: [String]?
+    let experts: JSONNull?
+    let djStatus, vipType: Int?
     let remarkName: JSONNull?
-    let avatarImgIDStr, backgroundImgIDStr, creatorAvatarImgIDStr: String
+    let avatarImgIDStr, backgroundImgIDStr, creatorAvatarImgIDStr: String?
 
     enum CodingKeys: String, CodingKey {
         case defaultAvatar, province, authStatus, followed
@@ -113,34 +107,35 @@ struct DCreator: Codable {
 
 // MARK: - TrackID
 struct TrackID: Codable {
-    let id, v: Int
+    let id, v: Int?
     let alg: JSONNull?
 }
 
 // MARK: - Track
 struct Track: Codable {
-    let name: String
-    let id, pst, t: Int
-    let ar: [Ar]
-    let alia: [JSONAny]
-    let pop, st: Int
+    let name: String?
+    let id, pst, t: Int?
+    let ar: [Ar]?
+    let alia: [String]?
+    let pop, st: Int?
     let rt: String?
-    let fee, v: Int
+    let fee, v: Int?
     let crbt: JSONNull?
-    let cf: String
-    let al: Al
-    let dt: Int
-    let h, m, l: H
+    let cf: String?
+    let al: Al?
+    let dt: Int?
+    let h, m, l: H?
     let a: JSONNull?
-    let cd: String
-    let no: Int
+    let cd: String?
+    let no: Int?
     let rtURL: JSONNull?
-    let ftype: Int
-    let rtUrls: [JSONAny]
-    let djID, copyright, sID, mark: Int
-    let rtype: Int
+    let ftype: Int?
+    let rtUrls: [JSONAny]?
+    let djID, copyright, sID: Int?
+    let mark: Double?
+    let rtype: Int?
     let rurl: JSONNull?
-    let mst, cp, mv, publishTime: Int
+    let mst, cp, mv, publishTime: Int?
     let tns: [String]?
 
     enum CodingKeys: String, CodingKey {
@@ -156,43 +151,42 @@ struct Track: Codable {
 
 // MARK: - Al
 struct Al: Codable {
-    let id: Int
-    let name: String
-    let picURL: String
-    let tns: [JSONAny]
+    let id: Int?
+    let name: String?
+    let picURL: String?
+    let tns: [String]?
+    let pic: Double?
     let picStr: String?
-    let pic: Double
 
     enum CodingKeys: String, CodingKey {
         case id, name
         case picURL = "picUrl"
-        case tns
+        case tns, pic
         case picStr = "pic_str"
-        case pic
     }
 }
 
 // MARK: - Ar
 struct Ar: Codable {
-    let id: Int
-    let name: String
-    let tns, alias: [JSONAny]
+    let id: Int?
+    let name: String?
+    let tns, alias: [JSONAny]?
 }
 
 // MARK: - H
 struct H: Codable {
-    let br, fid, size: Int
-    let vd: Double
+    let br, fid, size: Int?
+    let vd: Double?
 }
 
 // MARK: - Privilege
 struct Privilege: Codable {
-    let id, fee, payed, st: Int
-    let pl, dl, sp, cp: Int
-    let subp: Int
-    let cs: Bool
-    let maxbr, fl: Int
-    let toast: Bool
-    let flag: Int
-    let preSell: Bool
+    let id, fee, payed, st: Int?
+    let pl, dl, sp, cp: Int?
+    let subp: Int?
+    let cs: Bool?
+    let maxbr, fl: Int?
+    let toast: Bool?
+    let flag: Int?
+    let preSell: Bool?
 }

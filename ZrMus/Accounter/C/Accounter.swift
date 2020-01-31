@@ -33,7 +33,7 @@ class Accounter: UIViewController {
         
     }
 }
-
+//UI相关
 extension Accounter {
     func setupTV() {
         tableView = UITableView(frame: CGRect(x: 0, y: 70, width: width, height: height - 70), style: .grouped)
@@ -45,13 +45,13 @@ extension Accounter {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
     }
 }
-
+//按钮方法
 extension Accounter {
     @objc func refresh() {
         tableView.reloadData()
     }
 }
-
+//Tableview协议
 extension Accounter: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3

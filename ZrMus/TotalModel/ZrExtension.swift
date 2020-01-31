@@ -12,6 +12,7 @@ extension UILabel {
 //    根据Frame宽高字体自适应最小宽（高）
     func fontSuitToFrame () {
         let aView = self.sizeThatFits(CGRect.zero.size)
+        guard aView.width * aView.height != 0 else { return }
         let rate1 = self.frame.width / aView.width
         let rate2 = self.frame.height / aView.height
         let rate = rate1 > rate2 ? rate2 : rate1
@@ -56,8 +57,8 @@ extension CALayer {
         case BtoU
     }
 //    渐变色
-    static func getGradientLayer(topColor: UIColor, bottomColor: UIColor, type: gradientDirect) -> CAGradientLayer {
-        let gradientColors = [topColor.cgColor, bottomColor.cgColor]
+    static func getGradientLayer(aColor: UIColor, bColor: UIColor, type: gradientDirect) -> CAGradientLayer {
+        let gradientColors = [aColor.cgColor, bColor.cgColor]
 
         let gradientLocations: [NSNumber] = [0.0, 1.0]
         let gradientLayer = CAGradientLayer()
@@ -91,5 +92,32 @@ func ZrColor(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) -> UIColor {
 
 func ZrColor(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
     return UIColor(red: r / 255, green: g / 255, blue: b / 255, alpha: 1.0)
+}
+
+/// its rect will be insert at screen's center
+/// - Parameters:
+///   - y:
+///   - width: 
+///   - height:
+func ZrLabel(y: CGFloat, width: CGFloat, height: CGFloat) -> UILabel {
+    let x = (UIScreen.main.bounds.width - width) / 2
+    let label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
+    label.textAlignment = .center
+    return label
+}
+
+/// its rect will be insert at screen's center
+/// - Parameters:
+///   - y:
+///   - width:
+///   - height:
+func ZrRect(y: CGFloat, width: CGFloat, height: CGFloat) -> CGRect {
+    let x = (UIScreen.main.bounds.width - width) / 2
+    return CGRect(x: x, y: y, width: width, height: height)
+}
+
+func ZrRect(xOffset: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) -> CGRect {
+    var x = (UIScreen.main.bounds.width - width) / 2
+    return CGRect(x: x + xOffset, y: y, width: width, height: height)
 }
 

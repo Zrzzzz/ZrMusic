@@ -40,16 +40,13 @@ class DLCell2: UITableViewCell {
 
 extension DLCell2 {
     func drawUI() {
-        countLabel = UILabel(frame: CGRect(x: 5, y: 15, width: 50, height: 50))
+        countLabel = UILabel(frame: CGRect(x: 15, y: 25, width: 30, height: 30))
         contentView.addSubview(countLabel)
-        countLabel.fontSuitToFrame()
         
-        nameLabel = UILabel(frame: CGRect(x: 70, y: 5, width: 200, height: 45))
+        nameLabel = UILabel(frame: CGRect(x: 70, y: 5, width: 200, height: 55))
         contentView.addSubview(nameLabel)
-        nameLabel.fontSuitToFrame()
         
-        creatorLabel = UILabel(frame: CGRect(x: 70, y: 55, width: width - 70, height: 20))
+        creatorLabel = UILabel(frame: CGRect(x: 70, y: 55, width: width - 70, height: 15))
         contentView.addSubview(creatorLabel)
-        creatorLabel.fontSuitToFrame()
     }
 }

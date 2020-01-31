@@ -1,17 +1,18 @@
 //
-//  List.swift
+//  Song.swift
 //  ZrMus
 //
-//  Created by Zr埋 on 2020/1/30.
+//  Created by Zr埋 on 2020/1/31.
 //  Copyright © 2020 Zr埋. All rights reserved.
 //
 
 import UIKit
 
-struct List {
-    let id: Int
+struct Song {
+    let id: Int?
     let name: String
     let arName: String
     let alName: String
-    let picImg: String
+    let url: URL?
+    let imgUrl: URL?
 }

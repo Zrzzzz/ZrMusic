@@ -36,7 +36,7 @@ class Mine: UIViewController {
     }
     
 }
-
+//UI相关
 extension Mine {
     
     func drawUI() {
@@ -52,7 +52,7 @@ extension Mine {
         tableView.reloadData()
     }
 }
-
+//数据管理
 extension Mine {
     
     func getData(someCloure: @escaping() -> Void) {
@@ -152,7 +152,7 @@ extension Mine {
         return nil
     }
 }
-
+//TableView协议
 extension Mine: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -245,7 +245,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             tableView.deselectRow(at: indexPath, animated: true)
-//            这里要到本地音乐的NC去
+//            TODO: 这里要到本地音乐的NC去
 //            navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
         default:
             tableView.deselectRow(at: indexPath, animated: true)

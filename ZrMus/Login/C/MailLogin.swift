@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//TODO
 class MailLogin: UIViewController {
     
     let mailTF = ZrTF()
@@ -28,7 +28,7 @@ class MailLogin: UIViewController {
         
     }
 }
-
+//UI相关
 extension MailLogin {
     
     func drawTFs() {
@@ -60,7 +60,7 @@ extension MailLogin {
     }
     
 }
-
+//按钮方法
 extension MailLogin {
     @objc func check() {
             let param1 = mailTF.text

@@ -60,8 +60,6 @@ extension PhoneLogin {
 
 extension PhoneLogin {
     @objc func check() {
-//        跳转布尔
-        var isPass = false
         
 //        获取参数
         let param1 = phoneNumTF.text
@@ -70,14 +68,13 @@ extension PhoneLogin {
         if param1 == nil || param2 == nil {
             phoneNumTF.text = nil
             phoneNumTF.placeholder = "请正确输入"
-            isPass = false
         }
         
 //        储存数据
         let ud = UserDefaults.standard
         var dataSource = [String: Any]()
 //        发送并获取数据
-        Alamofire.request("http://localhost:3000/login/cellphone?phone=\(param1)&password=\(param2)").responseJSON { (d) in
+        Alamofire.request("http://localhost:3000/login/cellphone?phone=\(param1!)&password=\(param2!)").responseJSON { (d) in
             do {
                 let datas = try JSONDecoder().decode(LoginGet.self, from: d.data!)
                 
@@ -88,7 +85,6 @@ extension PhoneLogin {
                     self.passwordTF.text = nil
                     self.phoneNumTF.text = nil
                     self.phoneNumTF.placeholder = "请正确输入"
-                    isPass = false
                 }
                 print("密码正确")
 //                储存数据
@@ -101,14 +97,15 @@ extension PhoneLogin {
                 ud.set(datas.profile.userID, forKey: "uid")
                 ud.set(dataSource, forKey: "dS")
 //                可以通过
-                isPass = true
                 print("进行跳转")
+                self.navigationController?.popToRootViewController(animated: true)
+                let t = UIApplication.shared.keyWindow?.rootViewController
+                if (t?.isKind(of:  UITabBarController.self))! {
+                    (t as? UITabBarController)?.selectedIndex = 1
+                }
             } catch {
                 print("登录失败")
             }
-        }
-        if isPass == true {
-            navigationController?.popToViewController(Homepage(), animated: true)
         }
     }
 }

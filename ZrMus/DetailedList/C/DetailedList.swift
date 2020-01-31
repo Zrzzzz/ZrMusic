@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreData
 
 class DetailedList: UIViewController {
     
@@ -16,7 +17,8 @@ class DetailedList: UIViewController {
     var alImgUrl: URL!
     var alName: String!
 //    存储数据
-    var lists: [List] = []
+    var lists: [Song] = []
+    let db = DataBase.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,23 +27,35 @@ class DetailedList: UIViewController {
         
     }
 }
-
+//UI管理
+extension DetailedList {
+    func closure() {
+        tableView = UITableView(frame: UIScreen.main.bounds)
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.reloadData()
+    }
+}
+//数据管理
 extension DetailedList {
     func getData(someClosure: @escaping () -> Void) {
-        let url = "http://localhost:3000/playlist/detail?id=\(listId)"
+        let url = "http://localhost:3000/playlist/detail?id=\(listId!)"
         Alamofire.request(url).responseJSON { (d) in
             do {
                 let datas = try JSONDecoder().decode(ListDetailGet.self, from: d.data!)
                 print("详情获取成功")
                 
-                self.alName = datas.playlist.name
-                self.alImgUrl = URL(string: datas.playlist.coverImgURL)
-                for track in datas.playlist.tracks {
-                    let list = List(
-                        id: track.id, name: track.name, arName: track.ar[0].name, alName: track.al.name, picImg: track.al.picURL
+                self.alName = datas.playlist?.name
+                self.alImgUrl = URL(string: (datas.playlist?.coverImgURL)!)
+                for track in (datas.playlist?.tracks)! {
+                    let list = Song(
+                        id: track.id ?? 0, name: track.name ?? "", arName: track.ar?[0].name ?? "", alName: (track.al?.name) ?? "", url: nil, imgUrl: URL(string: ((track.al?.picURL) ?? ""))
                     )
                     self.lists.append(list)
                 }
+                
+                someClosure()
             } catch {
                 print(error)
                 print("详情获取失败")
@@ -49,13 +63,24 @@ extension DetailedList {
         }
     }
     
-    func closure() {
-         tableView = UITableView(frame: UIScreen.main.bounds)
-         view.addSubview(tableView)
+    func addData(song: Song) {
+        let context = db.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Music", in: context)
+        let music = NSManagedObject(entity: entity!, insertInto: context)
+        music.setValue(song.id, forKey: "id")
+        music.setValue(song.alName, forKey: "alname")
+        music.setValue(song.arName, forKey: "arname")
+        music.setValue(song.imgUrl, forKey: "imgUrl")
+        music.setValue(song.name, forKey: "name")
+        
+        do {
+            try context.save()
+        } catch {
+            fatalError("无法保存")
+        }
     }
-    
 }
-
+//Tableview协议
 extension DetailedList: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -80,13 +105,13 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let width = UIScreen.main.bounds.width
         switch indexPath.section {
         case 0:
             let cell = DLCell1()
-            cell.imageView?.sd_setImage(with: alImgUrl, placeholderImage: UIImage(named: "default"))
+            cell.coverImg?.sd_setImage(with: alImgUrl, placeholderImage: UIImage(named: "default"))
             cell.selectionStyle = .none
             cell.nameLabel.text = alName
+//            TODO: 下载
 //            cell.downLoadBtn.addTarget(self, action: , for: <#T##UIControl.Event#>)
             
             return cell
@@ -97,15 +122,28 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
             if cell == nil {
                 cell = DLCell2(style: .default, reuseIdentifier: reuseid)
             }
-            cell.countLabel.text = String(indexPath.row + 1)
-            cell.nameLabel.text = lists[indexPath.row].name
-            cell.creatorLabel.text = "\(lists[indexPath.row].arName) - \(lists[indexPath.row].alName)"
+            if !lists.isEmpty {
+                cell.countLabel.text = String(indexPath.row + 1)
+                cell.nameLabel.text = lists[indexPath.row].name
+                cell.creatorLabel.text = "\(lists[indexPath.row].arName) - \(lists[indexPath.row].alName)"
+//                调整字体，由于reloadData的原因，字体大小会被重新设置，所以不能在cell里设置，得在delegate里面重新设置
+                cell.countLabel.fontSuitToFrame()
+                cell.nameLabel.font = .boldSystemFont(ofSize: 20)
+                cell.creatorLabel.fontSuitToFrame()
+            }
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        addData(song: lists[indexPath.row])
+        self.dismiss(animated: true, completion: nil)
+        let t = UIApplication.shared.keyWindow?.rootViewController
+        if (t?.isKind(of:  UITabBarController.self))! {
+            (t as? UITabBarController)?.selectedIndex = 0
+        }
+        
         
     }
 }

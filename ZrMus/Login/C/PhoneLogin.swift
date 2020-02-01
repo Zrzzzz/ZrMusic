@@ -15,6 +15,9 @@ class PhoneLogin: UIViewController {
     let phoneNumTF = ZrTF()
     let passwordTF = ZrTF()
     let checkBtn = ZrBtn()
+    //        弹窗
+    let alert = UIAlertController()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +27,7 @@ class PhoneLogin: UIViewController {
         view.addSubview(passwordTF)
         view.addSubview(checkBtn)
         
-        drawTFs()
-        drawBtns()
+        drawUI()
         
         
         
@@ -34,7 +36,7 @@ class PhoneLogin: UIViewController {
 
 extension PhoneLogin {
     
-    func drawTFs() {
+    func drawUI() {
         phoneNumTF.frame = CGRect(x: 0, y: 300, width: 200, height: 40)
         phoneNumTF.placeholder = "请输入手机号"
         phoneNumTF.keyboardType = .numberPad
@@ -43,9 +45,6 @@ extension PhoneLogin {
         passwordTF.placeholder = "请输入密码"
         passwordTF.isSecureTextEntry = true
         
-    }
-    
-    func drawBtns() {
         checkBtn.setTitle("登录", for: .normal)
         checkBtn.backgroundColor = .cyan
         checkBtn.addTarget(self, action: #selector(check), for: .touchUpInside)
@@ -55,6 +54,9 @@ extension PhoneLogin {
             make.height.equalTo(40)
             make.centerY.equalTo(450)
         }
+        
+        let knownAction = UIAlertAction(title: "我知道了", style: .default, handler: nil)
+        alert.addAction(knownAction)
     }
 }
 
@@ -66,13 +68,13 @@ extension PhoneLogin {
         let param2 = passwordTF.text
         
         if param1 == nil || param2 == nil {
-            phoneNumTF.text = nil
-            phoneNumTF.placeholder = "请正确输入"
+            alert.title = "请完整输入"
+            present(alert, animated: true, completion: nil)
+            return
         }
         
 //        储存数据
         let ud = UserDefaults.standard
-        var dataSource = [String: Any]()
 //        发送并获取数据
         Alamofire.request("http://localhost:3000/login/cellphone?phone=\(param1!)&password=\(param2!)").responseJSON { (d) in
             do {
@@ -84,18 +86,12 @@ extension PhoneLogin {
                 if datas.code == 502 || datas.code == 400 {
                     self.passwordTF.text = nil
                     self.phoneNumTF.text = nil
-                    self.phoneNumTF.placeholder = "请正确输入"
+                    self.alert.title = "密码错误"
+                    self.present(self.alert, animated: true, completion: nil)
                 }
                 print("密码正确")
 //                储存数据
-                dataSource["uid"] = datas.profile.userID
-                dataSource["nickname"] = datas.profile.nickname
-                dataSource["avatarURL"] = datas.profile.avatarURL
-                dataSource["bgURL"] = datas.profile.backgroundURL
-                dataSource["followeds"] = datas.profile.followeds
-                dataSource["follows"] = datas.profile.follows
                 ud.set(datas.profile.userID, forKey: "uid")
-                ud.set(dataSource, forKey: "dS")
 //                可以通过
                 print("进行跳转")
                 self.navigationController?.popToRootViewController(animated: true)

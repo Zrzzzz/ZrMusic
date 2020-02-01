@@ -27,7 +27,7 @@ class DetailedList: UIViewController {
         
     }
 }
-//UI管理
+//MARK: - UI管理 & 按钮方法
 extension DetailedList {
     func closure() {
         tableView = UITableView(frame: UIScreen.main.bounds)
@@ -36,8 +36,16 @@ extension DetailedList {
         view.addSubview(tableView)
         tableView.reloadData()
     }
+    
+    @objc func addToQueue(sender: UIButton) {
+        let tableView = sender.superView(of: UITableView.self)
+        let index = tableView!.indexPath(for: sender.superView(of: UITableViewCell.self)!)!.row
+        addData(song: lists[index])
+        print(lists[index].name)
+    }
 }
-//数据管理
+
+//MARK: - 数据管理
 extension DetailedList {
     func getData(someClosure: @escaping () -> Void) {
         let url = "http://localhost:3000/playlist/detail?id=\(listId!)"
@@ -80,7 +88,7 @@ extension DetailedList {
         }
     }
 }
-//Tableview协议
+//MARK: - Tableview协议
 extension DetailedList: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -130,6 +138,7 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
                 cell.countLabel.fontSuitToFrame()
                 cell.nameLabel.font = .boldSystemFont(ofSize: 20)
                 cell.creatorLabel.fontSuitToFrame()
+                cell.addBtn.addTarget(self, action: #selector(addToQueue(sender:)), for: .touchUpInside)
             }
             return cell
         }
@@ -143,7 +152,5 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
         if (t?.isKind(of:  UITabBarController.self))! {
             (t as? UITabBarController)?.selectedIndex = 0
         }
-        
-        
     }
 }

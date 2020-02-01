@@ -59,6 +59,7 @@
 		D3AF429823E465EB00014FCA /* STKSpinLock.h in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428023E429CB00014FCA /* STKSpinLock.h */; };
 		D3AF429923E465EB00014FCA /* NSMutableArray+STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428123E429CB00014FCA /* NSMutableArray+STKAudioPlayer.m */; };
 		D3AF429A23E465EB00014FCA /* StreamingKit-Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */; };
+		D3D5B12623E5B26C0060D973 /* UserDetailGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B12523E5B26C0060D973 /* UserDetailGet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +119,7 @@
 		D3AF428123E429CB00014FCA /* NSMutableArray+STKAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+STKAudioPlayer.m"; sourceTree = "<group>"; };
 		D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StreamingKit-Prefix.pch"; sourceTree = "<group>"; };
 		D3AF428323E44AB800014FCA /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		D3D5B12523E5B26C0060D973 /* UserDetailGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailGet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 		D36FCEEB23DB4B7400B0A18E /* M */ = {
 			isa = PBXGroup;
 			children = (
+				D3D5B12523E5B26C0060D973 /* UserDetailGet.swift */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				D326002623D8593C00BE0967 /* MailLogin.swift in Sources */,
 				D38B81E823DDDFBC0098B7F2 /* DataBase.swift in Sources */,
 				D36FCEFF23DD66F600B0A18E /* SongListGet.swift in Sources */,
+				D3D5B12623E5B26C0060D973 /* UserDetailGet.swift in Sources */,
 				D3AAABC523E07CCE00D3DA3D /* ZrMus.xcdatamodeld in Sources */,
 				D36FCEFB23DC757700B0A18E /* listsCell.swift in Sources */,
 				D3AE843C23E0853C001C6483 /* SongListTransformer.swift in Sources */,

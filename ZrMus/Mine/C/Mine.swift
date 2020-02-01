@@ -36,7 +36,7 @@ class Mine: UIViewController {
     }
     
 }
-//UI相关
+//MARK: - UI相关
 extension Mine {
     
     func drawUI() {
@@ -52,7 +52,7 @@ extension Mine {
         tableView.reloadData()
     }
 }
-//数据管理
+//MARK: - 数据管理
 extension Mine {
     
     func getData(someCloure: @escaping() -> Void) {
@@ -152,7 +152,7 @@ extension Mine {
         return nil
     }
 }
-//TableView协议
+//MARK: - TableView协议
 extension Mine: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2

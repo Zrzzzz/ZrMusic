@@ -50,38 +50,6 @@
             endingLineNumber = "77"
             landmarkName = "check()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "579B6F83-1D32-4DCC-98E4-056E7D44C1A2 - ce34c44c0db2d6da"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ZrMus.PhoneLogin.check() -&gt; ()"
-                  moduleName = "ZrMus"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Login/C/PhoneLogin.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "77"
-                  endingLineNumber = "77"
-                  offsetFromSymbolStart = "1367">
-               </Location>
-               <Location
-                  uuid = "579B6F83-1D32-4DCC-98E4-056E7D44C1A2 - b3188ecf244dfc6a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in ZrMus.PhoneLogin.check() -&gt; ()"
-                  moduleName = "ZrMus"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Login/C/PhoneLogin.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "75"
-                  endingLineNumber = "75"
-                  offsetFromSymbolStart = "239">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -98,6 +66,38 @@
             endingLineNumber = "79"
             landmarkName = "check()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E13D8602-4143-4F74-AEA6-9D11896AEE48 - ce34c44c0db2d6da"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZrMus.PhoneLogin.check() -&gt; ()"
+                  moduleName = "ZrMus"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Login/C/PhoneLogin.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "1350">
+               </Location>
+               <Location
+                  uuid = "E13D8602-4143-4F74-AEA6-9D11896AEE48 - b3188ecf244dfc6a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in ZrMus.PhoneLogin.check() -&gt; ()"
+                  moduleName = "ZrMus"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Login/C/PhoneLogin.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "239">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -119,32 +119,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6070F76B-49F0-4E91-85F7-E3F11A1601B6"
-            shouldBeEnabled = "No"
+            uuid = "DEE45106-A00D-4975-BB3B-0CB748936A8C"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Player/C/Player.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
-            landmarkName = "audioPlayer(_:didFinishPlayingQueueItemId:with:andProgress:andDuration:)"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
+            landmarkName = "dbRefreshData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0958F404-1C60-4D03-B4B6-C4A1C1C4C093"
+            uuid = "D30AB853-7F7C-4503-B390-DBF008945CD8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZrMus/DetailedList/C/DetailedList.swift"
+            filePath = "ZrMus/Player/C/Player.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "dbRefreshData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D30AB853-7F7C-4503-B390-DBF008945CD8 - dfe654654766c9be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZrMus.Player.dbRefreshData() -&gt; ()"
+                  moduleName = "ZrMus"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Player/C/Player.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "204"
+                  endingLineNumber = "204"
+                  offsetFromSymbolStart = "1338">
+               </Location>
+               <Location
+                  uuid = "D30AB853-7F7C-4503-B390-DBF008945CD8 - 281b405b52bc3c74"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (ZrMus.Song) -&gt; Swift.Bool in ZrMus.Player.dbRefreshData() -&gt; ()"
+                  moduleName = "ZrMus"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Player/C/Player.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "09B07A37-7D0C-4F30-8121-1801C0193B73"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Player/C/Player.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "preSong()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

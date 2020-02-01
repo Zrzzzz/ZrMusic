@@ -12,46 +12,55 @@ import Alamofire
 import SDWebImage
 
 class Accounter: UIViewController {
-    
-    let width = UIScreen.main.bounds.width
-    let height = UIScreen.main.bounds.height
+//    组件
     var tableView: UITableView!
     let ud = UserDefaults.standard
     
+//    属性
+    let width = UIScreen.main.bounds.width
+    let height = UIScreen.main.bounds.height
+    
+    let level: Int!
+    let 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
 //        初始化tableView
         setupTV()
-        drawFreshBtn()
         view.addSubview(tableView)
-
-        
-        
-        
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
     }
 }
-//UI相关
+//MARK: - UI相关
 extension Accounter {
     func setupTV() {
         tableView = UITableView(frame: CGRect(x: 0, y: 70, width: width, height: height - 70), style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
-    func drawFreshBtn() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-    }
 }
-//按钮方法
+//MARK: - 获取数据
 extension Accounter {
-    @objc func refresh() {
-        tableView.reloadData()
+    func getData() {
+        let uid = ud.integer(forKey: "uid")
+        Alamofire.request(URL(string: "http://localhost:3000/user/detail?uid=\(uid)")!).responseJSON { (d) in
+            do {
+                let datas = try JSONDecoder().decode(UserDetailGet.self, from: d.data!)
+                
+            } catch {
+                print(error)
+            }
+        }
+        
+        
     }
 }
-//Tableview协议
+//MARK: - Tableview协议
 extension Accounter: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -103,7 +112,6 @@ extension Accounter: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
 //            数据放空
-            ud.set(nil, forKey: "uid")
             ud.set(nil, forKey: "dS")
 //            退出登录，刷新数据
             Alamofire.request("http://localhost:3000/logout")

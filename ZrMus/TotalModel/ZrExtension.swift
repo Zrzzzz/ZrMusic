@@ -8,6 +8,18 @@
 
 import UIKit
 
+extension UIView {
+//    返回父View
+    func superView<T: UIView>(of: T.Type) -> T? {
+        for view in sequence(first: self.superview, next: { $0?.superview }) {
+            if let father = view as? T {
+                return father
+            }
+        }
+        return nil
+    }
+}
+
 extension UILabel {
 //    根据Frame宽高字体自适应最小宽（高）
     func fontSuitToFrame () {

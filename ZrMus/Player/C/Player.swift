@@ -22,14 +22,17 @@ class Player: UIViewController {
     var imgView: UIImageView!
     var preBtn: UIButton!
     var nextBtn: UIButton!
+    var loopBtn: UIButton!
 //    pause&resume
     var prBtn: UIButton!
 //    时间
-    var timeLabel: UILabel!
+    var ltimeLabel: UILabel!
+    var rtimeLabel: UILabel!
 //    进度条
     var slider: UISlider!
 //    播放列表
     var songQueue: [Song] = []
+    var tableView: UITableView!
 //    当前播放索引
     var curIndex: Int = -1
 //    是否循环播放
@@ -43,66 +46,80 @@ class Player: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //判断登录状态
-        isRegistered()
         drawUI()
         drawPlayer()
-        deleteAll()
+        dbDeleteAll()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+//        判断登录状态
+        isRegistered()
 //        每次到此页面刷新一下queue的数据
-        refreshData()
-//        如果没有播放就开始播放
-        playWithQueue(queue: songQueue, index: 0)
+        dbRefreshData()
+//        如果是停止播放就开始播放
+        if state == .stopped {
+            playWithQueue(queue: songQueue, index: 0)
+        }
     }
 }
 //MARK: - UI相关
 extension Player {
     func isRegistered() {
-        let userid = UserDefaults.standard.string(forKey: "uid")
+        let userid = UserDefaults.standard.integer(forKey: "uid")
         if userid == nil {
             navigationController?.pushViewController(Login(), animated: true)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "登录", style: .plain, target: self, action: #selector(removeData))
+        } else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
     
     func drawUI() {
         view.backgroundColor = .white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(removeData))
         
         titleLabel = ZrLabel(y: 100, width: 200, height: 40)
         titleLabel.fontSuitToFrame()
         view.addSubview(titleLabel)
         
-        creatorLabel = ZrLabel(y: 150, width: 200, height: 30)
+        creatorLabel = ZrLabel(y: 150, width: 200, height: 25)
+        creatorLabel.fontSuitToFrame()
         view.addSubview(creatorLabel)
         
         imgView = UIImageView(frame: ZrRect(y: 200, width: 150, height: 150))
         view.addSubview(imgView)
         
-        preBtn = UIButton(frame: ZrRect(xOffset: -50, y: 360, width: 30, height: 30))
+        preBtn = UIButton(frame: ZrRect(xOffset: -60, y: 360, width: 30, height: 30))
         preBtn.setImage(UIImage(systemName: "backward.end")?.withRenderingMode(.alwaysTemplate), for: .normal)
         preBtn.addTarget(self, action: #selector(preSong), for: .touchUpInside)
         view.addSubview(preBtn)
         
-        nextBtn = UIButton(frame: ZrRect(y: 360, width: 30, height: 30))
+        nextBtn = UIButton(frame: ZrRect(xOffset: -20, y: 360, width: 30, height: 30))
         nextBtn.setImage(UIImage(systemName: "forward.end")?.withRenderingMode(.alwaysTemplate), for: .normal)
         nextBtn.addTarget(self, action: #selector(nextSong), for: .touchUpInside)
         view.addSubview(nextBtn)
         
-        prBtn = UIButton(frame: ZrRect(xOffset: 50, y: 360, width: 30, height: 30))
+        prBtn = UIButton(frame: ZrRect(xOffset: 20, y: 360, width: 30, height: 30))
         prBtn.setImage(UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
         prBtn.addTarget(self, action: #selector(pasueorResume), for: .touchUpInside)
         view.addSubview(prBtn)
         
-        slider = UISlider(frame: ZrRect(xOffset: -40, y: 400, width: 100, height: 30))
-        view.addSubview(slider)
+        loopBtn = UIButton(frame: ZrRect(xOffset: 60, y: 360, width: 30, height: 30))
+        loopBtn.setImage(UIImage(systemName: "repeat.1")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        loopBtn.addTarget(self, action: #selector(loopSwitch), for: .touchUpInside)
+        view.addSubview(loopBtn)
         
-        timeLabel = UILabel(frame: ZrRect(xOffset: 70, y: 400, width: 50, height: 30))
-        timeLabel.fontSuitToFrame()
-        view.addSubview(timeLabel)
+        slider = UISlider(frame: ZrRect(y: 400, width: 100, height: 30))
+        view.addSubview(slider)
+        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+        
+        ltimeLabel = UILabel(frame: ZrRect(xOffset: -85, y: 400, width: 50, height: 30))
+        ltimeLabel.fontSuitToFrame()
+        view.addSubview(ltimeLabel)
 
+        rtimeLabel = UILabel(frame: ZrRect(xOffset: 85, y: 400, width: 50, height: 30))
+        rtimeLabel.fontSuitToFrame()
+        view.addSubview(rtimeLabel)
     }
     
     func drawPlayer() {
@@ -134,13 +151,21 @@ extension Player {
 //    下一曲
     @objc func nextSong() {
         guard songQueue.count > 0 else { return }
-        curIndex = (curIndex + 1) % songQueue.count
+        if isLoop {
+            curIndex = (curIndex + 1) % songQueue.count
+        } else {
+            curIndex = curIndex + 1
+        }
         playWithQueue(queue: songQueue, index: curIndex)
     }
     
 //    上一曲
     @objc func preSong() {
-        curIndex = max(0, curIndex - 1)
+        if isLoop {
+            curIndex = max(0, curIndex - 1)
+        } else {
+            curIndex = curIndex - 1
+        }
         playWithQueue(queue: songQueue, index: curIndex)
     }
     
@@ -160,17 +185,27 @@ extension Player {
         songPlayer.seek(toTime: Double(slider.value))
         
     }
+    
+    @objc func loopSwitch() {
+        isLoop = isLoop ? false : true
+        loopBtn.setImage(UIImage(systemName: isLoop ? "repeat" : "repeat.1"), for: .normal)
+    }
 }
 //MARK: - 数据管理
 extension Player {
-    func refreshData() {
+    func dbRefreshData() {
         let context = db.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Music")
         do {
             if let results = try context.fetch(request) as? [NSManagedObject] {
                 for result in results {
                     guard let song = translateData(obj: result) else { return }
-                    songQueue.append(song)
+//                    判断歌曲是否已经添加
+                    if !songQueue.contains(where: { (addedSong) -> Bool in
+                        addedSong.id == song.id
+                    }) {
+                        songQueue.append(song)
+                    }
                 }
             }
         } catch {
@@ -178,7 +213,7 @@ extension Player {
         }
     }
     
-    func deleteAll() {
+    func dbDeleteAll() {
         let context = db.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Music")
         do {
@@ -219,26 +254,35 @@ extension Player {
     }
     
 //    开始播放
-    func playWithQueue(queue: [Song], index: Int = 0) {
-        guard index >= 0 && index < queue.count else { return }
-        self.songQueue = queue
-//        清空queue
-        songPlayer.clearQueue()
+    func playWithQueue(queue: [Song], index: Int = 0, insertedList: Bool = false) {
+        guard index >= 0 && index < queue.count else {
+            stop()
+            dbDeleteAll()
+            return
+        }
+        
         let url = queue[index].url
         songPlayer.play(url!)
-        
-        for i in 1..<queue.count {
-            songPlayer.queue(queue[Int((index + i) % queue.count)].url!)
+        if insertedList {
+            self.songQueue = queue
+            //        清空queue
+            songPlayer.clearQueue()
+            for i in 1..<queue.count {
+                songPlayer.queue(queue[Int((index + i) % queue.count)].url!)
+            }
+            curIndex = index
+            isLoop = false
         }
-        curIndex = index
-        isLoop = false
+        
     }
     
 //    停止播放
     func stop() {
         songPlayer.stop()
+        state = .stopped
         songQueue.removeAll()
         curIndex = -1
+        infoUpdate()
     }
     
 //    定时器响应，更新进度条和时间
@@ -246,32 +290,40 @@ extension Player {
         if state == .playing {
 //            更新进度条进度值
             slider.value = Float(songPlayer.progress)
-            let all:Int=Int(songPlayer.progress)
-            let m:Int=all % 60
-            let f:Int=Int(all/60)
-            var time:String=""
-            if f<10{
-                time="0\(f):"
-            }else {
-                time="\(f)"
-            }
-            if m<10{
-                time+="0\(m)"
-            }else {
-                time+="\(m)"
-            }
+            let curTime = timeVert(songPlayer.progress)
+            let totolTime = timeVert(songPlayer.duration)
 //            更新时间
-            self.timeLabel.text = time
+            self.ltimeLabel.text = curTime
+            self.rtimeLabel.text = totolTime
         }
     }
-    
+//    计算时间
+    func timeVert(_ time: Double) -> String {
+        let all:Int=Int(time)
+        let m:Int=all % 60
+        let f:Int=Int(all/60)
+        var time:String=""
+        if f<10{
+            time="0\(f):"
+        }else {
+            time="\(f)"
+        }
+        if m<10{
+            time+="0\(m)"
+        }else {
+            time+="\(m)"
+        }
+        return time
+    }
 //    更新当前播放信息
     func infoUpdate() {
         if curIndex >= 0 {
             let song = songQueue[curIndex]
 //            更新信息
             titleLabel.text = song.name
+            titleLabel.fontSuitToFrame()
             creatorLabel.text = "\(song.arName) - \(song.alName)"
+            creatorLabel.fontSuitToFrame()
             imgView.sd_setImage(with: song.imgUrl, placeholderImage: UIImage(named: "default"))
 //            进度条信息
             slider.maximumValue = Float(songPlayer.duration)
@@ -279,32 +331,21 @@ extension Player {
             titleLabel.text = "没有歌曲"
             creatorLabel.text = " - "
             slider.value = 0
-            timeLabel.text = "--:--"
+            ltimeLabel.text = "00:00"
+            rtimeLabel.text = "--:--"
             imgView.image = UIImage(named: "default")
+            isLoop = false
+            loopBtn.setImage(UIImage(systemName: "repeat.1")?.withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
 }
 
 // MARK: - Player协议
 extension Player: STKAudioPlayerDelegate {
-    func audioPlayer(_ audioPlayer: STKAudioPlayer, didFinishPlayingQueueItemId queueItemId: NSObject, with stopReason: STKAudioPlayerStopReason, andProgress progress: Double, andDuration duration: Double) {
-        if isLoop {
-            curIndex = 0
-        } else {
-            curIndex = -1
-            infoUpdate()
-            stop()
-        }
-    }
-    
-    func audioPlayer(_ audioPlayer: STKAudioPlayer, unexpectedError errorCode: STKAudioPlayerErrorCode) {
-        print(errorCode)
-    }
-    
     
 //    开始播放歌曲
     func audioPlayer(_ audioPlayer: STKAudioPlayer, didStartPlayingQueueItemId queueItemId: NSObject) {
-        if let index = (songQueue.firstIndex { $0.url == queueItemId as! URL}) {
+        if let index = (songQueue.firstIndex { $0.url == (queueItemId as! URL)}) {
             curIndex = index
         }
         
@@ -321,7 +362,28 @@ extension Player: STKAudioPlayerDelegate {
             infoUpdate()
         }
     }
+//    播放结束
+    func audioPlayer(_ audioPlayer: STKAudioPlayer, didFinishPlayingQueueItemId queueItemId: NSObject, with stopReason: STKAudioPlayerStopReason, andProgress progress: Double, andDuration duration: Double) {
+        if let index = (songQueue.firstIndex {
+            $0.url == audioPlayer.currentlyPlayingQueueItemId() as! URL
+        }) {
+            curIndex = index
+        }
+        
+        if stopReason == .eof {
+            nextSong()
+        } else if stopReason == .error {
+            stop()
+            resetAudioPlayer()
+        }
+        
+        
+    }
     
+    func audioPlayer(_ audioPlayer: STKAudioPlayer, unexpectedError errorCode: STKAudioPlayerErrorCode) {
+        print(errorCode)
+        resetAudioPlayer()
+    }
     
 }
 

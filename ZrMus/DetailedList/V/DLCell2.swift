@@ -13,6 +13,7 @@ class DLCell2: UITableViewCell {
     var countLabel: UILabel!
     var nameLabel: UILabel!
     var creatorLabel: UILabel!
+    var addBtn: UIButton!
 //    属性
     let width = UIScreen.main.bounds.width
     
@@ -43,10 +44,16 @@ extension DLCell2 {
         countLabel = UILabel(frame: CGRect(x: 15, y: 25, width: 30, height: 30))
         contentView.addSubview(countLabel)
         
-        nameLabel = UILabel(frame: CGRect(x: 70, y: 5, width: 200, height: 55))
+        nameLabel = UILabel(frame: CGRect(x: 70, y: 0, width: 200, height: 55))
         contentView.addSubview(nameLabel)
         
         creatorLabel = UILabel(frame: CGRect(x: 70, y: 55, width: width - 70, height: 15))
         contentView.addSubview(creatorLabel)
+        
+        addBtn = UIButton(frame: CGRect(x: width - 40, y: 0, width: 30, height: 30))
+        addBtn.setImage(UIImage(systemName: "text.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        addBtn.setImage(UIImage(systemName: "text.badge.plus")?.withRenderingMode(.alwaysOriginal).withTintColor(ZrColor(r: 166, g: 27, b: 41)), for: .highlighted)
+        contentView.addSubview(addBtn)
     }
+    
 }

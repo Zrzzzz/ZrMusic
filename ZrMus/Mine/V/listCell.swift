@@ -14,20 +14,22 @@ class listCell: UITableViewCell {
     var nameLabel: UILabel!
     var countLabel: UILabel!
     
+    let width = UIScreen.main.bounds.width
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         imgView = UIImageView(frame: CGRect(x: 5, y: 5, width: 70, height: 70))
         contentView.addSubview(imgView)
         
-        nameLabel = UILabel(frame: CGRect(x: 75, y: 5, width: 150, height: 40))
+        nameLabel = UILabel(frame: CGRect(x: 93, y: 15, width: 250, height: 50))
         contentView.addSubview(nameLabel)
-        nameLabel.font = .boldSystemFont(ofSize: 14)
-        nameLabel.adjustsFontSizeToFitWidth = true
+        nameLabel.numberOfLines = 0
+        nameLabel.font = UIFont(name: "AvenirNextCondensed-Bold", size: 18)
         
-        countLabel = UILabel(frame: CGRect(x: 75, y: 50, width: 40, height: 20))
+        countLabel = UILabel(frame: CGRect(x: width - 50, y: 20, width: 40, height: 40))
         contentView.addSubview(countLabel)
-        countLabel.font = .systemFont(ofSize: 10)
+        countLabel.font = .systemFont(ofSize: 15)
         
     }
     

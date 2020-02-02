@@ -60,6 +60,8 @@
 		D3AF429923E465EB00014FCA /* NSMutableArray+STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428123E429CB00014FCA /* NSMutableArray+STKAudioPlayer.m */; };
 		D3AF429A23E465EB00014FCA /* StreamingKit-Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */; };
 		D3D5B12623E5B26C0060D973 /* UserDetailGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B12523E5B26C0060D973 /* UserDetailGet.swift */; };
+		D3D5B12823E6BEDB0060D973 /* CityGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B12723E6BEDB0060D973 /* CityGet.swift */; };
+		D3D5B12A23E6F6F10060D973 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B12923E6F6F10060D973 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +122,8 @@
 		D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StreamingKit-Prefix.pch"; sourceTree = "<group>"; };
 		D3AF428323E44AB800014FCA /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		D3D5B12523E5B26C0060D973 /* UserDetailGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailGet.swift; sourceTree = "<group>"; };
+		D3D5B12723E6BEDB0060D973 /* CityGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityGet.swift; sourceTree = "<group>"; };
+		D3D5B12923E6F6F10060D973 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +266,8 @@
 			isa = PBXGroup;
 			children = (
 				D3D5B12523E5B26C0060D973 /* UserDetailGet.swift */,
+				D3D5B12723E6BEDB0060D973 /* CityGet.swift */,
+				D3D5B12923E6F6F10060D973 /* User.swift */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -579,6 +585,7 @@
 				D3AF428C23E465EB00014FCA /* STKLocalFileDataSource.m in Sources */,
 				D3AF428D23E465EB00014FCA /* NSMutableArray+STKAudioPlayer.h in Sources */,
 				D3AF428E23E465EB00014FCA /* STKCoreFoundationDataSource.m in Sources */,
+				D3D5B12823E6BEDB0060D973 /* CityGet.swift in Sources */,
 				D3AF428F23E465EB00014FCA /* STKAutoRecoveringHTTPDataSource.m in Sources */,
 				D3AF429023E465EB00014FCA /* STKQueueEntry.h in Sources */,
 				D3AF429123E465EB00014FCA /* STKHTTPDataSource.h in Sources */,
@@ -610,6 +617,7 @@
 				D36FCEFB23DC757700B0A18E /* listsCell.swift in Sources */,
 				D3AE843C23E0853C001C6483 /* SongListTransformer.swift in Sources */,
 				D3AF41FF23E2E4D300014FCA /* DetailedList.swift in Sources */,
+				D3D5B12A23E6F6F10060D973 /* User.swift in Sources */,
 				D37B286923D74689006C360E /* Accounter.swift in Sources */,
 				D355957323DAD66F0000826D /* LoginGet.swift in Sources */,
 				D37B286B23D74692006C360E /* Mine.swift in Sources */,

@@ -31,8 +31,12 @@ class Mine: UIViewController {
         
         view.backgroundColor = .white
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        deleteData()
         getData(someCloure: clousure)
-        
     }
     
 }
@@ -58,9 +62,10 @@ extension Mine {
     func getData(someCloure: @escaping() -> Void) {
 //        清空数据
         deleteData()
-        
-        let url = "http://localhost:3000/user/playlist?uid=\(ud.string(forKey: "uid")!)"
-        Alamofire.request(url).responseJSON { (d) in
+        guard let id = ud.string(forKey: "uid") else {
+            return
+        }
+        Alamofire.request("http://localhost:3000/user/playlist?uid=\(id)").responseJSON { (d) in
             do {
                 let datas = try JSONDecoder().decode(SongListGet.self, from: d.data!)
                 print("获取歌单成功")

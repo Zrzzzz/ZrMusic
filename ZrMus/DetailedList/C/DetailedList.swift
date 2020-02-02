@@ -41,7 +41,7 @@ extension DetailedList {
         let tableView = sender.superView(of: UITableView.self)
         let index = tableView!.indexPath(for: sender.superView(of: UITableViewCell.self)!)!.row
         addData(song: lists[index])
-        print(lists[index].name)
+        print("added to list: \(lists[index].name)")
     }
 }
 
@@ -133,6 +133,7 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
             if !lists.isEmpty {
                 cell.countLabel.text = String(indexPath.row + 1)
                 cell.nameLabel.text = lists[indexPath.row].name
+                
                 cell.creatorLabel.text = "\(lists[indexPath.row].arName) - \(lists[indexPath.row].alName)"
 //                调整字体，由于reloadData的原因，字体大小会被重新设置，所以不能在cell里设置，得在delegate里面重新设置
                 cell.countLabel.fontSuitToFrame()

@@ -13,7 +13,6 @@ class listsCell: UITableViewCell {
     var arrowImg: UIImageView!
     var titleLabel: UILabel!
     var listsCountLabel: UILabel!
-    var addBtn: UIButton!//TODO: 这个之后再完善
     
     var listView: UITableView!
     var lists: [SongList] = []
@@ -64,15 +63,10 @@ extension listsCell {
         titleLabel.textAlignment = .center
         titleLabel.adjustsFontSizeToFitWidth = true
         
-        listsCountLabel = UILabel(frame: CGRect(x: width - 100, y: 5, width: 70, height: 70))
+        listsCountLabel = UILabel(frame: CGRect(x: width - 40, y: 5, width: 50, height: 50))
         contentView.addSubview(listsCountLabel)
         listsCountLabel.font = .systemFont(ofSize: 14)
         listsCountLabel.adjustsFontSizeToFitWidth = true
-        
-        addBtn = UIButton(frame: CGRect(x: width - 55, y: 5, width: 70, height: 70))
-        contentView.addSubview(addBtn)
-        addBtn.addTarget(self, action: #selector(addList), for: .touchUpInside)
-        addBtn.setImage(UIImage(systemName: "plus"), for: .normal)
         
         listView = UITableView(frame: CGRect(x: 0, y: 80, width: width, height: CGFloat((listsCount ?? 0) * 80)))
         contentView.addSubview(listView)

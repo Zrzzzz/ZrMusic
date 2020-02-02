@@ -16,7 +16,7 @@ class PhoneLogin: UIViewController {
     let passwordTF = ZrTF()
     let checkBtn = ZrBtn()
     //        弹窗
-    let alert = UIAlertController()
+    let alert = UIAlertController(title: "", message: nil, preferredStyle: .alert)
     
 
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class PhoneLogin: UIViewController {
         
     }
 }
-
+//MARK: - UI界面
 extension PhoneLogin {
     
     func drawUI() {
@@ -55,11 +55,12 @@ extension PhoneLogin {
             make.centerY.equalTo(450)
         }
         
+        
         let knownAction = UIAlertAction(title: "我知道了", style: .default, handler: nil)
         alert.addAction(knownAction)
     }
 }
-
+//MARK: - 数据管理
 extension PhoneLogin {
     @objc func check() {
         
@@ -67,7 +68,7 @@ extension PhoneLogin {
         let param1 = phoneNumTF.text
         let param2 = passwordTF.text
         
-        if param1 == nil || param2 == nil {
+        if param1 == "" || param2 == "" {
             alert.title = "请完整输入"
             present(alert, animated: true, completion: nil)
             return
@@ -83,15 +84,25 @@ extension PhoneLogin {
                 print("成功连接")
                 
 //                判断密码是否错误
-                if datas.code == 502 || datas.code == 400 {
-                    self.passwordTF.text = nil
-                    self.phoneNumTF.text = nil
+                if datas.code == 400 {
+                    self.passwordTF.text = ""
+                    self.phoneNumTF.text = ""
+                    self.alert.title = "你瞎jb输啥呢"
+                    self.present(self.alert, animated: true, completion: nil)
+                    print("瞎输的")
+                    return
+                }
+                if datas.code == 502 {
+                    self.passwordTF.text = ""
+                    self.phoneNumTF.text = ""
                     self.alert.title = "密码错误"
                     self.present(self.alert, animated: true, completion: nil)
+                    print("密码错误")
+                    return
                 }
                 print("密码正确")
 //                储存数据
-                ud.set(datas.profile.userID, forKey: "uid")
+                ud.set(datas.profile?.userID, forKey: "uid")
 //                可以通过
                 print("进行跳转")
                 self.navigationController?.popToRootViewController(animated: true)

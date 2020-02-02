@@ -10,75 +10,79 @@ import Foundation
 
 // MARK: - LoginGet
 struct LoginGet: Codable {
-    let loginType, code: Int
-    let account: Account
-    let token: String
-    let profile: Profile
-    let bindings: [Binding]
+    let loginType, code: Int?
+    let account: Account?
+    let token: String?
+    let profile: Profile?
+    let bindings: [Binding]?
 }
 
 // MARK: - Account
 struct Account: Codable {
-    let id: Int
-    let userName: String
-    let type, status, whitelistAuthority, createTime: Int
-    let salt: String
-    let tokenVersion, ban, baoyueVersion, donateVersion: Int
-    let vipType, viptypeVersion: Int
-    let anonimousUser: Bool
+    let id: Int?
+    let userName: String?
+    let type, status, whitelistAuthority, createTime: Int?
+    let salt: String?
+    let tokenVersion, ban, baoyueVersion, donateVersion: Int?
+    let vipType, viptypeVersion: Int?
+    let anonimousUser: Bool?
 }
 
 // MARK: - Binding
 struct Binding: Codable {
-    let userID: Int
-    let tokenJSONStr, url: String
-    let bindingTime, expiresIn: Int
-    let expired: Bool
-    let refreshTime, id, type: Int
+    let url: String?
+    let userID: Int?
+    let tokenJSONStr: String?
+    let expiresIn, bindingTime, refreshTime: Int?
+    let expired: Bool?
+    let id, type: Int?
 
     enum CodingKeys: String, CodingKey {
+        case url
         case userID = "userId"
         case tokenJSONStr = "tokenJsonStr"
-        case url, bindingTime, expiresIn, expired, refreshTime, id, type
+        case expiresIn, bindingTime, refreshTime, expired, id, type
     }
 }
 
 // MARK: - Profile
 struct Profile: Codable {
-    let userID, vipType, gender, accountStatus: Int
-    let province: Int
-    let defaultAvatar: Bool
-    let avatarURL: String
-    let djStatus: Int
-    let experts: Experts
-    let mutual: Bool
+    let userID, vipType, gender, accountStatus: Int?
+    let avatarImgID: Double?
+    let nickname: String?
+    let birthday, city, userType, backgroundImgID: Int?
+    let province: Int?
+    let defaultAvatar: Bool?
+    let avatarURL: String?
+    let djStatus: Int?
+    let followed: Bool?
+    let backgroundURL: String?
+    let detailDescription, avatarImgIDStr, backgroundImgIDStr: String?
+    let experts: Experts?
+    let mutual: Bool?
     let remarkName, expertTags: JSONNull?
-    let authStatus, city, userType, backgroundImgID: Int
-    let avatarImgID: Double
-    let nickname: String
-    let birthday: Int
-    let avatarImgIDStr, backgroundImgIDStr, profileDescription, detailDescription: String
-    let followed: Bool
-    let backgroundURL: String
-    let signature: String
-    let authority: Int
-    let profileAvatarImgIDStr: String
-    let followeds, follows, eventCount, playlistCount: Int
-    let playlistBeSubscribedCount: Int
+    let authStatus: Int?
+    let profileDescription, signature: String?
+    let authority: Int?
+    let profileAvatarImgIDStr: String?
+    let followeds, follows, eventCount, playlistCount: Int?
+    let playlistBeSubscribedCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
-        case vipType, gender, accountStatus, province, defaultAvatar
-        case avatarURL = "avatarUrl"
-        case djStatus, experts, mutual, remarkName, expertTags, authStatus, city, userType
-        case backgroundImgID = "backgroundImgId"
+        case vipType, gender, accountStatus
         case avatarImgID = "avatarImgId"
-        case nickname, birthday
+        case nickname, birthday, city, userType
+        case backgroundImgID = "backgroundImgId"
+        case province, defaultAvatar
+        case avatarURL = "avatarUrl"
+        case djStatus, followed
+        case backgroundURL = "backgroundUrl"
+        case detailDescription
         case avatarImgIDStr = "avatarImgIdStr"
         case backgroundImgIDStr = "backgroundImgIdStr"
+        case experts, mutual, remarkName, expertTags, authStatus
         case profileDescription = "description"
-        case detailDescription, followed
-        case backgroundURL = "backgroundUrl"
         case signature, authority
         case profileAvatarImgIDStr = "avatarImgId_str"
         case followeds, follows, eventCount, playlistCount, playlistBeSubscribedCount

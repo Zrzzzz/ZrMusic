@@ -13,6 +13,13 @@ class nicknameCell: UITableViewCell {
 
     var avatar: UIImageView!
     var nickname: UILabel!
+    var level: UILabel!
+    var listened: UILabel!
+    var birth: UILabel!
+    var gender: Int!
+    var genderView: UIImageView!
+    var city: UILabel!
+    var signature: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,16 +29,46 @@ class nicknameCell: UITableViewCell {
         avatar.layer.cornerRadius = avatar.frame.width / 2
         avatar.clipsToBounds = true
         
-        nickname = UILabel()
+        nickname = UILabel(frame: CGRect(x: 100, y: 5, width: 150, height: 30))
         contentView.addSubview(nickname)
-        nickname.textColor = .black
-        nickname.font = .systemFont(ofSize: 26)
-        nickname.snp.makeConstraints { (m) in
-            m.left.equalTo(100)
-            m.top.equalTo(5)
-            m.width.equalTo(200)
-            m.height.equalTo(20)
-        }
+        nickname.font = .boldSystemFont(ofSize: 20)
+                
+        level = UILabel(frame: CGRect(x: 100, y: 35, width: 30, height: 15))
+        contentView.addSubview(level)
+        level.layer.cornerRadius = 5
+        level.clipsToBounds = true
+        level.backgroundColor = ZrColor(r: 255, g: 201, b: 12)
+        level.font = .italicSystemFont(ofSize: 14)
+        
+        birth = UILabel(frame: CGRect(x: 130, y: 35, width: 50, height: 15))
+        contentView.addSubview(birth)
+        birth.layer.cornerRadius = 5
+        birth.clipsToBounds = true
+        birth.textAlignment = .right
+        birth.font = .systemFont(ofSize: 15)
+        birth.backgroundColor = gender == 1 ? ZrColor(r: 36, g: 134, b: 185) : ZrColor(r: 241, g: 151, b: 144)
+        
+        genderView = UIImageView(frame: CGRect(x: 132, y: 37.5, width: 10, height: 10))
+        contentView.addSubview(genderView)
+        genderView.backgroundColor = .clear
+        genderView.image = gender == 1 ? UIImage(named: "ac_man") : UIImage(named: "ac_woman")
+        
+        city = UILabel(frame: CGRect(x: 200, y: 5, width: 50, height: 30))
+        contentView.addSubview(city)
+        city.layer.cornerRadius = 5
+        city.clipsToBounds = true
+        
+        listened = UILabel(frame: CGRect(x: 180, y: 35, width: 180, height: 15))
+        contentView.addSubview(listened)
+        listened.font = .systemFont(ofSize: 15)
+        listened.backgroundColor = ZrColor(r: 131, g: 203, b: 172)
+        listened.layer.cornerRadius = 5
+        listened.clipsToBounds = true
+        
+        signature = UILabel(frame: CGRect(x: 100, y: 50, width: 150, height: 30))
+        contentView.addSubview(signature)
+        
+        
     }
     
     required init?(coder: NSCoder) {

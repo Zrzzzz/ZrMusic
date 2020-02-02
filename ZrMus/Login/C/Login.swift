@@ -35,7 +35,7 @@ extension Login {
         phoneLoginBtn.snp.updateConstraints { (make) in
             make.width.equalTo(150)
             make.height.equalTo(40)
-            make.centerY.equalTo(500)
+            make.centerY.equalTo(300)
         }
         
         mailLoginBtn.backgroundColor = .red
@@ -44,7 +44,7 @@ extension Login {
         mailLoginBtn.snp.updateConstraints { (make) in
             make.width.equalTo(150)
             make.height.equalTo(40)
-            make.centerY.equalTo(600)
+            make.centerY.equalTo(400)
         }
     }
     

@@ -32,7 +32,7 @@ class Player: UIViewController {
     var slider: UISlider!
 //    播放列表
     var songQueue: [Song] = []
-    var tableView: UITableView!
+    var tableView: UITableView?
 //    当前播放索引
     var curIndex: Int = -1
 //    是否循环播放
@@ -43,20 +43,21 @@ class Player: UIViewController {
     var timer: Timer!
 //    db
     let db = DataBase.shared
-
+//MARK: - didLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         drawUI()
         drawPlayer()
         dbDeleteAll()
     }
-    
+    //MARK: - willAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 //        判断登录状态
         isRegistered()
 //        每次到此页面刷新一下queue的数据
         dbRefreshData()
+        tableView?.reloadData()
 //        如果是停止播放就开始播放
         if state == .stopped {
             playWithQueue(queue: songQueue, index: 0)
@@ -66,7 +67,7 @@ class Player: UIViewController {
 //MARK: - UI相关
 extension Player {
     func isRegistered() {
-        let userid = UserDefaults.standard.integer(forKey: "uid")
+        let userid = UserDefaults.standard.value(forKey: "uid")
         if userid == nil {
             navigationController?.pushViewController(Login(), animated: true)
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "登录", style: .plain, target: self, action: #selector(removeData))
@@ -109,17 +110,24 @@ extension Player {
         loopBtn.addTarget(self, action: #selector(loopSwitch), for: .touchUpInside)
         view.addSubview(loopBtn)
         
-        slider = UISlider(frame: ZrRect(y: 400, width: 100, height: 30))
+        slider = UISlider(frame: ZrRect(y: 400, width: 250, height: 30))
         view.addSubview(slider)
         slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+        slider.addTarget(self, action: #selector(sliderTouchin), for: .touchDown)
+        slider.addTarget(self, action: #selector(sliderTouchout), for: .touchUpInside)
         
-        ltimeLabel = UILabel(frame: ZrRect(xOffset: -85, y: 400, width: 50, height: 30))
+        ltimeLabel = UILabel(frame: ZrRect(xOffset: -155, y: 400, width: 50, height: 30))
         ltimeLabel.fontSuitToFrame()
         view.addSubview(ltimeLabel)
 
-        rtimeLabel = UILabel(frame: ZrRect(xOffset: 85, y: 400, width: 50, height: 30))
+        rtimeLabel = UILabel(frame: ZrRect(xOffset: 155, y: 400, width: 50, height: 30))
         rtimeLabel.fontSuitToFrame()
         view.addSubview(rtimeLabel)
+        
+        tableView = UITableView(frame: ZrRect(y: view.bounds.height / 2, width: view.bounds.width - 30, height: view.bounds.height / 2 - 100))
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        view.addSubview(tableView!)
     }
     
     func drawPlayer() {
@@ -131,7 +139,7 @@ extension Player {
         //重置播放器
         resetAudioPlayer()
         
-        //设置一个定时器，每三秒钟滚动一次
+        //设置一个定时器，每0.1秒钟滚动一次
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self,
                     selector: #selector(tick), userInfo: nil, repeats: true)
     }
@@ -180,10 +188,17 @@ extension Player {
         }
     }
     
+    @objc func sliderTouchin() {
+        songPlayer.pause()
+    }
+    
     @objc func sliderValueChanged() {
 //        播放器定位
         songPlayer.seek(toTime: Double(slider.value))
-        
+    }
+    
+    @objc func sliderTouchout(){
+        songPlayer.resume()
     }
     
     @objc func loopSwitch() {
@@ -201,8 +216,8 @@ extension Player {
                 for result in results {
                     guard let song = translateData(obj: result) else { return }
 //                    判断歌曲是否已经添加
-                    if !songQueue.contains(where: { (addedSong) -> Bool in
-                        addedSong.id == song.id
+                    if !songQueue.contains(where: {
+                        $0.id == song.id
                     }) {
                         songQueue.append(song)
                     }
@@ -228,9 +243,30 @@ extension Player {
         }
     }
     
+    func dbDeleteSong(songId: Int) {
+        let context = db.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Music")
+        do {
+            if let results = try context.fetch(request) as? [NSManagedObject] {
+                for result in results {
+                    guard let song = translateData(obj: result) else {
+                        return
+                    }
+                    if song.id == songId {
+                        context.delete(result)
+                        return
+                    }
+                }
+                try context.save()
+            }
+        } catch {
+            fatalError("获取失败")
+        }
+    }
+    
     func translateData(obj: NSManagedObject) -> Song? {
         if let id = obj.value(forKey: "id"), let name = obj.value(forKey: "name"), let alname = obj.value(forKey: "alname"), let arname = obj.value(forKey: "arname"), let imgUrl = obj.value(forKey: "imgUrl") {
-            let song = Song(id: id as! Int, name: name as! String, arName: arname as! String, alName: alname as! String, url: URL(string: "https://music.163.com/song/media/outer/url?id=\(id).mp3"), imgUrl: imgUrl as! URL)
+            let song = Song(id: (id as! Int), name: name as! String, arName: arname as! String, alName: alname as! String, url: URL(string: "https://music.163.com/song/media/outer/url?id=\(id).mp3"), imgUrl: (imgUrl as! URL))
             return song
         }
         return nil
@@ -283,6 +319,7 @@ extension Player {
         songQueue.removeAll()
         curIndex = -1
         infoUpdate()
+        tableView?.reloadData()
     }
     
 //    定时器响应，更新进度条和时间
@@ -329,7 +366,9 @@ extension Player {
             slider.maximumValue = Float(songPlayer.duration)
         } else {
             titleLabel.text = "没有歌曲"
+            titleLabel.fontSuitToFrame()
             creatorLabel.text = " - "
+            creatorLabel.fontSuitToFrame()
             slider.value = 0
             ltimeLabel.text = "00:00"
             rtimeLabel.text = "--:--"
@@ -359,16 +398,18 @@ extension Player: STKAudioPlayerDelegate {
     func audioPlayer(_ audioPlayer: STKAudioPlayer, stateChanged state: STKAudioPlayerState, previousState: STKAudioPlayerState) {
         self.state = state
         if state != .stopped && state != .error && state != .disposed {
+            tableView?.reloadData()
             infoUpdate()
         }
     }
 //    播放结束
     func audioPlayer(_ audioPlayer: STKAudioPlayer, didFinishPlayingQueueItemId queueItemId: NSObject, with stopReason: STKAudioPlayerStopReason, andProgress progress: Double, andDuration duration: Double) {
-        if let index = (songQueue.firstIndex {
-            $0.url == audioPlayer.currentlyPlayingQueueItemId() as! URL
-        }) {
-            curIndex = index
-        }
+//        if let index = (songQueue.firstIndex {
+//            $0.url == audioPlayer.currentlyPlayingQueueItemId() as? URL
+//        }) {
+//            curIndex = index
+//        }
+        
         
         if stopReason == .eof {
             nextSong()
@@ -382,9 +423,70 @@ extension Player: STKAudioPlayerDelegate {
     
     func audioPlayer(_ audioPlayer: STKAudioPlayer, unexpectedError errorCode: STKAudioPlayerErrorCode) {
         print(errorCode)
+        let alert = UIAlertController(title: "该歌曲无法播放！", message: "放弃吧", preferredStyle: .alert)
+        let known = UIAlertAction(title: "我知道了", style: .default, handler: nil)
+        alert.addAction(known)
+        self.present(alert, animated: true) {
+            self.nextSong()
+        }
         resetAudioPlayer()
     }
     
 }
 
-
+extension Player: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return songQueue.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "songs")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "songs")
+        if cell == nil {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "songs")
+        }
+        if curIndex == indexPath.row {
+            cell?.backgroundColor = ZrColor(r: 251, g: 185, b: 87)
+        } else {
+            cell?.backgroundColor = .clear
+        }
+        cell?.textLabel?.text = songQueue[indexPath.row].name
+        
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row != curIndex {
+            curIndex = indexPath.row
+            playWithQueue(queue: songQueue, index: curIndex)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if curIndex == indexPath.row && curIndex != songQueue.count - 1 {
+                playWithQueue(queue: songQueue, index: curIndex)
+            } else if curIndex == indexPath.row && curIndex == songQueue.count - 1 {
+                curIndex -= 1
+                playWithQueue(queue: songQueue, index: curIndex)
+            }
+            dbDeleteSong(songId: songQueue[indexPath.row].id!)
+            songQueue.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+}

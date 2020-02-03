@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CommonCrypto
 
 extension UIView {
 //    返回父View
@@ -98,6 +99,50 @@ extension CALayer {
     }
 }
 
+extension String {
+    func md5() -> String {
+        let str = self.cString(using: String.Encoding.utf8)
+        let strLen = CUnsignedInt(self.lengthOfBytes(using: String.Encoding.utf8))
+        let digestLen = Int(CC_MD5_DIGEST_LENGTH)
+        let result = UnsafeMutablePointer<UInt8>.allocate(capacity: 16)
+        CC_MD5(str!, strLen, result)
+        let hash = NSMutableString()
+        for i in 0 ..< digestLen {
+            hash.appendFormat("%02x", result[i])
+        }
+        free(result)
+        return String(format: hash as String)
+    }
+    
+    func dateToTimeStamp()-> String {
+
+        let dfmatter = DateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd"
+        let date = dfmatter.date(from: self)
+        
+        let dateStamp:TimeInterval = date!.timeIntervalSince1970
+        
+        let dateSt:Int = Int(dateStamp)
+        
+        return String(dateSt)
+        
+    }
+    
+    func timestampToDate() -> String {
+        //时间戳, 而且这个是毫秒级
+        let timeStamp = Int(self)! / 1000
+        //转换为时间
+        let timeInterval:TimeInterval = TimeInterval(timeStamp)
+        let date = NSDate(timeIntervalSince1970: timeInterval)
+        //格式化输出
+        let dformatter = DateFormatter()
+        dformatter.dateFormat = "yyyy-MM-dd"
+        //这是年份的后两位
+        let y = dformatter.string(from: date as Date)
+        return y
+    }
+}
+
 func ZrColor(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) -> UIColor {
     return UIColor(red: r / 255, green: g / 255, blue: b / 255, alpha: a)
 }
@@ -129,7 +174,7 @@ func ZrRect(y: CGFloat, width: CGFloat, height: CGFloat) -> CGRect {
 }
 
 func ZrRect(xOffset: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) -> CGRect {
-    var x = (UIScreen.main.bounds.width - width) / 2
+    let x = (UIScreen.main.bounds.width - width) / 2
     return CGRect(x: x + xOffset, y: y, width: width, height: height)
 }
 

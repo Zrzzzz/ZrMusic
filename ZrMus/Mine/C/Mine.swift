@@ -30,15 +30,22 @@ class Mine: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
+        drawUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         deleteData()
-        getData(someCloure: clousure)
+        let userid = UserDefaults.standard.value(forKey: "uid")
+        if userid != nil {
+            getData {
+                self.getDbData()
+                self.tableView.reloadData()
+            }
+        } else {
+            self.tableView.reloadData()
+        }
     }
-    
 }
 //MARK: - UI相关
 extension Mine {
@@ -48,12 +55,6 @@ extension Mine {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
-    }
-    
-    func clousure() {
-        getDbData()
-        drawUI()
-        tableView.reloadData()
     }
 }
 //MARK: - 数据管理
@@ -100,6 +101,8 @@ extension Mine {
                 }
                 try managedObjectContext.save()
 //                Step5: 更新数据
+                myLists.removeAll()
+                subscribedLists.removeAll()
             }
         } catch {
             fatalError("删除失败")

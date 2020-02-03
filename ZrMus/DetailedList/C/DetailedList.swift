@@ -30,7 +30,7 @@ class DetailedList: UIViewController {
 //MARK: - UI管理 & 按钮方法
 extension DetailedList {
     func closure() {
-        tableView = UITableView(frame: UIScreen.main.bounds)
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 50))
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
@@ -57,10 +57,10 @@ extension DetailedList {
                 self.alName = datas.playlist?.name
                 self.alImgUrl = URL(string: (datas.playlist?.coverImgURL)!)
                 for track in (datas.playlist?.tracks)! {
-                    let list = Song(
-                        id: track.id ?? 0, name: track.name ?? "", arName: track.ar?[0].name ?? "", alName: (track.al?.name) ?? "", url: nil, imgUrl: URL(string: ((track.al?.picURL) ?? ""))
+                    let song = Song(
+                        id: track.id ?? 0, name: track.name ?? "", arName: track.ar?[0].name ?? "", alName: (track.al?.name) ?? "", url: nil, imgUrl: URL(string: ((track.al?.picURL) ?? "")), isFirst: nil
                     )
-                    self.lists.append(list)
+                    self.lists.append(song)
                 }
                 
                 someClosure()
@@ -71,7 +71,7 @@ extension DetailedList {
         }
     }
     
-    func addData(song: Song) {
+    func addData(song: Song, isFirst: Bool = false) {
         let context = db.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Music", in: context)
         let music = NSManagedObject(entity: entity!, insertInto: context)
@@ -80,7 +80,7 @@ extension DetailedList {
         music.setValue(song.arName, forKey: "arname")
         music.setValue(song.imgUrl, forKey: "imgUrl")
         music.setValue(song.name, forKey: "name")
-        
+        music.setValue(isFirst, forKey: "isFirst")
         do {
             try context.save()
         } catch {
@@ -147,7 +147,7 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        addData(song: lists[indexPath.row])
+        addData(song: lists[indexPath.row], isFirst: true)
         self.dismiss(animated: true, completion: nil)
         let t = UIApplication.shared.keyWindow?.rootViewController
         if (t?.isKind(of:  UITabBarController.self))! {

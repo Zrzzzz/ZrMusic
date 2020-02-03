@@ -213,6 +213,19 @@ extension Player {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Music")
         do {
             if let results = try context.fetch(request) as? [NSManagedObject] {
+                guard !results.isEmpty else {
+                    return
+                }
+//              判断是否要优先播放
+                if let song = translateData(obj: results[results.count - 1]) {
+                    if !songQueue.isEmpty {
+                        if song.id != songQueue[0].id && song.isFirst == true {
+                            songQueue.insert(song, at: 0)
+                            curIndex = 0
+                            playWithQueue(queue: songQueue, index: curIndex)
+                        }
+                    }
+                }
                 for result in results {
                     guard let song = translateData(obj: result) else { return }
 //                    判断歌曲是否已经添加
@@ -265,8 +278,8 @@ extension Player {
     }
     
     func translateData(obj: NSManagedObject) -> Song? {
-        if let id = obj.value(forKey: "id"), let name = obj.value(forKey: "name"), let alname = obj.value(forKey: "alname"), let arname = obj.value(forKey: "arname"), let imgUrl = obj.value(forKey: "imgUrl") {
-            let song = Song(id: (id as! Int), name: name as! String, arName: arname as! String, alName: alname as! String, url: URL(string: "https://music.163.com/song/media/outer/url?id=\(id).mp3"), imgUrl: (imgUrl as! URL))
+        if let id = obj.value(forKey: "id"), let name = obj.value(forKey: "name"), let alname = obj.value(forKey: "alname"), let arname = obj.value(forKey: "arname"), let imgUrl = obj.value(forKey: "imgUrl"), let isFirst = obj.value(forKey: "isFirst") {
+            let song = Song(id: (id as! Int), name: name as! String, arName: arname as! String, alName: alname as! String, url: URL(string: "https://music.163.com/song/media/outer/url?id=\(id).mp3"), imgUrl: (imgUrl as! URL), isFirst: (isFirst as! Bool))
             return song
         }
         return nil
@@ -343,7 +356,7 @@ extension Player {
         if f<10{
             time="0\(f):"
         }else {
-            time="\(f)"
+            time="\(f):"
         }
         if m<10{
             time+="0\(m)"
@@ -478,15 +491,16 @@ extension Player: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if curIndex == indexPath.row && curIndex != songQueue.count - 1 {
-                playWithQueue(queue: songQueue, index: curIndex)
-            } else if curIndex == indexPath.row && curIndex == songQueue.count - 1 {
-                curIndex -= 1
-                playWithQueue(queue: songQueue, index: curIndex)
-            }
             dbDeleteSong(songId: songQueue[indexPath.row].id!)
             songQueue.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            if curIndex == indexPath.row && curIndex != songQueue.count {
+                playWithQueue(queue: songQueue, index: curIndex)
+            } else if curIndex == indexPath.row && curIndex == songQueue.count {
+                curIndex -= 1
+                playWithQueue(queue: songQueue, index: curIndex)
+            }
+
         }
     }
 }

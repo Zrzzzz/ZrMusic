@@ -18,7 +18,7 @@ class nicknameCell: UITableViewCell {
     var birth: UILabel!
     var gender: Int!
     var genderView: UIImageView!
-    var city: UILabel!
+    var location: UILabel!
     var signature: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,10 +53,13 @@ class nicknameCell: UITableViewCell {
         genderView.backgroundColor = .clear
         genderView.image = gender == 1 ? UIImage(named: "ac_man") : UIImage(named: "ac_woman")
         
-        city = UILabel(frame: CGRect(x: 200, y: 5, width: 50, height: 30))
-        contentView.addSubview(city)
-        city.layer.cornerRadius = 5
-        city.clipsToBounds = true
+        location = UILabel(frame: CGRect(x: 250, y: 15, width: 80, height: 18))
+        contentView.addSubview(location)
+        location.layer.cornerRadius = 5
+        location.clipsToBounds = true
+        location.textAlignment = .center
+        location.font = .systemFont(ofSize: 12)
+        
         
         listened = UILabel(frame: CGRect(x: 180, y: 35, width: 180, height: 15))
         contentView.addSubview(listened)

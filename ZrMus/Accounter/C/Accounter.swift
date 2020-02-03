@@ -26,24 +26,35 @@ class Accounter: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        初始化tableView
-        getData {
-            self.setupTV()
-            self.view.addSubview(self.tableView)
-        }
+        self.setupTV()
+        view.addSubview(self.tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-//        tableView.reloadData()
+        let userid = UserDefaults.standard.value(forKey: "uid")
+        if userid != nil {
+            getData {
+                self.tableView.reloadData()
+            }
+        }
     }
 }
-//MARK: - UI相关
+//MARK: - UI相关 & 按钮方法
 extension Accounter {
     func setupTV() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "更改资料", style: .plain, target: self, action: #selector(to))
+        
         tableView = UITableView(frame: CGRect(x: 0, y: 70, width: width, height: height - 70), style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+    }
+    
+    @objc func to() {
+        let vc = InfoChange()
+        vc.user = self.user
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 //MARK: - 获取数据
@@ -65,27 +76,27 @@ extension Accounter {
                 self.user.followeds = datas.profile?.followeds
                 self.user.beSubed = datas.profile?.playlistBeSubscribedCount
 //                //        TODO: 用来返回城市信息
-//                Alamofire.request(URL(string: "https://restapi.amap.com/v3/config/district?keywords=\((datas.profile?.province)!)&subdistrict=0&key=7ad4fb0fd2a9685ee0211aa036c4a177")!).responseJSON { (d) in
-//                    do {
-//                        let datas = try JSONDecoder().decode(CityGet.self, from: d.data!)
-////                        会返回各个区的资料，我们只需要省市
-//                        self.province = datas.districts![0].name
-//
-//                    } catch {
-//                        print("省份获取失败")
-//                    }
-//                }
-//                Alamofire.request(URL(string: "https://restapi.amap.com/v3/config/district?keywords=\((datas.profile?.city)!)&subdistrict=0&key=7ad4fb0fd2a9685ee0211aa036c4a177")!).responseJSON { (d) in
-//                    do {
-//                        let datas = try JSONDecoder().decode(CityGet.self, from: d.data!)
-////                        会返回各个区的资料，我们只需要省市
-//                        self.city = datas.districts![0].name
-//
-//                    } catch {
-//                        print("城市获取失败")
-//                    }
-//                }
-//
+                Alamofire.request(URL(string: "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((datas.profile?.province)!)")!).responseJSON { (d) in
+                    do {
+                        let datas = try JSONDecoder().decode(LocationGet.self, from: d.data!)
+//                        会返回各个区的资料，我们只需要省市
+                        self.user.province = datas.result![0][0].fullname
+                        someClosure()
+                    } catch {
+                        print("省份获取失败")
+                    }
+                }
+                Alamofire.request(URL(string: "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((datas.profile?.city)!)")!).responseJSON { (d) in
+                    do {
+                        let datas = try JSONDecoder().decode(LocationGet.self, from: d.data!)
+//                        会返回各个区的资料，我们只需要省市
+                        self.user.city = datas.result![0][0].fullname
+                        someClosure()
+                    } catch {
+                        print("城市获取失败")
+                    }
+                }
+
                 someClosure()
             } catch {
                 print(error)
@@ -100,7 +111,7 @@ extension Accounter {
         //转换为时间
         let timeInterval:TimeInterval = TimeInterval(timeStamp)
         let date = NSDate(timeIntervalSince1970: timeInterval)
-        //格式话输出
+        //格式化输出
         let dformatter = DateFormatter()
         dformatter.dateFormat = "yy"
 //        这是年份的后两位
@@ -158,7 +169,10 @@ extension Accounter: UITableViewDataSource, UITableViewDelegate {
             cell.listened.adjustsFontSizeToFitWidth = true
             cell.birth.text = birthTrans(num: self.user.birth ?? 0)
             cell.gender = self.user.gender
-            cell.city.text = self.user.city
+            cell.location.text = "\(self.user.province ?? "") \(self.user.city ?? "")"
+            if self.user.province != nil || self.user.city != nil {
+                cell.location.backgroundColor = ZrColor(r: 39, g: 117, b: 182)
+            }
             cell.signature.text = "签名：\(self.user.signature ?? "")"
             return cell
         case 1:

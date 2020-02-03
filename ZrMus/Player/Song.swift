@@ -15,4 +15,5 @@ struct Song {
     let alName: String
     let url: URL?
     let imgUrl: URL?
+    let isFirst: Bool?
 }

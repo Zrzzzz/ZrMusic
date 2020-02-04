@@ -55,7 +55,7 @@ extension InfoChange {
         view.addSubview(cityTF)
         
         signTF = ZrTF(frame: CGRect(x: 0, y: 600, width: 200, height: 40))
-        signTF.placeholder = user.signature
+        signTF.placeholder = "签名"
         view.addSubview(signTF)
         
         checkBtn = ZrBtn(frame: CGRect(x: 0, y: 700, width: 100, height: 40))

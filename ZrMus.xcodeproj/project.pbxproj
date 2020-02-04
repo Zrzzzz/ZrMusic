@@ -63,6 +63,11 @@
 		D3D5B12823E6BEDB0060D973 /* LocationGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B12723E6BEDB0060D973 /* LocationGet.swift */; };
 		D3D5B12A23E6F6F10060D973 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B12923E6F6F10060D973 /* User.swift */; };
 		D3D5B12E23E86E050060D973 /* InfoChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B12D23E86E050060D973 /* InfoChange.swift */; };
+		D3D5B13723E98F980060D973 /* NewLongPressGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B13223E98F980060D973 /* NewLongPressGesture.swift */; };
+		D3D5B13823E98F980060D973 /* NewTapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B13323E98F980060D973 /* NewTapGesture.swift */; };
+		D3D5B13923E98F980060D973 /* NewPanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B13423E98F980060D973 /* NewPanGesture.swift */; };
+		D3D5B13A23E98F980060D973 /* NewGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B13523E98F980060D973 /* NewGestureAction.swift */; };
+		D3D5B13B23E98F980060D973 /* NewGestureVIew+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5B13623E98F980060D973 /* NewGestureVIew+Gesture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +131,16 @@
 		D3D5B12723E6BEDB0060D973 /* LocationGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGet.swift; sourceTree = "<group>"; };
 		D3D5B12923E6F6F10060D973 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D3D5B12D23E86E050060D973 /* InfoChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChange.swift; sourceTree = "<group>"; };
+		D3D5B13223E98F980060D973 /* NewLongPressGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewLongPressGesture.swift; sourceTree = "<group>"; };
+		D3D5B13323E98F980060D973 /* NewTapGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTapGesture.swift; sourceTree = "<group>"; };
+		D3D5B13423E98F980060D973 /* NewPanGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPanGesture.swift; sourceTree = "<group>"; };
+		D3D5B13523E98F980060D973 /* NewGestureAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGestureAction.swift; sourceTree = "<group>"; };
+		D3D5B13623E98F980060D973 /* NewGestureVIew+Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewGestureVIew+Gesture.swift"; sourceTree = "<group>"; };
+		D3D5B13D23E98F9C0060D973 /* NewLongPressGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLongPressGesture.swift; sourceTree = "<group>"; };
+		D3D5B13E23E98F9C0060D973 /* NewTapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTapGesture.swift; sourceTree = "<group>"; };
+		D3D5B13F23E98F9C0060D973 /* NewPanGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPanGesture.swift; sourceTree = "<group>"; };
+		D3D5B14023E98F9C0060D973 /* NewGestureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGestureAction.swift; sourceTree = "<group>"; };
+		D3D5B14123E98F9C0060D973 /* NewGestureVIew+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGestureVIew+Gesture.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -347,6 +362,7 @@
 				D37B285F23D74588006C360E /* LaunchScreen.storyboard */,
 				D37B286223D74588006C360E /* Info.plist */,
 				D38B81E623DDDFA20098B7F2 /* DataBase */,
+				D3D5B13C23E98F9C0060D973 /* NiceGesture */,
 				D3AF426D23E429CB00014FCA /* StreamingKit */,
 				D36FCF0423DD71AB00B0A18E /* TotalModel */,
 				D36FCEF023DBF61200B0A18E /* TotalView */,
@@ -439,6 +455,7 @@
 		D3AF426D23E429CB00014FCA /* StreamingKit */ = {
 			isa = PBXGroup;
 			children = (
+				D3D5B13123E98F980060D973 /* NiceGesture */,
 				D3AF426E23E429CB00014FCA /* STKQueueEntry.m */,
 				D3AF426F23E429CB00014FCA /* STKAutoRecoveringHTTPDataSource.h */,
 				D3AF427023E429CB00014FCA /* STKDataSourceWrapper.h */,
@@ -462,6 +479,31 @@
 				D3AF428223E429CB00014FCA /* StreamingKit-Prefix.pch */,
 			);
 			path = StreamingKit;
+			sourceTree = "<group>";
+		};
+		D3D5B13123E98F980060D973 /* NiceGesture */ = {
+			isa = PBXGroup;
+			children = (
+				D3D5B13223E98F980060D973 /* NewLongPressGesture.swift */,
+				D3D5B13323E98F980060D973 /* NewTapGesture.swift */,
+				D3D5B13423E98F980060D973 /* NewPanGesture.swift */,
+				D3D5B13523E98F980060D973 /* NewGestureAction.swift */,
+				D3D5B13623E98F980060D973 /* NewGestureVIew+Gesture.swift */,
+			);
+			name = NiceGesture;
+			path = ../../../../../Desktop/NewGesture/NiceGesture/NiceGesture;
+			sourceTree = "<group>";
+		};
+		D3D5B13C23E98F9C0060D973 /* NiceGesture */ = {
+			isa = PBXGroup;
+			children = (
+				D3D5B13D23E98F9C0060D973 /* NewLongPressGesture.swift */,
+				D3D5B13E23E98F9C0060D973 /* NewTapGesture.swift */,
+				D3D5B13F23E98F9C0060D973 /* NewPanGesture.swift */,
+				D3D5B14023E98F9C0060D973 /* NewGestureAction.swift */,
+				D3D5B14123E98F9C0060D973 /* NewGestureVIew+Gesture.swift */,
+			);
+			path = NiceGesture;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -581,6 +623,8 @@
 			files = (
 				D3AF428623E465EB00014FCA /* STKQueueEntry.m in Sources */,
 				D3D5B12E23E86E050060D973 /* InfoChange.swift in Sources */,
+				D3D5B13B23E98F980060D973 /* NewGestureVIew+Gesture.swift in Sources */,
+				D3D5B13723E98F980060D973 /* NewLongPressGesture.swift in Sources */,
 				D3AF428723E465EB00014FCA /* STKAutoRecoveringHTTPDataSource.h in Sources */,
 				D3AF428823E465EB00014FCA /* STKDataSourceWrapper.h in Sources */,
 				D3AF428923E465EB00014FCA /* STKAudioPlayer.h in Sources */,
@@ -594,12 +638,14 @@
 				D3AF429023E465EB00014FCA /* STKQueueEntry.h in Sources */,
 				D3AF429123E465EB00014FCA /* STKHTTPDataSource.h in Sources */,
 				D3AF429223E465EB00014FCA /* STKAudioPlayer.m in Sources */,
+				D3D5B13A23E98F980060D973 /* NewGestureAction.swift in Sources */,
 				D3AF429323E465EB00014FCA /* STKDataSourceWrapper.m in Sources */,
 				D3AF429423E465EB00014FCA /* STKLocalFileDataSource.h in Sources */,
 				D3AF429523E465EB00014FCA /* STKMacro.h in Sources */,
 				D3AF429623E465EB00014FCA /* STKDataSource.m in Sources */,
 				D3AF429723E465EB00014FCA /* STKCoreFoundationDataSource.h in Sources */,
 				D3AF429823E465EB00014FCA /* STKSpinLock.h in Sources */,
+				D3D5B13923E98F980060D973 /* NewPanGesture.swift in Sources */,
 				D3AF429923E465EB00014FCA /* NSMutableArray+STKAudioPlayer.m in Sources */,
 				D3AF429A23E465EB00014FCA /* StreamingKit-Prefix.pch in Sources */,
 				D3AF428423E44AB800014FCA /* Song.swift in Sources */,
@@ -608,6 +654,7 @@
 				D3AF420723E2E76E00014FCA /* DLCell2.swift in Sources */,
 				D36FCEFD23DC9D7800B0A18E /* ncCell.swift in Sources */,
 				D37B285523D74587006C360E /* AppDelegate.swift in Sources */,
+				D3D5B13823E98F980060D973 /* NewTapGesture.swift in Sources */,
 				D3AF420B23E3150700014FCA /* ZrExtension.swift in Sources */,
 				D36FCEEF23DB4BDC00B0A18E /* fansCell.swift in Sources */,
 				D326002123D8585E00BE0967 /* Login.swift in Sources */,

@@ -115,6 +115,19 @@ extension Player {
         slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
         slider.addTarget(self, action: #selector(sliderTouchin), for: .touchDown)
         slider.addTarget(self, action: #selector(sliderTouchout), for: .touchUpInside)
+        slider.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(sliderTapped(gR:))))
+//        这里使用NiceGesture实现了简单的手势方法
+        slider.newPanGesture().whenChanged { (pan) in
+            let pointTapped: CGPoint = pan.location(in: self.view)
+            let positionOfSlider: CGPoint = self.slider.frame.origin
+            let widthOfSlider: CGFloat = self.slider.frame.size.width
+            let newValue = ((pointTapped.x - positionOfSlider.x) * CGFloat(self.slider.maximumValue) / widthOfSlider)
+            self.slider.setValue(Float(newValue), animated: true)
+            self.ltimeLabel.text = self.timeVert(self.songPlayer.progress)
+            self.songPlayer.seek(toTime: Double(self.slider.value))
+        }
+        
+        
         
         ltimeLabel = UILabel(frame: ZrRect(xOffset: -155, y: 400, width: 50, height: 30))
         ltimeLabel.fontSuitToFrame()
@@ -134,7 +147,7 @@ extension Player {
         
         //设置进度条相关属性
         slider!.minimumValue = 0
-        slider!.isContinuous = false
+        slider!.isContinuous = true
         
         //重置播放器
         resetAudioPlayer()
@@ -194,11 +207,35 @@ extension Player {
     
     @objc func sliderValueChanged() {
 //        播放器定位
+        ltimeLabel.text = timeVert(songPlayer.progress)
         songPlayer.seek(toTime: Double(slider.value))
     }
     
-    @objc func sliderTouchout(){
+    @objc func sliderTouchout() {
         songPlayer.resume()
+    }
+    
+    @objc func sliderTapped(gR: UIGestureRecognizer) {
+        let pointTapped: CGPoint = gR.location(in: self.view)
+        let positionOfSlider: CGPoint = slider.frame.origin
+        let widthOfSlider: CGFloat = slider.frame.size.width
+        let newValue = ((pointTapped.x - positionOfSlider.x) * CGFloat(slider.maximumValue) / widthOfSlider)
+        slider.setValue(Float(newValue), animated: true)
+        ltimeLabel.text = timeVert(songPlayer.progress)
+        songPlayer.seek(toTime: Double(slider.value))
+    }
+    
+//    定时器响应，更新进度条和时间
+    @objc func tick() {
+        if state == .playing {
+//            更新进度条进度值
+            slider.value = Float(songPlayer.progress)
+            let curTime = timeVert(songPlayer.progress)
+            let totolTime = timeVert(songPlayer.duration)
+//            更新时间
+            self.ltimeLabel.text = curTime
+            self.rtimeLabel.text = totolTime
+        }
     }
     
     @objc func loopSwitch() {
@@ -335,18 +372,6 @@ extension Player {
         tableView?.reloadData()
     }
     
-//    定时器响应，更新进度条和时间
-    @objc func tick() {
-        if state == .playing {
-//            更新进度条进度值
-            slider.value = Float(songPlayer.progress)
-            let curTime = timeVert(songPlayer.progress)
-            let totolTime = timeVert(songPlayer.duration)
-//            更新时间
-            self.ltimeLabel.text = curTime
-            self.rtimeLabel.text = totolTime
-        }
-    }
 //    计算时间
     func timeVert(_ time: Double) -> String {
         let all:Int=Int(time)
@@ -460,9 +485,7 @@ extension Player: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "songs")
         let cell = tableView.dequeueReusableCell(withIdentifier: "songs")
-        if cell == nil {
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "songs")
-        }
+        
         if curIndex == indexPath.row {
             cell?.backgroundColor = ZrColor(r: 251, g: 185, b: 87)
         } else {

@@ -63,6 +63,7 @@ extension Accounter {
         let uid = ud.integer(forKey: "uid")
         Alamofire.request(URL(string: "http://localhost:3000/user/detail?uid=\(uid)")!).responseJSON { (d) in
             do {
+                let group = DispatchGroup()
                 let datas = try JSONDecoder().decode(UserDetailGet.self, from: d.data!)
                 self.user.nickname = datas.profile?.nickname
                 self.user.gender = datas.profile?.gender
@@ -76,28 +77,32 @@ extension Accounter {
                 self.user.followeds = datas.profile?.followeds
                 self.user.beSubed = datas.profile?.playlistBeSubscribedCount
 //                //        TODO: 用来返回城市信息
+                group.enter()
                 Alamofire.request(URL(string: "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((datas.profile?.province)!)")!).responseJSON { (d) in
                     do {
                         let datas = try JSONDecoder().decode(LocationGet.self, from: d.data!)
 //                        会返回各个区的资料，我们只需要省市
                         self.user.province = datas.result![0][0].fullname
-                        someClosure()
+                        group.leave()
                     } catch {
                         print("省份获取失败")
                     }
                 }
+                group.enter()
                 Alamofire.request(URL(string: "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((datas.profile?.city)!)")!).responseJSON { (d) in
                     do {
                         let datas = try JSONDecoder().decode(LocationGet.self, from: d.data!)
 //                        会返回各个区的资料，我们只需要省市
                         self.user.city = datas.result![0][0].fullname
-                        someClosure()
+                        group.leave()
                     } catch {
                         print("城市获取失败")
                     }
                 }
 
-                someClosure()
+                group.notify(queue: .main) {
+                    someClosure()
+                }
             } catch {
                 print(error)
                 print("个人信息获取失败")

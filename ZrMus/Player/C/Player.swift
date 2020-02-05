@@ -15,6 +15,9 @@ class Player: UIViewController {
     static let shared = Player()
 
 //    组件
+    
+    var searchController: UISearchController!
+    
     var songPlayer: STKAudioPlayer!
     var songId: Int!
     var titleLabel: UILabel!
@@ -53,19 +56,13 @@ class Player: UIViewController {
     //MARK: - willAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
 //        判断登录状态
         isRegistered()
-//        每次到此页面刷新一下queue的数据
-        dbRefreshData()
-        tableView?.reloadData()
-//        如果是停止播放就开始播放
-        if state == .stopped {
-            playWithQueue(queue: songQueue, index: 0)
-        }
     }
 }
 //MARK: - UI相关
-extension Player {
+extension Player: UISearchControllerDelegate {
     func isRegistered() {
         let userid = UserDefaults.standard.value(forKey: "uid")
         if userid == nil {
@@ -78,6 +75,21 @@ extension Player {
     
     func drawUI() {
         view.backgroundColor = .white
+        
+        let resultsTableViewController = SearchResults()
+        
+        searchController = UISearchController(searchResultsController: resultsTableViewController)
+        searchController.delegate = self
+        searchController.searchResultsUpdater = resultsTableViewController
+        definesPresentationContext = true
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "不搜了"
+        searchController.searchBar.delegate = resultsTableViewController
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "搜索想听的音乐"
+        searchController.searchBar.sizeToFit()
+        
+        navigationItem.titleView = searchController.searchBar
+
         
         titleLabel = ZrLabel(y: 100, width: 200, height: 40)
         titleLabel.fontSuitToFrame()
@@ -227,6 +239,14 @@ extension Player {
     
 //    定时器响应，更新进度条和时间
     @objc func tick() {
+//        每次到此页面刷新一下queue的数据
+        dbRefreshData()
+        print(" - \(songQueue)")
+        tableView?.reloadData()
+//        如果是停止播放就开始播放
+        if state == .stopped {
+            playWithQueue(queue: songQueue, index: 0)
+        }
         if state == .playing {
 //            更新进度条进度值
             slider.value = Float(songPlayer.progress)
@@ -315,8 +335,13 @@ extension Player {
     }
     
     func translateData(obj: NSManagedObject) -> Song? {
-        if let id = obj.value(forKey: "id"), let name = obj.value(forKey: "name"), let alname = obj.value(forKey: "alname"), let arname = obj.value(forKey: "arname"), let imgUrl = obj.value(forKey: "imgUrl"), let isFirst = obj.value(forKey: "isFirst") {
-            let song = Song(id: (id as! Int), name: name as! String, arName: arname as! String, alName: alname as! String, url: URL(string: "https://music.163.com/song/media/outer/url?id=\(id).mp3"), imgUrl: (imgUrl as! URL), isFirst: (isFirst as! Bool))
+        let name = obj.value(forKey: "name") ?? ""
+        let alname = obj.value(forKey: "alname") ?? ""
+        let arname = obj.value(forKey: "arname") ?? ""
+        let imgUrl = obj.value(forKey: "imgUrl") ?? URL(string: "nil")
+        let isFirst = obj.value(forKey: "isFirst") ?? false
+        if let id = obj.value(forKey: "id") {
+            let song = Song(id: (id as! Int), name: name as! String, arName: arname as! String, alName: alname as! String, url: URL(string: "https://music.163.com/song/media/outer/url?id=\(id).mp3"), imgUrl: (imgUrl as! URL), isFirst: isFirst as? Bool)
             return song
         }
         return nil

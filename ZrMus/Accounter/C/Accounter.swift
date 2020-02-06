@@ -173,7 +173,17 @@ extension Accounter: UITableViewDataSource, UITableViewDelegate {
             cell.listened.text = "你欣赏过\(self.user.listenSongs ?? 0)次世界的颜色"
             cell.listened.adjustsFontSizeToFitWidth = true
             cell.birth.text = birthTrans(num: self.user.birth ?? 0)
-            cell.gender = self.user.gender
+            cell.birth.backgroundColor = self.user.gender == 2 ? ZrColor(r: 241, g: 151, b: 144) : ZrColor(r: 36, g: 134, b: 185)
+            let imgName = { () -> String in
+                if self.user.gender == 1 {
+                    return "ac_man"
+                } else if self.user.gender == 2 {
+                    return "ac_woman"
+                } else {
+                    return "ac_nil"
+                }
+            }
+            cell.genderView.image = UIImage(named: imgName())?.withRenderingMode(.alwaysOriginal)
             cell.location.text = "\(self.user.province ?? "") \(self.user.city ?? "")"
             if self.user.province != nil || self.user.city != nil {
                 cell.location.backgroundColor = ZrColor(r: 39, g: 117, b: 182)

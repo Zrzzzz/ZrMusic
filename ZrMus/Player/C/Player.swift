@@ -241,7 +241,6 @@ extension Player {
     @objc func tick() {
 //        每次到此页面刷新一下queue的数据
         dbRefreshData()
-        print(" - \(songQueue)")
         tableView?.reloadData()
 //        如果是停止播放就开始播放
         if state == .stopped {
@@ -275,7 +274,10 @@ extension Player {
                 }
 //              判断是否要优先播放
                 if let song = translateData(obj: results[results.count - 1]) {
-                    if !songQueue.isEmpty {
+                    if !songQueue.isEmpty && !songQueue.contains(where: {
+                        $0.id == song.id
+                    })
+                    {
                         if song.id != songQueue[0].id && song.isFirst == true {
                             songQueue.insert(song, at: 0)
                             curIndex = 0
@@ -324,7 +326,6 @@ extension Player {
                     }
                     if song.id == songId {
                         context.delete(result)
-                        return
                     }
                 }
                 try context.save()
@@ -489,12 +490,14 @@ extension Player: STKAudioPlayerDelegate {
         let alert = UIAlertController(title: "该歌曲无法播放！", message: "放弃吧", preferredStyle: .alert)
         let known = UIAlertAction(title: "我知道了", style: .default, handler: nil)
         alert.addAction(known)
-        self.present(alert, animated: true) {
-            self.nextSong()
-        }
-        resetAudioPlayer()
+        self.present(alert, animated: true)
+        self.nextSong()
+        guard state != .stopped else { return }
+        let index = curIndex == 0 ? songQueue.count - 1 : curIndex - 1
+        self.dbDeleteSong(songId: self.songQueue[index].id!)
+        self.songQueue.remove(at: index)
+        self.tableView?.deleteRows(at: [[0, index]], with: .fade)
     }
-    
 }
 
 extension Player: UITableViewDataSource, UITableViewDelegate {

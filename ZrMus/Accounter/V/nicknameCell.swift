@@ -46,21 +46,11 @@ class nicknameCell: UITableViewCell {
         birth.clipsToBounds = true
         birth.textAlignment = .right
         birth.font = .systemFont(ofSize: 15)
-        birth.backgroundColor = gender == 1 ? ZrColor(r: 36, g: 134, b: 185) : ZrColor(r: 241, g: 151, b: 144)
         
         genderView = UIImageView(frame: CGRect(x: 132, y: 37.5, width: 10, height: 10))
         contentView.addSubview(genderView)
         genderView.backgroundColor = .clear
-        let imgName = { () -> String in
-            if self.gender == 1 {
-                return "ac_man"
-            } else if self.gender == 2 {
-                return "ac_woman"
-            } else {
-                return "ac_nil"
-            }
-        }
-        genderView.image = UIImage(named: imgName())?.withRenderingMode(.alwaysTemplate)
+        
         
         location = UILabel(frame: CGRect(x: 250, y: 15, width: 80, height: 18))
         contentView.addSubview(location)

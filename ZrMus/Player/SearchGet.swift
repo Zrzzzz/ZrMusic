@@ -84,3 +84,9 @@ struct Artist: Codable {
         case trans
     }
 }
+
+//MARK: - IsOKGet
+struct IsOKGet: Codable {
+    let success: Bool?
+    let message: String?
+}

@@ -16,6 +16,7 @@ class DLCell2: UITableViewCell {
     var addBtn: UIButton!
 //    属性
     let width = UIScreen.main.bounds.width
+    var isOK: Bool!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -103,14 +103,13 @@ extension InfoChange {
                         self.navigationController?.popViewController(animated: true)
                     } catch {
                         print(error)
-                        print("个人信息获取失败")
                     }
                 }
 
                 
             } catch {
                 print(error)
-                print("个人信息获取失败")
+                print("修改个人信息失败")
             }
         }
     }

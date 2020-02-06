@@ -26,7 +26,7 @@ class ResultCell: UITableViewCell {
         creatorLabel = UILabel(frame: CGRect(x: 5, y: 55, width: width - 70, height: 15))
         contentView.addSubview(creatorLabel)
         
-        addBtn = UIButton(frame: CGRect(x: width - 40, y: 30, width: 20, height: 30))
+        addBtn = UIButton(frame: CGRect(x: width - 40, y: 30, width: 20, height: 22))
         addBtn.setImage(UIImage(named: "player_menu")?.withRenderingMode(.alwaysOriginal), for: .normal)
         contentView.addSubview(addBtn)
     }

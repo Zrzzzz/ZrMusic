@@ -81,6 +81,7 @@ extension SearchResults {
         let cell: ResultCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! ResultCell
         cell.nameLabel.text = songList[indexPath.row].name
         cell.creatorLabel.text = "\(songList[indexPath.row].arName)-\(songList[indexPath.row].alName)"
+        cell.addBtn.addTarget(self, action: #selector(showMenu(bar:)), for: .touchUpInside)
         
         return cell
     }
@@ -91,6 +92,27 @@ extension SearchResults {
     }
     
     
+}
+
+//MARK: - 按钮方法
+extension SearchResults {
+    @objc func showMenu(bar: UIButton) {
+            let controller = PopMenuViewController(sourceView: bar, actions: [
+                    PopMenuDefaultAction(title: "Click me to", image: #imageLiteral(resourceName: "default"), color: .yellow),
+                    PopMenuDefaultAction(title: "Pop another menu", image: #imageLiteral(resourceName: "default"), color: #colorLiteral(red: 0.9816910625, green: 0.5655395389, blue: 0.4352460504, alpha: 1)),
+                    PopMenuDefaultAction(title: "Try it out!", image: nil, color: .white)
+                ])
+                
+                controller.shouldDismissOnSelection = true
+                controller.didDismiss = { selected in
+                    print("Menu dismissed: \(selected ? "selected item" : "no selection")")
+                }
+                
+                // Present menu controller
+                present(controller, animated: true, completion: nil)
+            
+        }
+
 }
 
 //MARK: - 数据保存
@@ -112,3 +134,4 @@ extension SearchResults {
         }
     }
 }
+

@@ -16,8 +16,24 @@ class DetailedList: UIViewController {
     var tableView: UITableView!
     var alImgUrl: URL!
     var alName: String!
+    var check: Bool = false {
+        didSet {
+            for i in 0..<list.count {
+                Alamofire.request(URL(string: "http://localhost:3000/check/music?id=\(list[i].id!)")!).responseJSON { (d) in
+                    do {
+                        let datas = try JSONDecoder().decode(IsOKGet.self, from: d.data!)
+                        self.list[i].isOK = datas.success!
+                        self.tableView.reloadRows(at: [[1, i]], with: .automatic)
+                    } catch {
+                        print(error)
+                        print("可用获取失败")
+                    }
+                }
+            }
+        }
+    }
 //    存储数据
-    var lists: [Song] = []
+    var list: [Song] = []
     let db = DataBase.shared
     
     override func viewDidLoad() {
@@ -35,13 +51,14 @@ extension DetailedList {
         tableView.dataSource = self
         view.addSubview(tableView)
         tableView.reloadData()
+        check = true
     }
     
     @objc func addToQueue(sender: UIButton) {
         let tableView = sender.superView(of: UITableView.self)
         let index = tableView!.indexPath(for: sender.superView(of: UITableViewCell.self)!)!.row
-        addData(song: lists[index])
-        print("added to list: \(lists[index].name)")
+        addData(song: list[index])
+        print("added to list: \(list[index].name)")
     }
 }
 
@@ -56,13 +73,14 @@ extension DetailedList {
                 
                 self.alName = datas.playlist?.name
                 self.alImgUrl = URL(string: (datas.playlist?.coverImgURL)!)
+                let group = DispatchGroup()
                 for track in (datas.playlist?.tracks)! {
-                    let song = Song(
+
+                    var song = Song(
                         id: track.id ?? 0, name: track.name ?? "", arName: track.ar?[0].name ?? "", alName: (track.al?.name) ?? "", url: nil, imgUrl: URL(string: ((track.al?.picURL) ?? "")), isFirst: nil
                     )
-                    self.lists.append(song)
+                    self.list.append(song)
                 }
-                
                 someClosure()
             } catch {
                 print(error)
@@ -99,7 +117,7 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return 1
         default:
-            return lists.count
+            return list.count
         }
     }
     
@@ -126,15 +144,16 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
         default:
             let reuseid = "dl"
             tableView.register(DLCell2.self, forCellReuseIdentifier: reuseid)
-            var cell: DLCell2 = tableView.dequeueReusableCell(withIdentifier: reuseid) as! DLCell2
-            if cell == nil {
-                cell = DLCell2(style: .default, reuseIdentifier: reuseid)
-            }
-            if !lists.isEmpty {
+            let cell: DLCell2 = tableView.dequeueReusableCell(withIdentifier: reuseid) as! DLCell2
+            if !list.isEmpty {
+                cell.isOK = list[indexPath.row].isOK ?? true
+                if !(cell.isOK ?? true) {
+                    cell.nameLabel.textColor = .gray
+                    cell.creatorLabel.textColor = .gray
+                }
                 cell.countLabel.text = String(indexPath.row + 1)
-                cell.nameLabel.text = lists[indexPath.row].name
-                
-                cell.creatorLabel.text = "\(lists[indexPath.row].arName) - \(lists[indexPath.row].alName)"
+                cell.nameLabel.text = list[indexPath.row].name
+                cell.creatorLabel.text = "\(list[indexPath.row].arName) - \(list[indexPath.row].alName)"
 //                调整字体，由于reloadData的原因，字体大小会被重新设置，所以不能在cell里设置，得在delegate里面重新设置
                 cell.countLabel.fontSuitToFrame()
                 cell.nameLabel.font = .boldSystemFont(ofSize: 20)
@@ -147,11 +166,18 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        addData(song: lists[indexPath.row], isFirst: true)
-        self.dismiss(animated: true, completion: nil)
-        let t = UIApplication.shared.keyWindow?.rootViewController
-        if (t?.isKind(of:  UITabBarController.self))! {
-            (t as? UITabBarController)?.selectedIndex = 0
+        if list[indexPath.row].isOK! {
+            addData(song: list[indexPath.row], isFirst: true)
+            self.dismiss(animated: true, completion: nil)
+            let t = UIApplication.shared.keyWindow?.rootViewController
+            if (t?.isKind(of:  UITabBarController.self))! {
+                (t as? UITabBarController)?.selectedIndex = 0
+            }
+        } else {
+            let alert = UIAlertController(title: "这首歌没版权哦", message: nil, preferredStyle: .alert)
+            let known = UIAlertAction(title: "我知道了", style: .default, handler: nil)
+            alert.addAction(known)
+            present(alert, animated: true, completion: nil)
         }
     }
 }

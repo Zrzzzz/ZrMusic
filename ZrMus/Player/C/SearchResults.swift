@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CoreData
+import PopMenu
 
 class SearchResults: UITableViewController, UISearchBarDelegate{
     
@@ -21,9 +22,13 @@ class SearchResults: UITableViewController, UISearchBarDelegate{
         }
     }
     
+    var myLists: [SongList] = []
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        获取我的歌单
+        fetchLists()
     }
     
 }
@@ -32,6 +37,7 @@ class SearchResults: UITableViewController, UISearchBarDelegate{
 extension SearchResults: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         var url = "http://localhost:3000/search?keywords=\(searchController.searchBar.text ?? "")&limit=20"
+        // 防止有中文的text, 需要进行编码
         url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         if searchController.searchBar.text! != "" {
             Alamofire.request(url).responseJSON { (d) in
@@ -81,7 +87,7 @@ extension SearchResults {
         let cell: ResultCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! ResultCell
         cell.nameLabel.text = songList[indexPath.row].name
         cell.creatorLabel.text = "\(songList[indexPath.row].arName)-\(songList[indexPath.row].alName)"
-        cell.addBtn.addTarget(self, action: #selector(showMenu(bar:)), for: .touchUpInside)
+        cell.addBtn.addTarget(self, action: #selector(showMenu(btn:)), for: .touchUpInside)
         
         return cell
     }
@@ -96,27 +102,42 @@ extension SearchResults {
 
 //MARK: - 按钮方法
 extension SearchResults {
-    @objc func showMenu(bar: UIButton) {
-            let controller = PopMenuViewController(sourceView: bar, actions: [
-                    PopMenuDefaultAction(title: "Click me to", image: #imageLiteral(resourceName: "default"), color: .yellow),
-                    PopMenuDefaultAction(title: "Pop another menu", image: #imageLiteral(resourceName: "default"), color: #colorLiteral(red: 0.9816910625, green: 0.5655395389, blue: 0.4352460504, alpha: 1)),
-                    PopMenuDefaultAction(title: "Try it out!", image: nil, color: .white)
-                ])
-                
-                controller.shouldDismissOnSelection = true
-                controller.didDismiss = { selected in
-                    print("Menu dismissed: \(selected ? "selected item" : "no selection")")
-                }
-                
-                // Present menu controller
-                present(controller, animated: true, completion: nil)
-            
+    @objc func showMenu(btn: UIButton) {
+        let tableView = btn.superView(of: UITableView.self)
+        let index = tableView!.indexPath(for: btn.superView(of: UITableViewCell.self)!)!.row
+        let trackId = songList[index].id
+    
+        let action1 = PopMenuDefaultAction(title: "添加到歌单", image: UIImage(systemName: "suit.heart"))
+        let popMenu = PopMenuViewController(sourceView: btn, actions: [action1])
+        // When tapped
+        popMenu.appearance.popMenuBackgroundStyle = .none()
+        popMenu.shouldDismissOnSelection = true
+        popMenu.didDismiss = { selected in
+            self.showListMenu(btn: btn, trackId: trackId!)
         }
-
+        // Menu Styles
+        popMenu.appearance.popMenuColor.backgroundColor = .gradient(fill: .blue, .yellow)
+        
+        // Present menu controller
+        present(popMenu, animated: true, completion: nil)
+    }
+    
+    func showListMenu(btn: UIButton, trackId: Int) {
+        var actions: [PopMenuDefaultAction] = []
+        for list in self.myLists {
+            let action = PopMenuDefaultAction(title: list.name) { (PopMenuAction) in
+                Alamofire.request(URL(string: "http://localhost:3000/playlist/tracks?op=add&pid=\(list.id)&tracks=\(trackId)")!)
+            }
+            actions.append(action)
+        }
+        let listMenu = PopMenuViewController(sourceView: btn, actions: actions)
+        self.present(listMenu, animated: true)
+    }
 }
 
-//MARK: - 数据保存
+//MARK: - 数据管理
 extension SearchResults {
+    
     func addData(song: Song, isFirst: Bool = false) {
         let context = db.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Music", in: context)
@@ -133,5 +154,32 @@ extension SearchResults {
             fatalError("无法保存")
         }
     }
+    
+    func fetchLists() {
+        let context = db.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "SongLists")
+        do {
+            if let results = try context.fetch(request) as? [NSManagedObject] {
+                for result in results {
+                    if let list = translateData(obj: result) {
+                        if list.subscribed == false {
+                            myLists.append(list)
+                        }
+                    }
+                }
+            }
+        } catch {
+            fatalError("获取失败")
+        }
+    }
+    
+    func translateData(obj: NSManagedObject) -> (SongList?) {
+        if let name = obj.value(forKey: "name"), let id = obj.value(forKey: "id"), let count = obj.value(forKey: "count"), let imgUrl = obj.value(forKey: "imgUrl"), let subscribed = obj.value(forKey: "subscribed") {
+            let songlist = SongList(name: name as! String, id: id as! Int, imgUrl: imgUrl as! URL, count: count as! Int, subscribed: subscribed as! Bool)
+            return songlist
+        }
+        return nil
+    }
+
 }
 

@@ -71,16 +71,6 @@
 		D3E71F5E23EAFC75002CFE10 /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71F5D23EAFC75002CFE10 /* ResultCell.swift */; };
 		D3E71F6023EB194A002CFE10 /* SearchGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71F5F23EB194A002CFE10 /* SearchGet.swift */; };
 		D3E71F6223EB3967002CFE10 /* CoverImgGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71F6123EB3967002CFE10 /* CoverImgGet.swift */; };
-		D3E71FC523EC890F002CFE10 /* PopMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FB823EC890F002CFE10 /* PopMenuAction.swift */; };
-		D3E71FC623EC890F002CFE10 /* PopMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FB923EC890F002CFE10 /* PopMenuViewController.swift */; };
-		D3E71FC723EC890F002CFE10 /* PopMenuAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FBB23EC890F002CFE10 /* PopMenuAppearance.swift */; };
-		D3E71FC823EC890F002CFE10 /* PopMenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FBC23EC890F002CFE10 /* PopMenuManager.swift */; };
-		D3E71FC923EC890F002CFE10 /* UIColor+Contrast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FBE23EC890F002CFE10 /* UIColor+Contrast.swift */; };
-		D3E71FCA23EC890F002CFE10 /* PopMenuGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FBF23EC890F002CFE10 /* PopMenuGradientView.swift */; };
-		D3E71FCB23EC890F002CFE10 /* UIView+Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FC023EC890F002CFE10 /* UIView+Shadows.swift */; };
-		D3E71FCC23EC890F002CFE10 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FC123EC890F002CFE10 /* Haptics.swift */; };
-		D3E71FCD23EC890F002CFE10 /* PopMenuPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FC323EC890F002CFE10 /* PopMenuPresentAnimationController.swift */; };
-		D3E71FCE23EC890F002CFE10 /* PopMenuDismissAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E71FC423EC890F002CFE10 /* PopMenuDismissAnimationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -157,17 +147,6 @@
 		D3E71F5D23EAFC75002CFE10 /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		D3E71F5F23EB194A002CFE10 /* SearchGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGet.swift; sourceTree = "<group>"; };
 		D3E71F6123EB3967002CFE10 /* CoverImgGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverImgGet.swift; sourceTree = "<group>"; };
-		D3E71FB623EC890F002CFE10 /* PopMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopMenu.h; sourceTree = "<group>"; };
-		D3E71FB823EC890F002CFE10 /* PopMenuAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMenuAction.swift; sourceTree = "<group>"; };
-		D3E71FB923EC890F002CFE10 /* PopMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMenuViewController.swift; sourceTree = "<group>"; };
-		D3E71FBB23EC890F002CFE10 /* PopMenuAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMenuAppearance.swift; sourceTree = "<group>"; };
-		D3E71FBC23EC890F002CFE10 /* PopMenuManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMenuManager.swift; sourceTree = "<group>"; };
-		D3E71FBE23EC890F002CFE10 /* UIColor+Contrast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Contrast.swift"; sourceTree = "<group>"; };
-		D3E71FBF23EC890F002CFE10 /* PopMenuGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMenuGradientView.swift; sourceTree = "<group>"; };
-		D3E71FC023EC890F002CFE10 /* UIView+Shadows.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Shadows.swift"; sourceTree = "<group>"; };
-		D3E71FC123EC890F002CFE10 /* Haptics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
-		D3E71FC323EC890F002CFE10 /* PopMenuPresentAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMenuPresentAnimationController.swift; sourceTree = "<group>"; };
-		D3E71FC423EC890F002CFE10 /* PopMenuDismissAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMenuDismissAnimationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,7 +371,6 @@
 				D37B285F23D74588006C360E /* LaunchScreen.storyboard */,
 				D37B286223D74588006C360E /* Info.plist */,
 				D38B81E623DDDFA20098B7F2 /* DataBase */,
-				D3E71FB523EC890F002CFE10 /* PopMenu */,
 				D3D5B13C23E98F9C0060D973 /* NiceGesture */,
 				D3AF426D23E429CB00014FCA /* StreamingKit */,
 				D36FCF0423DD71AB00B0A18E /* TotalModel */,
@@ -537,56 +515,6 @@
 			path = NiceGesture;
 			sourceTree = "<group>";
 		};
-		D3E71FB523EC890F002CFE10 /* PopMenu */ = {
-			isa = PBXGroup;
-			children = (
-				D3E71FB623EC890F002CFE10 /* PopMenu.h */,
-				D3E71FB723EC890F002CFE10 /* View Controller & Views */,
-				D3E71FBA23EC890F002CFE10 /* Classes */,
-				D3E71FC223EC890F002CFE10 /* Transitions */,
-			);
-			path = PopMenu;
-			sourceTree = "<group>";
-		};
-		D3E71FB723EC890F002CFE10 /* View Controller & Views */ = {
-			isa = PBXGroup;
-			children = (
-				D3E71FB823EC890F002CFE10 /* PopMenuAction.swift */,
-				D3E71FB923EC890F002CFE10 /* PopMenuViewController.swift */,
-			);
-			path = "View Controller & Views";
-			sourceTree = "<group>";
-		};
-		D3E71FBA23EC890F002CFE10 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				D3E71FBB23EC890F002CFE10 /* PopMenuAppearance.swift */,
-				D3E71FBC23EC890F002CFE10 /* PopMenuManager.swift */,
-				D3E71FBD23EC890F002CFE10 /* Helpers */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		D3E71FBD23EC890F002CFE10 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				D3E71FBE23EC890F002CFE10 /* UIColor+Contrast.swift */,
-				D3E71FBF23EC890F002CFE10 /* PopMenuGradientView.swift */,
-				D3E71FC023EC890F002CFE10 /* UIView+Shadows.swift */,
-				D3E71FC123EC890F002CFE10 /* Haptics.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		D3E71FC223EC890F002CFE10 /* Transitions */ = {
-			isa = PBXGroup;
-			children = (
-				D3E71FC323EC890F002CFE10 /* PopMenuPresentAnimationController.swift */,
-				D3E71FC423EC890F002CFE10 /* PopMenuDismissAnimationController.swift */,
-			);
-			path = Transitions;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -703,7 +631,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3D5B14223E99C880060D973 /* NewLongPressGesture.swift in Sources */,
-				D3E71FCD23EC890F002CFE10 /* PopMenuPresentAnimationController.swift in Sources */,
 				D3D5B14323E99C880060D973 /* NewTapGesture.swift in Sources */,
 				D3D5B14423E99C880060D973 /* NewPanGesture.swift in Sources */,
 				D3D5B14523E99C880060D973 /* NewGestureAction.swift in Sources */,
@@ -715,15 +642,11 @@
 				D3AF428923E465EB00014FCA /* STKAudioPlayer.h in Sources */,
 				D3AF428A23E465EB00014FCA /* STKHTTPDataSource.m in Sources */,
 				D3AF428B23E465EB00014FCA /* STKDataSource.h in Sources */,
-				D3E71FCB23EC890F002CFE10 /* UIView+Shadows.swift in Sources */,
 				D3AF428C23E465EB00014FCA /* STKLocalFileDataSource.m in Sources */,
-				D3E71FC623EC890F002CFE10 /* PopMenuViewController.swift in Sources */,
 				D3AF428D23E465EB00014FCA /* NSMutableArray+STKAudioPlayer.h in Sources */,
 				D3AF428E23E465EB00014FCA /* STKCoreFoundationDataSource.m in Sources */,
-				D3E71FC523EC890F002CFE10 /* PopMenuAction.swift in Sources */,
 				D3D5B12823E6BEDB0060D973 /* LocationGet.swift in Sources */,
 				D3AF428F23E465EB00014FCA /* STKAutoRecoveringHTTPDataSource.m in Sources */,
-				D3E71FCA23EC890F002CFE10 /* PopMenuGradientView.swift in Sources */,
 				D3AF429023E465EB00014FCA /* STKQueueEntry.h in Sources */,
 				D3E71F5E23EAFC75002CFE10 /* ResultCell.swift in Sources */,
 				D3AF429123E465EB00014FCA /* STKHTTPDataSource.h in Sources */,
@@ -736,10 +659,8 @@
 				D3AF429723E465EB00014FCA /* STKCoreFoundationDataSource.h in Sources */,
 				D3AF429823E465EB00014FCA /* STKSpinLock.h in Sources */,
 				D3AF429923E465EB00014FCA /* NSMutableArray+STKAudioPlayer.m in Sources */,
-				D3E71FC723EC890F002CFE10 /* PopMenuAppearance.swift in Sources */,
 				D3AF429A23E465EB00014FCA /* StreamingKit-Prefix.pch in Sources */,
 				D3AF428423E44AB800014FCA /* Song.swift in Sources */,
-				D3E71FCC23EC890F002CFE10 /* Haptics.swift in Sources */,
 				D384C33E23E070730087D3D4 /* SongList.swift in Sources */,
 				D36FCF0623DD71CE00B0A18E /* JSONHandle.swift in Sources */,
 				D3E71F5C23EAFBB2002CFE10 /* SearchResults.swift in Sources */,
@@ -748,12 +669,10 @@
 				D37B285523D74587006C360E /* AppDelegate.swift in Sources */,
 				D3AF420B23E3150700014FCA /* ZrExtension.swift in Sources */,
 				D36FCEEF23DB4BDC00B0A18E /* fansCell.swift in Sources */,
-				D3E71FCE23EC890F002CFE10 /* PopMenuDismissAnimationController.swift in Sources */,
 				D326002123D8585E00BE0967 /* Login.swift in Sources */,
 				D3E71F6023EB194A002CFE10 /* SearchGet.swift in Sources */,
 				D326002423D8592E00BE0967 /* PhoneLogin.swift in Sources */,
 				D355957523DAD7E70000826D /* ZrBtn.swift in Sources */,
-				D3E71FC823EC890F002CFE10 /* PopMenuManager.swift in Sources */,
 				D326002623D8593C00BE0967 /* MailLogin.swift in Sources */,
 				D38B81E823DDDFBC0098B7F2 /* DataBase.swift in Sources */,
 				D36FCEFF23DD66F600B0A18E /* SongListGet.swift in Sources */,
@@ -764,7 +683,6 @@
 				D3D5B12A23E6F6F10060D973 /* User.swift in Sources */,
 				D37B286923D74689006C360E /* Accounter.swift in Sources */,
 				D355957323DAD66F0000826D /* LoginGet.swift in Sources */,
-				D3E71FC923EC890F002CFE10 /* UIColor+Contrast.swift in Sources */,
 				D37B286B23D74692006C360E /* Mine.swift in Sources */,
 				D37B286D23D746B3006C360E /* Player.swift in Sources */,
 				D36FCF0123DD6CBE00B0A18E /* ListDetailGet.swift in Sources */,

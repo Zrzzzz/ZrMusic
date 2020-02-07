@@ -96,9 +96,6 @@ extension listsCell: UITableViewDataSource, UITableViewDelegate {
         let cellid = "id"
         listView.register(listCell.self, forCellReuseIdentifier: cellid)
         var cell: listCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! listCell
-        if cell == nil {
-            cell = listCell(style: .default, reuseIdentifier: cellid)
-        }
         if !lists.isEmpty {
             cell.countLabel.text = "(\(lists[indexPath.row].count))"
             cell.imgView.sd_setImage(with: lists[indexPath.row].imgUrl, placeholderImage: UIImage(named: "default"))

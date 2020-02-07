@@ -65,7 +65,8 @@ extension DetailedList {
 //MARK: - 数据管理
 extension DetailedList {
     func getData(someClosure: @escaping () -> Void) {
-        let url = "http://localhost:3000/playlist/detail?id=\(listId!)"
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let url = "http://localhost:3000/playlist/detail?id=\(listId!)&timestamp=\(timestamp)"
         Alamofire.request(url).responseJSON { (d) in
             do {
                 let datas = try JSONDecoder().decode(ListDetailGet.self, from: d.data!)
@@ -178,6 +179,19 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
             let known = UIAlertAction(title: "我知道了", style: .default, handler: nil)
             alert.addAction(known)
             present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            Alamofire.request(URL(string: "http://localhost:3000/playlist/tracks?op=del&pid=\(listId!)&tracks=\(list[indexPath.row].id!)")!)
+            list.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
         }
     }
 }

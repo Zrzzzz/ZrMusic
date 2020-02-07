@@ -66,7 +66,8 @@ extension Mine {
         guard let id = ud.string(forKey: "uid") else {
             return
         }
-        Alamofire.request("http://localhost:3000/user/playlist?uid=\(id)").responseJSON { (d) in
+        let timestamp = Int(Date().timeIntervalSince1970)
+        Alamofire.request("http://localhost:3000/user/playlist?uid=\(id)&timestamp=\(timestamp)").responseJSON { (d) in
             do {
                 let datas = try JSONDecoder().decode(SongListGet.self, from: d.data!)
                 print("获取歌单成功")

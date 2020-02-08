@@ -13,6 +13,7 @@ class DLCell1: UITableViewCell {
     var coverImg: UIImageView!
     var nameLabel: UILabel!
     var downLoadBtn: UIButton!
+    var deleteBtn: UIButton!
 //    属性
     let width = UIScreen.main.bounds.width
     
@@ -49,16 +50,26 @@ extension DLCell1 {
         nameLabel.numberOfLines = 2
         nameLabel.font = .italicSystemFont(ofSize: 25)
         
-        downLoadBtn = UIButton(frame: CGRect(x: width - 100, y: 90, width: 30, height: 30))
+        downLoadBtn = UIButton(frame: CGRect(x: width - 150, y: 70, width: 50, height: 50))
         contentView.addSubview(downLoadBtn)
-        downLoadBtn.setImage(UIImage(systemName: "square.and.arrow.down")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        downLoadBtn.setTitle("下载到本地", for: .normal)
+        downLoadBtn.setImage(UIImage(systemName: "square.and.arrow.down")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        downLoadBtn.setTitle("下载", for: .normal)
+        downLoadBtn.setTitleColor(.black, for: .normal)
+        downLoadBtn.titleLabel?.font = .boldSystemFont(ofSize: 12)
         downLoadBtn.setLayoutType(type: .topImage)
+        
+        deleteBtn = UIButton(frame: CGRect(x: width - 100, y: 70, width: 50, height: 50))
+        contentView.addSubview(deleteBtn)
+        deleteBtn.setImage(UIImage(systemName: "trash")?.withTintColor(.red, renderingMode: .alwaysOriginal), for: .normal)
+        deleteBtn.setTitle("删除", for: .normal)
+        deleteBtn.setTitleColor(.red, for: .normal)
+        deleteBtn.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        deleteBtn.setLayoutType(type: .topImage)
         
         let topColor = ZrColor(r: CGFloat.random(in: 0...255), g: CGFloat.random(in: 0...255), b: CGFloat.random(in: 0...255))
         let bottomColor = ZrColor(r: 255, g: 255, b: 255)
         let gradientLayer = CALayer.getGradientLayer(aColor: topColor, bColor: bottomColor, type: .UtoB)
-        gradientLayer.frame.size = CGSize(width: width, height: self.frame.height)
+        gradientLayer.frame.size = CGSize(width: width, height: 140)
         self.contentView.layer.insertSublayer(gradientLayer, at: 0)
     }
     

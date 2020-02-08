@@ -18,11 +18,11 @@ class DetailedList: UIViewController {
     var alName: String!
     var check: Bool = false {
         didSet {
-            for i in 0..<list.count {
-                Alamofire.request(URL(string: "http://localhost:3000/check/music?id=\(list[i].id!)")!).responseJSON { (d) in
+            for i in 0..<songList.count {
+                Alamofire.request(URL(string: "http://localhost:3000/check/music?id=\(songList[i].id!)")!).responseJSON { (d) in
                     do {
                         let datas = try JSONDecoder().decode(IsOKGet.self, from: d.data!)
-                        self.list[i].isOK = datas.success!
+                        self.songList[i].isOK = datas.success!
                         self.tableView.reloadRows(at: [[1, i]], with: .automatic)
                     } catch {
                         print(error)
@@ -33,7 +33,7 @@ class DetailedList: UIViewController {
         }
     }
 //    存储数据
-    var list: [Song] = []
+    var songList: [Song] = []
     let db = DataBase.shared
     
     override func viewDidLoad() {
@@ -57,8 +57,43 @@ extension DetailedList {
     @objc func addToQueue(sender: UIButton) {
         let tableView = sender.superView(of: UITableView.self)
         let index = tableView!.indexPath(for: sender.superView(of: UITableViewCell.self)!)!.row
-        addData(song: list[index])
-        print("added to list: \(list[index].name)")
+        addData(song: songList[index])
+        print("added to list: \(songList[index].name)")
+    }
+    
+    @objc func download() {
+        let alert = UIAlertController(title: "下载", message: "下载此歌单所有的歌?", preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let action2 = UIAlertAction(title: "确认", style: .default) { (_) in
+            for song in self.songList {
+                let destination: DownloadRequest.DownloadFileDestination = { _, response in
+                let documentsURL = FileManager.default.urls(for: .musicDirectory, in: .userDomainMask) [0]
+                    let fileURL = documentsURL.appendingPathComponent("zrmusic/\(song.name)-\(song.arName)-\(song.alName)-\(song.id!).mp3")
+                return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+                }
+                Alamofire.download(URL(string: "https://music.163.com/song/media/outer/url?id=\(song.id!).mp3")!, to: destination).response { response in
+                    print(" - 已下载 - \(song.name) -\(song.arName)")
+                }
+            }
+        }
+        alert.addAction(action1)
+        alert.addAction(action2)
+        
+        self.present(alert, animated: true)
+    }
+    
+    @objc func deleteList() {
+        let alert = UIAlertController(title: "警告⚠️", message: "你真的要删除此歌单吗", preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let action2 = UIAlertAction(title: "确定", style: .default) { (_) in
+            Alamofire.request(URL(string: "http://localhost:3000/playlist/delete?id=\(self.listId!)")!).response { _ in
+                self.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
+        alert.addAction(action1)
+        alert.addAction(action2)
+        
+        self.present(alert, animated: true)
     }
 }
 
@@ -80,7 +115,7 @@ extension DetailedList {
                     var song = Song(
                         id: track.id ?? 0, name: track.name ?? "", arName: track.ar?[0].name ?? "", alName: (track.al?.name) ?? "", url: nil, imgUrl: URL(string: ((track.al?.picURL) ?? "")), isFirst: nil
                     )
-                    self.list.append(song)
+                    self.songList.append(song)
                 }
                 someClosure()
             } catch {
@@ -118,7 +153,7 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return 1
         default:
-            return list.count
+            return songList.count
         }
     }
     
@@ -139,22 +174,22 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = .none
             cell.nameLabel.text = alName
 //            TODO: 下载
-//            cell.downLoadBtn.addTarget(self, action: , for: <#T##UIControl.Event#>)
-            
+            cell.downLoadBtn.addTarget(self, action: #selector(download), for: .touchUpInside)
+            cell.deleteBtn.addTarget(self, action: #selector(deleteList), for: .touchUpInside)
             return cell
         default:
             let reuseid = "dl"
             tableView.register(DLCell2.self, forCellReuseIdentifier: reuseid)
             let cell: DLCell2 = tableView.dequeueReusableCell(withIdentifier: reuseid) as! DLCell2
-            if !list.isEmpty {
-                cell.isOK = list[indexPath.row].isOK ?? true
+            if !songList.isEmpty {
+                cell.isOK = songList[indexPath.row].isOK ?? true
                 if !(cell.isOK ?? true) {
                     cell.nameLabel.textColor = .gray
                     cell.creatorLabel.textColor = .gray
                 }
                 cell.countLabel.text = String(indexPath.row + 1)
-                cell.nameLabel.text = list[indexPath.row].name
-                cell.creatorLabel.text = "\(list[indexPath.row].arName) - \(list[indexPath.row].alName)"
+                cell.nameLabel.text = songList[indexPath.row].name
+                cell.creatorLabel.text = "\(songList[indexPath.row].arName) - \(songList[indexPath.row].alName)"
 //                调整字体，由于reloadData的原因，字体大小会被重新设置，所以不能在cell里设置，得在delegate里面重新设置
                 cell.countLabel.fontSuitToFrame()
                 cell.nameLabel.font = .boldSystemFont(ofSize: 20)
@@ -166,19 +201,24 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if list[indexPath.row].isOK! {
-            addData(song: list[indexPath.row], isFirst: true)
-            self.dismiss(animated: true, completion: nil)
-            let t = UIApplication.shared.keyWindow?.rootViewController
-            if (t?.isKind(of:  UITabBarController.self))! {
-                (t as? UITabBarController)?.selectedIndex = 0
+        switch indexPath.section {
+        case 0:
+            return
+        default:
+            tableView.deselectRow(at: indexPath, animated: true)
+            if songList[indexPath.row].isOK! {
+                addData(song: songList[indexPath.row], isFirst: true)
+                self.dismiss(animated: true, completion: nil)
+                let t = UIApplication.shared.keyWindow?.rootViewController
+                if (t?.isKind(of:  UITabBarController.self))! {
+                    (t as? UITabBarController)?.selectedIndex = 0
+                }
+            } else {
+                let alert = UIAlertController(title: "这首歌没版权哦", message: nil, preferredStyle: .alert)
+                let known = UIAlertAction(title: "我知道了", style: .default, handler: nil)
+                alert.addAction(known)
+                present(alert, animated: true, completion: nil)
             }
-        } else {
-            let alert = UIAlertController(title: "这首歌没版权哦", message: nil, preferredStyle: .alert)
-            let known = UIAlertAction(title: "我知道了", style: .default, handler: nil)
-            alert.addAction(known)
-            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -188,8 +228,8 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            Alamofire.request(URL(string: "http://localhost:3000/playlist/tracks?op=del&pid=\(listId!)&tracks=\(list[indexPath.row].id!)")!)
-            list.remove(at: indexPath.row)
+            Alamofire.request(URL(string: "http://localhost:3000/playlist/tracks?op=del&pid=\(listId!)&tracks=\(songList[indexPath.row].id!)")!)
+            songList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
         }

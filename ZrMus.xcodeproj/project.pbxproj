@@ -28,6 +28,7 @@
 		D37B286923D74689006C360E /* Accounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37B286823D74689006C360E /* Accounter.swift */; };
 		D37B286B23D74692006C360E /* Mine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37B286A23D74692006C360E /* Mine.swift */; };
 		D37B286D23D746B3006C360E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37B286C23D746B3006C360E /* Player.swift */; };
+		D37D54B823EEE2C100AD8524 /* LocalMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37D54B723EEE2C100AD8524 /* LocalMusic.swift */; };
 		D384C33E23E070730087D3D4 /* SongList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D384C33D23E070730087D3D4 /* SongList.swift */; };
 		D38B81E823DDDFBC0098B7F2 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38B81E723DDDFBC0098B7F2 /* DataBase.swift */; };
 		D3AAABC523E07CCE00D3DA3D /* ZrMus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3AAABC323E07CCE00D3DA3D /* ZrMus.xcdatamodeld */; };
@@ -99,6 +100,7 @@
 		D37B286823D74689006C360E /* Accounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accounter.swift; sourceTree = "<group>"; };
 		D37B286A23D74692006C360E /* Mine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mine.swift; sourceTree = "<group>"; };
 		D37B286C23D746B3006C360E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		D37D54B723EEE2C100AD8524 /* LocalMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMusic.swift; sourceTree = "<group>"; };
 		D384C33D23E070730087D3D4 /* SongList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongList.swift; sourceTree = "<group>"; };
 		D38B81E723DDDFBC0098B7F2 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		D3AAABC423E07CCE00D3DA3D /* ZrMus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZrMus.xcdatamodel; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				D37B286A23D74692006C360E /* Mine.swift */,
+				D37D54B723EEE2C100AD8524 /* LocalMusic.swift */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				D37B286D23D746B3006C360E /* Player.swift in Sources */,
 				D36FCF0123DD6CBE00B0A18E /* ListDetailGet.swift in Sources */,
 				D3AF41D223E1C06800014FCA /* listCell.swift in Sources */,
+				D37D54B823EEE2C100AD8524 /* LocalMusic.swift in Sources */,
 				D36FCEED23DB4BC700B0A18E /* nicknameCell.swift in Sources */,
 				D3AF420923E2E77900014FCA /* DLCell1.swift in Sources */,
 				D355957723DADAE90000826D /* ZrTF.swift in Sources */,

@@ -18,6 +18,7 @@ class Mine: UIViewController {
     let ud = UserDefaults.standard
     let db = DataBase.shared
     let reuseID = "id"
+    var localMusics: Int = 0
     
 //    两种歌单类型
     var myLists: [SongList] = []
@@ -40,6 +41,7 @@ class Mine: UIViewController {
         if userid != nil {
             getData {
                 self.getDbData()
+                self.getLocalMusic()
                 self.tableView.reloadData()
             }
         } else {
@@ -47,7 +49,7 @@ class Mine: UIViewController {
         }
     }
 }
-//MARK: - UI相关
+//MARK: - UI相关 & 按钮方法
 extension Mine {
     
     func drawUI() {
@@ -56,9 +58,43 @@ extension Mine {
         tableView.dataSource = self
         tableView.delegate = self
     }
+    
+    @objc func newList() {
+        let alert = UIAlertController(title: "新建歌单", message: "请输入歌单名称", preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "保存", style: .default) { (action :UIAlertAction!) in
+            let textFieldText = (alert.textFields![0] as UITextField).text!
+            let url = "http://localhost:3000/playlist/create?name=\(textFieldText)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            Alamofire.request(URL(string: url!)!).response { _ in
+                self.deleteData()
+                self.getData {
+                    self.getDbData()
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        alert.addTextField { (textField: UITextField) in
+            
+        }
+        
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 //MARK: - 数据管理
 extension Mine {
+    
+    func getLocalMusic() {
+        let manager = FileManager.default
+        var url = manager.urls(for: .musicDirectory, in: .userDomainMask)[0] as URL
+        url = url.appendingPathComponent("zrmusic")
+        let contentOfPath = try? manager.contentsOfDirectory(atPath: url.path)
+        localMusics = contentOfPath!.count
+    }
     
     func getData(someCloure: @escaping() -> Void) {
 //        清空数据
@@ -204,8 +240,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             let cell = ncCell()
             cell.leftView.image = UIImage(named: "mine_music")
             cell.titilLabel.text = "本地音乐"
-            cell.countLabel.text = "(0)"
-            cell.selectionStyle = .none
+            cell.countLabel.text = "(\(localMusics))"
             return cell
         default:
 //            分类解析
@@ -214,7 +249,16 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             case [1, 0]:
 //                设定分类
                 let cell = listsCell(count: myLists.count, style: .default, reuseIdentifier: "cell1")
-                
+//                弄一个添加歌单的按钮
+                let newListBtn = UIButton()
+                newListBtn.setImage(UIImage(named: "mine_new_list"), for: .normal)
+                newListBtn.addTarget(self, action: #selector(newList), for: .touchUpInside)
+                cell.contentView.addSubview(newListBtn)
+                newListBtn.snp.makeConstraints { (make) in
+                    make.width.height.equalTo(30)
+                    make.right.equalTo(cell.listsCountLabel.snp.left).offset(-5)
+                    make.centerY.equalTo(cell.listsCountLabel.snp.centerY)
+                }
                 cell.titleLabel.text = "创建歌单"
 //                箭头方向
                 if selectedCellIndexPaths.contains(indexPath) {
@@ -225,7 +269,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
 //                描绘cell
                 cell.listsCountLabel.text = "(\(myLists.count))"
                 cell.reloadData(lists: myLists)
-    
+                
                 
                 return cell
 
@@ -254,8 +298,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             tableView.deselectRow(at: indexPath, animated: true)
-//            TODO: 这里要到本地音乐的NC去
-//            navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+            navigationController?.pushViewController(LocalMusic(), animated: true)
         default:
             tableView.deselectRow(at: indexPath, animated: true)
             if let index = selectedCellIndexPaths.firstIndex(of: indexPath) {

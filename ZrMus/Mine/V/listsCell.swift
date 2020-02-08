@@ -63,9 +63,9 @@ extension listsCell {
         titleLabel.textAlignment = .center
         titleLabel.adjustsFontSizeToFitWidth = true
         
-        listsCountLabel = UILabel(frame: CGRect(x: width - 40, y: 5, width: 50, height: 50))
+        listsCountLabel = UILabel(frame: CGRect(x: width - 40, y: 15, width: 50, height: 50))
         contentView.addSubview(listsCountLabel)
-        listsCountLabel.font = .systemFont(ofSize: 14)
+        listsCountLabel.font = .systemFont(ofSize: 16)
         listsCountLabel.adjustsFontSizeToFitWidth = true
         
         listView = UITableView(frame: CGRect(x: 0, y: 80, width: width, height: CGFloat((listsCount ?? 0) * 80)))

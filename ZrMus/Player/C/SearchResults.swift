@@ -113,7 +113,9 @@ extension SearchResults {
         popMenu.appearance.popMenuBackgroundStyle = .none()
         popMenu.shouldDismissOnSelection = true
         popMenu.didDismiss = { selected in
-            self.showListMenu(btn: btn, trackId: trackId!)
+            if selected {
+                self.showListMenu(btn: btn, trackId: trackId!)
+            }
         }
         // Menu Styles
         popMenu.appearance.popMenuColor.backgroundColor = .gradient(fill: .blue, .yellow)

@@ -34,7 +34,11 @@ class Player: UIViewController {
 //    进度条
     var slider: UISlider!
 //    播放列表
-    var songQueue: [Song] = []
+    var songQueue: [Song] = [] {
+        didSet {
+            tableView?.reloadData()
+        }
+    }
     var tableView: UITableView?
 //    当前播放索引
     var curIndex: Int = -1
@@ -239,9 +243,10 @@ extension Player {
     
 //    定时器响应，更新进度条和时间
     @objc func tick() {
-//        每次到此页面刷新一下queue的数据
+//        刷新一下queue的数据
         dbRefreshData()
-        tableView?.reloadData()
+//        不然歌都没法删了
+//        tableView?.reloadData()
 //        如果是停止播放就开始播放
         if state == .stopped {
             playWithQueue(queue: songQueue, index: 0)
@@ -544,7 +549,8 @@ extension Player: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             dbDeleteSong(songId: songQueue[indexPath.row].id!)
             songQueue.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            因为songQueue在改变时reload了,这时就不用delete了
+//            tableView.deleteRows(at: [indexPath], with: .fade)
             if curIndex == indexPath.row && curIndex != songQueue.count {
                 playWithQueue(queue: songQueue, index: curIndex)
             } else if curIndex == indexPath.row && curIndex == songQueue.count {

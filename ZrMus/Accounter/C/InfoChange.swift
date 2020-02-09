@@ -11,7 +11,7 @@ import Alamofire
 
 class InfoChange: UIViewController {
     
-    var user: User!
+    weak var delegate: UserDelegate?
     
     var checkBtn: UIButton!
     var nameTF: ZrTF!
@@ -50,11 +50,11 @@ class InfoChange: UIViewController {
 extension InfoChange {
     func drawUI() {
         nameTF = ZrTF(frame: CGRect(x: 0, y: 100, width: 200, height: 40))
-        nameTF.placeholder = user.nickname
+        nameTF.placeholder = delegate!.user.nickname
         view.addSubview(nameTF)
         
         genderTF = ZrTF(frame: CGRect(x: 0, y: 200, width: 200, height: 40))
-        genderTF.placeholder = genderIToS(i: user.gender!)
+        genderTF.placeholder = genderIToS(i: delegate!.user.gender!)
         view.addSubview(genderTF)
         
         genderBtn = UIButton()
@@ -68,7 +68,7 @@ extension InfoChange {
         }
         
         birthTF = ZrTF(frame: CGRect(x: 0, y: 300, width: 200, height: 40))
-        birthTF.placeholder = String(describing: user.birth!).timestampToDate()
+        birthTF.placeholder = String(describing: delegate!.user.birth!).timestampToDate()
         view.addSubview(birthTF)
         
         birthBtn = UIButton()
@@ -82,11 +82,11 @@ extension InfoChange {
         }
         
         provinceTF = ZrTF(frame: CGRect(x: 0, y: 400, width: 200, height: 40))
-        provinceTF.placeholder = user.province
+        provinceTF.placeholder = delegate!.user.province
         view.addSubview(provinceTF)
         
         cityTF = ZrTF(frame: CGRect(x: 0, y: 500, width: 200, height: 40))
-        cityTF.placeholder = user.city
+        cityTF.placeholder = delegate!.user.city
         view.addSubview(cityTF)
         
         signTF = ZrTF(frame: CGRect(x: 0, y: 600, width: 200, height: 40))
@@ -141,11 +141,30 @@ extension InfoChange {
                             url += "&nickname=\((self.nameTF.text)!)"
                         }
                         if self.birthTF.text != "" {
-                            url += "&birthday=\((self.birthTF.text)!.dateToTimeStamp())"
+                            url += "&birthday=\((self.birthTF.text)!.dateToTimeStamp())000"
                         }
                         
                         Alamofire.request(URL(string: url)!)
-                        
+                        if self.delegate != nil {
+                            if self.genderTF.text != "" {
+                                self.delegate?.user.gender = self.genderSToI(s: (self.genderTF.text)!)
+                            }
+                            if self.signTF.text != "" {
+                                self.delegate?.user.signature = (self.signTF.text)!
+                            }
+                            if self.provinceTF.text != "" {
+                                self.delegate?.user.province = pInt
+                            }
+                            if self.cityTF.text != "" {
+                                self.delegate?.user.city = cInt
+                            }
+                            if self.nameTF.text != "" {
+                                self.delegate?.user.nickname = (self.nameTF.text)!
+                            }
+                            if self.birthTF.text != "" {
+                                self.delegate?.user.birth = Int(String(describing: self.birthTF.text!).dateToTimeStamp())! * 1000
+                            }
+                        }
                         self.navigationController?.popViewController(animated: true)
                     } catch {
                         print(error)

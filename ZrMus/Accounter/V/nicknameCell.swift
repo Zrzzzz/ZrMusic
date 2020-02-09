@@ -24,7 +24,7 @@ class nicknameCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        avatar = UIImageView(frame: CGRect(x: 5, y: 5, width:90, height: 90))
+        avatar = UIImageView(frame: CGRect(x: 5, y: 5, width: 90, height: 90))
         contentView.addSubview(avatar)
         avatar.layer.cornerRadius = avatar.frame.width / 2
         avatar.clipsToBounds = true

@@ -26,6 +26,7 @@ class Player: UIViewController {
     var preBtn: UIButton!
     var nextBtn: UIButton!
     var loopBtn: UIButton!
+    var commentBtn: UIButton!
 //    pause&resume
     var prBtn: UIButton!
 //    时间
@@ -106,25 +107,55 @@ extension Player: UISearchControllerDelegate {
         imgView = UIImageView(frame: ZrRect(y: 200, width: 150, height: 150))
         view.addSubview(imgView)
         
-        preBtn = UIButton(frame: ZrRect(xOffset: -60, y: 360, width: 30, height: 30))
-        preBtn.setImage(UIImage(systemName: "backward.end")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        preBtn.addTarget(self, action: #selector(preSong), for: .touchUpInside)
-        view.addSubview(preBtn)
+        prBtn = UIButton()
+        prBtn.setImage(UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        prBtn.addTarget(self, action: #selector(pasueorResume), for:  .touchUpInside)
+        view.addSubview(prBtn)
+        prBtn.snp.makeConstraints { (make) in
+            make.top.equalTo(imgView.snp.bottom).offset(5)
+            make.width.height.equalTo(30)
+            make.centerX.equalTo(view.snp.centerX)
+        }
         
-        nextBtn = UIButton(frame: ZrRect(xOffset: -20, y: 360, width: 30, height: 30))
+        nextBtn = UIButton()
         nextBtn.setImage(UIImage(systemName: "forward.end")?.withRenderingMode(.alwaysTemplate), for: .normal)
         nextBtn.addTarget(self, action: #selector(nextSong), for: .touchUpInside)
         view.addSubview(nextBtn)
+        nextBtn.snp.makeConstraints { (make) in
+            make.width.height.equalTo(30)
+            make.right.equalTo(prBtn.snp.left).offset(-10)
+            make.centerY.equalTo(prBtn.snp.centerY)
+        }
         
-        prBtn = UIButton(frame: ZrRect(xOffset: 20, y: 360, width: 30, height: 30))
-        prBtn.setImage(UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        prBtn.addTarget(self, action: #selector(pasueorResume), for: .touchUpInside)
-        view.addSubview(prBtn)
+        preBtn = UIButton()
+        preBtn.setImage(UIImage(systemName: "backward.end")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        preBtn.addTarget(self, action: #selector(preSong), for: .touchUpInside)
+        view.addSubview(preBtn)
+        preBtn.snp.makeConstraints { (make) in
+            make.width.height.equalTo(30)
+            make.right.equalTo(nextBtn.snp.left).offset(-10)
+            make.centerY.equalTo(prBtn.snp.centerY)
+        }
         
-        loopBtn = UIButton(frame: ZrRect(xOffset: 60, y: 360, width: 30, height: 30))
+        loopBtn = UIButton()
         loopBtn.setImage(UIImage(systemName: "repeat.1")?.withRenderingMode(.alwaysTemplate), for: .normal)
         loopBtn.addTarget(self, action: #selector(loopSwitch), for: .touchUpInside)
         view.addSubview(loopBtn)
+        loopBtn.snp.makeConstraints { (make) in
+            make.width.height.equalTo(30)
+            make.left.equalTo(prBtn.snp.right).offset(10)
+            make.centerY.equalTo(prBtn.snp.centerY)
+        }
+
+        commentBtn = UIButton()
+        commentBtn.setImage(UIImage(systemName: "text.bubble")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        commentBtn.addTarget(self, action: #selector(showComment), for: .touchUpInside)
+        view.addSubview(commentBtn)
+        commentBtn.snp.makeConstraints { (make) in
+            make.width.height.equalTo(30)
+            make.left.equalTo(loopBtn.snp.right).offset(10)
+            make.centerY.equalTo(prBtn.snp.centerY)
+        }
         
         slider = UISlider(frame: ZrRect(y: 400, width: 250, height: 30))
         view.addSubview(slider)
@@ -265,6 +296,20 @@ extension Player {
     @objc func loopSwitch() {
         isLoop = isLoop ? false : true
         loopBtn.setImage(UIImage(systemName: isLoop ? "repeat" : "repeat.1"), for: .normal)
+    }
+    
+    @objc func showComment() {
+        if !songQueue.isEmpty {
+            let vc = Comment()
+            vc.songId = songQueue[curIndex].id
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let alert = UIAlertController(title: "警告⚠️", message: "没有正在播放的歌曲", preferredStyle: .alert)
+            let known = UIAlertAction(title: "知道了", style: .default, handler: nil)
+            alert.addAction(known)
+            
+            self.present(alert, animated: true)
+        }
     }
 }
 //MARK: - 数据管理

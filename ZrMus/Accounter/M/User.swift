@@ -34,3 +34,7 @@ struct User {
 //    被订阅歌单数
     var beSubed: Int?
 }
+
+protocol UserDelegate: class {
+    var user: User { get set }
+}

@@ -23,7 +23,7 @@ extension UIView {
 
 extension UILabel {
 //    根据Frame宽高字体自适应最小宽（高）
-    func fontSuitToFrame () {
+    func fontSuitToFrame() {
         let aView = self.sizeThatFits(CGRect.zero.size)
         guard aView.width * aView.height != 0 else { return }
         let rate1 = self.frame.width / aView.width
@@ -120,7 +120,7 @@ extension String {
         dfmatter.dateFormat="yyyy-MM-dd"
         let date = dfmatter.date(from: self)
         
-        let dateStamp:TimeInterval = date!.timeIntervalSince1970
+        let dateStamp: TimeInterval = date!.timeIntervalSince1970
         
         let dateSt:Int = Int(dateStamp)
         

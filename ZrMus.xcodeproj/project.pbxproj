@@ -31,6 +31,9 @@
 		D37D54B823EEE2C100AD8524 /* LocalMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37D54B723EEE2C100AD8524 /* LocalMusic.swift */; };
 		D384C33E23E070730087D3D4 /* SongList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D384C33D23E070730087D3D4 /* SongList.swift */; };
 		D38B81E823DDDFBC0098B7F2 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38B81E723DDDFBC0098B7F2 /* DataBase.swift */; };
+		D39C8D0E23EFDE580067018B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39C8D0D23EFDE580067018B /* Comment.swift */; };
+		D39C8D1023EFE2870067018B /* CommentGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39C8D0F23EFE2870067018B /* CommentGet.swift */; };
+		D39C8D1223EFE6A70067018B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39C8D1123EFE6A70067018B /* CommentCell.swift */; };
 		D3AAABC523E07CCE00D3DA3D /* ZrMus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3AAABC323E07CCE00D3DA3D /* ZrMus.xcdatamodeld */; };
 		D3AF41D223E1C06800014FCA /* listCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF41D123E1C06800014FCA /* listCell.swift */; };
 		D3AF41FF23E2E4D300014FCA /* DetailedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF41FE23E2E4D300014FCA /* DetailedList.swift */; };
@@ -103,6 +106,9 @@
 		D37D54B723EEE2C100AD8524 /* LocalMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMusic.swift; sourceTree = "<group>"; };
 		D384C33D23E070730087D3D4 /* SongList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongList.swift; sourceTree = "<group>"; };
 		D38B81E723DDDFBC0098B7F2 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
+		D39C8D0D23EFDE580067018B /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		D39C8D0F23EFE2870067018B /* CommentGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentGet.swift; sourceTree = "<group>"; };
+		D39C8D1123EFE6A70067018B /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		D3AAABC423E07CCE00D3DA3D /* ZrMus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZrMus.xcdatamodel; sourceTree = "<group>"; };
 		D3AF41D123E1C06800014FCA /* listCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listCell.swift; sourceTree = "<group>"; };
 		D3AF41FE23E2E4D300014FCA /* DetailedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedList.swift; sourceTree = "<group>"; };
@@ -252,6 +258,7 @@
 			children = (
 				D37B286C23D746B3006C360E /* Player.swift */,
 				D3E71F5B23EAFBB2002CFE10 /* SearchResults.swift */,
+				D39C8D0D23EFDE580067018B /* Comment.swift */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -260,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				D3E71F5D23EAFC75002CFE10 /* ResultCell.swift */,
+				D39C8D1123EFE6A70067018B /* CommentCell.swift */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -270,6 +278,7 @@
 				D3AF428323E44AB800014FCA /* Song.swift */,
 				D3E71F5F23EB194A002CFE10 /* SearchGet.swift */,
 				D3E71F6123EB3967002CFE10 /* CoverImgGet.swift */,
+				D39C8D0F23EFE2870067018B /* CommentGet.swift */,
 			);
 			name = M;
 			sourceTree = "<group>";
@@ -379,7 +388,6 @@
 				D36FCF0423DD71AB00B0A18E /* TotalModel */,
 				D36FCEF023DBF61200B0A18E /* TotalView */,
 				D326002223D8590800BE0967 /* Login */,
-				D3AF420E23E427A000014FCA /* Comment */,
 				D326002B23D9E81D00BE0967 /* Player */,
 				D326002C23D9E82900BE0967 /* Mine */,
 				D3AF41F723E2E25900014FCA /* DetailedList */,
@@ -430,38 +438,6 @@
 				D36FCF0023DD6CBE00B0A18E /* ListDetailGet.swift */,
 			);
 			path = M;
-			sourceTree = "<group>";
-		};
-		D3AF420E23E427A000014FCA /* Comment */ = {
-			isa = PBXGroup;
-			children = (
-				D3AF421123E428E500014FCA /* M */,
-				D3AF421023E428E300014FCA /* V */,
-				D3AF420F23E428B000014FCA /* C */,
-			);
-			path = Comment;
-			sourceTree = "<group>";
-		};
-		D3AF420F23E428B000014FCA /* C */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = C;
-			sourceTree = "<group>";
-		};
-		D3AF421023E428E300014FCA /* V */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = V;
-			sourceTree = "<group>";
-		};
-		D3AF421123E428E500014FCA /* M */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = M;
-			path = "New Group1/M";
 			sourceTree = "<group>";
 		};
 		D3AF426D23E429CB00014FCA /* StreamingKit */ = {
@@ -646,6 +622,7 @@
 				D3AF428A23E465EB00014FCA /* STKHTTPDataSource.m in Sources */,
 				D3AF428B23E465EB00014FCA /* STKDataSource.h in Sources */,
 				D3AF428C23E465EB00014FCA /* STKLocalFileDataSource.m in Sources */,
+				D39C8D1023EFE2870067018B /* CommentGet.swift in Sources */,
 				D3AF428D23E465EB00014FCA /* NSMutableArray+STKAudioPlayer.h in Sources */,
 				D3AF428E23E465EB00014FCA /* STKCoreFoundationDataSource.m in Sources */,
 				D3D5B12823E6BEDB0060D973 /* LocationGet.swift in Sources */,
@@ -658,6 +635,7 @@
 				D3AF429423E465EB00014FCA /* STKLocalFileDataSource.h in Sources */,
 				D3AF429523E465EB00014FCA /* STKMacro.h in Sources */,
 				D3E71F6223EB3967002CFE10 /* CoverImgGet.swift in Sources */,
+				D39C8D0E23EFDE580067018B /* Comment.swift in Sources */,
 				D3AF429623E465EB00014FCA /* STKDataSource.m in Sources */,
 				D3AF429723E465EB00014FCA /* STKCoreFoundationDataSource.h in Sources */,
 				D3AF429823E465EB00014FCA /* STKSpinLock.h in Sources */,
@@ -694,6 +672,7 @@
 				D36FCEED23DB4BC700B0A18E /* nicknameCell.swift in Sources */,
 				D3AF420923E2E77900014FCA /* DLCell1.swift in Sources */,
 				D355957723DADAE90000826D /* ZrTF.swift in Sources */,
+				D39C8D1223EFE6A70067018B /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

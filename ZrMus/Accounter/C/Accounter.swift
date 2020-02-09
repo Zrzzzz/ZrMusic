@@ -11,7 +11,8 @@ import SnapKit
 import Alamofire
 import SDWebImage
 
-class Accounter: UIViewController {
+class Accounter: UIViewController, UserDelegate {
+    
 //    组件
     var tableView: UITableView!
     let ud = UserDefaults.standard
@@ -20,24 +21,29 @@ class Accounter: UIViewController {
     let width = UIScreen.main.bounds.width
     let height = UIScreen.main.bounds.height
     
-    var user = User()
+    var user: User = User() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        初始化tableView
         self.setupTV()
-        view.addSubview(self.tableView)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         let userid = UserDefaults.standard.value(forKey: "uid")
         if userid != nil {
             getData {
                 self.tableView.reloadData()
             }
         }
+        view.addSubview(self.tableView)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+      
     }
 }
 //MARK: - UI相关 & 按钮方法
@@ -53,7 +59,8 @@ extension Accounter {
     
     @objc func to() {
         let vc = InfoChange()
-        vc.user = self.user
+//        TODO: delegate
+        vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -61,7 +68,8 @@ extension Accounter {
 extension Accounter {
     func getData(someClosure: @escaping () -> Void) {
         let uid = ud.integer(forKey: "uid")
-        Alamofire.request(URL(string: "http://localhost:3000/user/detail?uid=\(uid)")!).responseJSON { (d) in
+        let timestamp = Int(Date().timeIntervalSince1970)
+        Alamofire.request(URL(string: "http://localhost:3000/user/detail?uid=\(uid)&timestamp=\(timestamp)")!).responseJSON { (d) in
             do {
                 let group = DispatchGroup()
                 let datas = try JSONDecoder().decode(UserDetailGet.self, from: d.data!)

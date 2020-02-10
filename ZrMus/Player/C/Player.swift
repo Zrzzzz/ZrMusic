@@ -61,7 +61,6 @@ class Player: UIViewController {
     //MARK: - willAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
 //        判断登录状态
         isRegistered()
     }

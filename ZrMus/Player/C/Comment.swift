@@ -12,7 +12,9 @@ import Alamofire
 class Comment: UIViewController {
     
     var songId: Int!
+    var hotCommentList: [CComment] = []
     var commentList: [CComment] = []
+    var totalCount: Int!
     var commentView: UIView!
     var textView: UITextView!
     var sendBtn: UIButton!
@@ -94,10 +96,12 @@ extension Comment {
 extension Comment {
     func getData() {
         let timestamp = Int(Date().timeIntervalSince1970)
-        Alamofire.request(URL(string: "http://localhost:3000/comment/music?id=\(songId!)&limit=1&timestamp=\(timestamp)")!).responseJSON { (d) in
+        Alamofire.request(URL(string: "http://localhost:3000/comment/music?id=\(songId!)&limit=10&timestamp=\(timestamp)")!).responseJSON { (d) in
             do {
                 let datas = try JSONDecoder().decode(CommentGet.self, from: d.data!)
-                self.commentList = datas.hotComments!
+                self.hotCommentList = datas.hotComments!
+                self.commentList = datas.comments!
+                self.totalCount = datas.total
                 self.tableView.reloadData()
             } catch {
                 print(error)
@@ -110,17 +114,27 @@ extension Comment {
 
 //MARK: - TableView协议, TextView协议
 extension Comment: UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let titles = ["精彩评论", "最新评论   \(totalCount ?? 0)"]
+        return titles[section]
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return commentList.count
+        return section == 0 ? hotCommentList.count : commentList.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70 + getSuitableHeight(text: commentList[indexPath.row].content!, fontSize: 14, fontWeight: .bold, setWidth: width - 90)
+        let comment = indexPath.section == 0 ? hotCommentList[indexPath.row] : commentList[indexPath.row]
+        return 70 + getSuitableHeight(text: comment.content!, fontSize: 14, fontWeight: .bold, setWidth: width - 90)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellid = "commentid"
-        let comment = commentList[indexPath.row]
+        let comment = indexPath.section == 0 ? hotCommentList[indexPath.row] : commentList[indexPath.row]
         tableView.register(CommentCell.self, forCellReuseIdentifier: cellid)
         let cell: CommentCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! CommentCell
         cell.avatarImg.sd_setImage(with: URL(string: (comment.user?.avatarUrl)!), completed: nil)
@@ -173,10 +187,16 @@ extension Comment: UITextViewDelegate, UITableViewDelegate, UITableViewDataSourc
 //MARK: - 一些方法
 extension Comment {
     @objc func send() {
+        guard textView.text! != "" else {
+            return
+        }
         textView.endEditing(true)
         let url = "http://localhost:3000/comment?t=1&type=0&id=\(songId!)&content=\(textView.text!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        Alamofire.request(URL(string: url!)!)
-        textView.text = ""
+        Alamofire.request(URL(string: url!)!).response { _ in
+            self.getData()
+            self.tableView.scrollToRow(at: [1, 0], at: .top, animated: true)
+            self.textView.text = ""
+        }
     }
     
     @objc func stopEditing(sender: UIGestureRecognizer) {

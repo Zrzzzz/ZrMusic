@@ -9,6 +9,7 @@ pod 'SnapKit'
 pod 'Alamofire'
 pod 'SDWebImage'
 pod 'NewPopMenu'
+pod 'CryptoSwift'
   # Pods for ZrMus
 
 end

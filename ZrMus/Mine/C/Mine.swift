@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CoreData
+import CryptoSwift
 
 class Mine: UIViewController {
     

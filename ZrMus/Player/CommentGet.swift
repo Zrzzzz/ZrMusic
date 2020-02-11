@@ -10,6 +10,8 @@ import Foundation
 
 struct CommentGet: Codable {
     let hotComments: [CComment]?
+    let comments: [CComment]?
+    let total: Int?
 }
 
 struct CComment: Codable {

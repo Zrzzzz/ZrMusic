@@ -24,6 +24,7 @@ struct CComment: Codable {
 }
 
 struct CUser: Codable {
+    let userId: Int?
     let avatarUrl: String?
     let nickname: String?
 }

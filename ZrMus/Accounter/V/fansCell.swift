@@ -20,8 +20,7 @@ class fansCell: UITableViewCell {
         
         followeds = UILabel(frame: CGRect(x: 30, y: 5, width: 70, height: 70))
         contentView.addSubview(followeds)
-        followeds.layer.cornerRadius = followeds.frame.width / 2
-        followeds.clipsToBounds = true
+        followeds.setCornerRadiusCircle()
         followeds.backgroundColor = .red
         followeds.numberOfLines = 2
         followeds.textAlignment = .center
@@ -29,16 +28,14 @@ class fansCell: UITableViewCell {
         
         follows = UILabel(frame: ZrRect(y: 5, width: 70, height: 70))
         contentView.addSubview(follows)
-        follows.layer.cornerRadius = follows.frame.width / 2
-        follows.clipsToBounds = true
+        follows.setCornerRadiusCircle()
         follows.backgroundColor = .red
         follows.numberOfLines = 2
         follows.textAlignment = .center
         
         subed = UILabel(frame: CGRect(x: width - 100, y: 5, width: 70, height: 70))
         contentView.addSubview(subed)
-        subed.layer.cornerRadius = subed.frame.width / 2
-        subed.clipsToBounds = true
+        subed.setCornerRadiusCircle()
         subed.backgroundColor = .red
         subed.numberOfLines = 0
         subed.font = .systemFont(ofSize: 14)

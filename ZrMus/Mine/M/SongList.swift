@@ -14,4 +14,5 @@ struct SongList {
     let imgUrl: URL
     let count: Int
     let subscribed: Bool
+    let creator: String
 }

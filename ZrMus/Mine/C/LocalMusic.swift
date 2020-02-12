@@ -69,7 +69,7 @@ extension LocalMusic {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellid = "hhh"
+        let cellid = "ZrMusic.Local.cell"
         tableView.register(ResultCell.self, forCellReuseIdentifier: cellid)
         let cell: ResultCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! ResultCell
         cell.nameLabel.text = songList[indexPath.row].name

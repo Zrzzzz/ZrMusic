@@ -26,7 +26,7 @@ class nicknameCell: UITableViewCell {
         
         avatar = UIImageView(frame: CGRect(x: 5, y: 5, width: 90, height: 90))
         contentView.addSubview(avatar)
-        avatar.layer.cornerRadius = avatar.frame.width / 2
+        avatar.setCornerRadiusCircle()
         avatar.clipsToBounds = true
         
         nickname = UILabel(frame: CGRect(x: 100, y: 5, width: 150, height: 30))
@@ -35,15 +35,13 @@ class nicknameCell: UITableViewCell {
                 
         level = UILabel(frame: CGRect(x: 100, y: 35, width: 30, height: 15))
         contentView.addSubview(level)
-        level.layer.cornerRadius = 5
-        level.clipsToBounds = true
+        level.setCornerRadius(5)
         level.backgroundColor = ZrColor(r: 255, g: 201, b: 12)
         level.font = .italicSystemFont(ofSize: 14)
         
         birth = UILabel(frame: CGRect(x: 130, y: 35, width: 50, height: 15))
         contentView.addSubview(birth)
-        birth.layer.cornerRadius = 5
-        birth.clipsToBounds = true
+        birth.setCornerRadius(5)
         birth.textAlignment = .right
         birth.font = .systemFont(ofSize: 15)
         
@@ -54,8 +52,7 @@ class nicknameCell: UITableViewCell {
         
         location = UILabel(frame: CGRect(x: 250, y: 15, width: 80, height: 18))
         contentView.addSubview(location)
-        location.layer.cornerRadius = 5
-        location.clipsToBounds = true
+        location.setCornerRadius(5)
         location.textAlignment = .center
         location.font = .systemFont(ofSize: 12)
         
@@ -64,8 +61,7 @@ class nicknameCell: UITableViewCell {
         contentView.addSubview(listened)
         listened.font = .systemFont(ofSize: 15)
         listened.backgroundColor = ZrColor(r: 131, g: 203, b: 172)
-        listened.layer.cornerRadius = 5
-        listened.clipsToBounds = true
+        listened.setCornerRadius(5)
         
         signature = UILabel(frame: CGRect(x: 100, y: 50, width: 150, height: 30))
         contentView.addSubview(signature)

@@ -18,7 +18,6 @@ class ZrBtn: UIButton {
         self.frame.origin.x = (spaceWid - wid) / 2
         
 //        圆角
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 14.0
+        self.setCornerRadius(14)
     }
 }

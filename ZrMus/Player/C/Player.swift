@@ -11,8 +11,6 @@ import Alamofire
 import CoreData
 
 class Player: UIViewController {
-    
-    static let shared = Player()
 
 //    组件
     
@@ -172,8 +170,6 @@ extension Player: UISearchControllerDelegate {
             self.ltimeLabel.text = self.timeVert(self.songPlayer.progress)
             self.songPlayer.seek(toTime: Double(self.slider.value))
         }
-        
-        
         
         ltimeLabel = UILabel(frame: ZrRect(xOffset: -155, y: 400, width: 50, height: 30))
         ltimeLabel.fontSuitToFrame()
@@ -560,9 +556,9 @@ extension Player: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "songs")
-        let cell = tableView.dequeueReusableCell(withIdentifier: "songs")
-        
+        let cellid = "ZrMusic.Player.list"
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellid)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellid)
         if curIndex == indexPath.row {
             cell?.backgroundColor = ZrColor(r: 251, g: 185, b: 87)
         } else {
@@ -585,9 +581,6 @@ extension Player: UITableViewDataSource, UITableViewDelegate {
         return true
     }
     
-//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {

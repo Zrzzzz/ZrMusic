@@ -19,6 +19,16 @@ extension UIView {
         }
         return nil
     }
+    
+    func setCornerRadius(_ radius: CGFloat) {
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
+    }
+    
+    func setCornerRadiusCircle() {
+        self.layer.cornerRadius = self.frame.width / 2
+        self.layer.masksToBounds = true
+    }
 }
 
 extension UILabel {
@@ -114,7 +124,7 @@ extension String {
         return String(format: hash as String)
     }
     
-    func dateToTimeStamp()-> String {
+    func dateToTimeStamp()-> Int {
 
         let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd"
@@ -124,13 +134,15 @@ extension String {
         
         let dateSt:Int = Int(dateStamp)
         
-        return String(dateSt)
+        return dateSt
         
     }
-    
+}
+
+extension Int {
     func timestampToDate() -> String {
         //时间戳, 而且这个是毫秒级
-        let timeStamp = Int(self)! / 1000
+        let timeStamp = self / 1000
         //转换为时间
         let timeInterval:TimeInterval = TimeInterval(timeStamp)
         let date = NSDate(timeIntervalSince1970: timeInterval)

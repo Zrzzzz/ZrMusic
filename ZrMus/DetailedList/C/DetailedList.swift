@@ -109,10 +109,8 @@ extension DetailedList {
                 
                 self.alName = datas.playlist?.name
                 self.alImgUrl = URL(string: (datas.playlist?.coverImgURL)!)
-                let group = DispatchGroup()
                 for track in (datas.playlist?.tracks)! {
-
-                    var song = Song(
+                    let song = Song(
                         id: track.id ?? 0, name: track.name ?? "", arName: track.ar?[0].name ?? "", alName: (track.al?.name) ?? "", url: nil, imgUrl: URL(string: ((track.al?.picURL) ?? "")), isFirst: nil
                     )
                     self.songList.append(song)
@@ -173,14 +171,13 @@ extension DetailedList: UITableViewDataSource, UITableViewDelegate {
             cell.coverImg?.sd_setImage(with: alImgUrl, placeholderImage: UIImage(named: "default"))
             cell.selectionStyle = .none
             cell.nameLabel.text = alName
-//            TODO: 下载
             cell.downLoadBtn.addTarget(self, action: #selector(download), for: .touchUpInside)
             cell.deleteBtn.addTarget(self, action: #selector(deleteList), for: .touchUpInside)
             return cell
         default:
-            let reuseid = "dl"
-            tableView.register(DLCell2.self, forCellReuseIdentifier: reuseid)
-            let cell: DLCell2 = tableView.dequeueReusableCell(withIdentifier: reuseid) as! DLCell2
+            let cellid = "ZrMusic.DetailedList.cell"
+            tableView.register(DLCell2.self, forCellReuseIdentifier: cellid)
+            let cell: DLCell2 = tableView.dequeueReusableCell(withIdentifier: cellid) as! DLCell2
             if !songList.isEmpty {
                 cell.isOK = songList[indexPath.row].isOK ?? true
                 if !(cell.isOK ?? true) {

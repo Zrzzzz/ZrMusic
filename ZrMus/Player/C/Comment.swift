@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import PopMenu
 
 class Comment: UIViewController {
     
@@ -17,9 +18,9 @@ class Comment: UIViewController {
     var totalCount: Int!
     var commentView: UIView!
     var textView: UITextView!
-    var sendBtn: UIButton!
     var tableView: UITableView!
     
+    let userid = UserDefaults.standard.value(forKey: "uid")
     let width = UIScreen.main.bounds.width
     let height = UIScreen.main.bounds.height
 
@@ -37,11 +38,12 @@ extension Comment {
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: width, height: height - 83))
         tableView.delegate = self
         tableView.dataSource = self
+        // 滑动时让键盘落下, 这个属性继承自UIScrollView, 所以在UITextView里面也适用
+        tableView.keyboardDismissMode = .onDrag
         view.addSubview(tableView)
         
         commentView = UIView()
-        commentView.layer.cornerRadius = 20
-        commentView.layer.masksToBounds = true
+        commentView.setCornerRadius(20)
         commentView.layer.borderWidth = 2
         commentView.layer.borderColor = .init(srgbRed: 0, green: 0, blue: 0, alpha: 1)
         commentView.backgroundColor = .white
@@ -53,35 +55,20 @@ extension Comment {
             make.centerX.equalTo(view.snp.centerX)
         }
         
-        sendBtn = UIButton()
-        commentView.addSubview(sendBtn)
-        sendBtn.layer.cornerRadius = 5
-        sendBtn.layer.masksToBounds = true
-        sendBtn.backgroundColor = ZrColor(r: 194, g: 124, b: 136)
-        sendBtn.setTitleColor(.black, for: .normal)
-        sendBtn.setTitle("发送", for: .normal)
-        sendBtn.addTarget(self, action: #selector(send), for: .touchUpInside)
-        sendBtn.snp.updateConstraints { (make) in
-            make.right.equalTo(commentView.snp.right).offset(-10)
-            make.width.equalTo(50)
-            make.height.equalTo(30)
-            make.centerY.equalTo(commentView.snp.centerY)
-        }
-        
         textView = UITextView()
         commentView.addSubview(textView)
         textView.layer.borderColor = .init(srgbRed: 194 / 255, green: 124 / 255, blue: 136 / 255, alpha: 1)
         textView.layer.borderWidth = 1
-        textView.layer.cornerRadius = 20
-        textView.delegate = self
+        textView.setCornerRadius(20)
         textView.layer.masksToBounds = true
-        textView.returnKeyType = .done
+        textView.returnKeyType = .send
+        // 防止圆角遮挡
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 5, right: 5)
         textView.font = .systemFont(ofSize: 18)
         textView.snp.updateConstraints { (make) in
             make.left.equalTo(commentView.snp.left).offset(10)
             make.centerY.equalTo(commentView.snp.centerY)
-            make.width.equalTo(300)
+            make.width.equalTo(commentView.snp.width).offset(-30)
             make.height.equalTo(40)
         }
         
@@ -133,7 +120,7 @@ extension Comment: UITextViewDelegate, UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellid = "commentid"
+        let cellid = "ZrMusic.Comment.cell"
         let comment = indexPath.section == 0 ? hotCommentList[indexPath.row] : commentList[indexPath.row]
         tableView.register(CommentCell.self, forCellReuseIdentifier: cellid)
         let cell: CommentCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! CommentCell
@@ -156,6 +143,19 @@ extension Comment: UITextViewDelegate, UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let comment = indexPath.section == 0 ? hotCommentList[indexPath.row] : commentList[indexPath.row]
+        let action1 = PopMenuDefaultAction(title: "回复评论", image: nil, color: nil, didSelect: nil)
+        let action2 = PopMenuDefaultAction(title: "删除评论", image: nil, color: nil) { (_) in
+            Alamofire.request(URL(string: "http://localhost:3000/comment?t=0&type=0&id=\(self.songId!)&commentId=\(comment.commentId!)")!).response { _ in
+                self.commentList.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadSections([1], with: .automatic)
+            }
+        }
+        // 判断是不是自己的评论
+        let actions = comment.user?.userId! == self.userid as? Int ? [action1, action2] : [action1]
+        let popMenu = PopMenuViewController(sourceView: tableView.cellForRow(at: indexPath), actions: actions)
+        present(popMenu, animated: true, completion: nil)
     }
     
     func textViewDidChange(_ textView: UITextView) {
@@ -178,7 +178,16 @@ extension Comment: UITextViewDelegate, UITableViewDelegate, UITableViewDataSourc
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text ==  "\n") {
             textView.resignFirstResponder()
-            return false;
+            guard textView.text! != "" else {
+                return true
+            }
+            textView.endEditing(true)
+            let url = "http://localhost:3000/comment?t=1&type=0&id=\(songId!)&content=\(textView.text!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            Alamofire.request(URL(string: url!)!).response { _ in
+                self.getData()
+                self.tableView.scrollToRow(at: [1, 0], at: .top, animated: true)
+                self.textView.text = ""
+            }
         }
         return true
     }
@@ -186,18 +195,6 @@ extension Comment: UITextViewDelegate, UITableViewDelegate, UITableViewDataSourc
 
 //MARK: - 一些方法
 extension Comment {
-    @objc func send() {
-        guard textView.text! != "" else {
-            return
-        }
-        textView.endEditing(true)
-        let url = "http://localhost:3000/comment?t=1&type=0&id=\(songId!)&content=\(textView.text!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        Alamofire.request(URL(string: url!)!).response { _ in
-            self.getData()
-            self.tableView.scrollToRow(at: [1, 0], at: .top, animated: true)
-            self.textView.text = ""
-        }
-    }
     
     @objc func stopEditing(sender: UIGestureRecognizer) {
         let tappedPoint: CGPoint = sender.location(in: view)
@@ -245,6 +242,7 @@ extension Comment {
     }
     
     @objc func zan(sender: UIButton) {
+        // cell.likedCountLabel.tag代表commentId
         if sender.tag == 0 {
             sender.tag = 1
             sender.setImage(UIImage(named: "cmt_like")?.withTintColor(.red, renderingMode: .automatic), for: .normal)
@@ -254,6 +252,7 @@ extension Comment {
             cell.likedCountLabel.text = String(describing: count)
             let timestamp = Int(Date().timeIntervalSince1970)
             Alamofire.request(URL(string: "http://localhost:3000/comment/like?id=\(songId!)&cid=\(cell.likedCountLabel.tag)&t=\(sender.tag)&type=0&timestamp=\(timestamp)")!)
+            // 这里实现一个动画
             UIView.animate(withDuration: 0.5) {
                 sender.imageView?.transform = CGAffineTransform.init(scaleX: 1.2, y: 1.2)
                 sender.imageView?.transform = CGAffineTransform.identity

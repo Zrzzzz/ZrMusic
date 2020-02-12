@@ -82,7 +82,7 @@ extension SearchResults {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellid = "hhwdwa"
+        let cellid = "ZrMusic.Search.Results.cell"
         tableView.register(ResultCell.self, forCellReuseIdentifier: cellid)
         let cell: ResultCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! ResultCell
         cell.nameLabel.text = songList[indexPath.row].name
@@ -109,7 +109,7 @@ extension SearchResults {
     
         let action1 = PopMenuDefaultAction(title: "添加到歌单", image: UIImage(systemName: "suit.heart"))
         let popMenu = PopMenuViewController(sourceView: btn, actions: [action1])
-        // When tapped
+        
         popMenu.appearance.popMenuBackgroundStyle = .none()
         popMenu.shouldDismissOnSelection = true
         popMenu.didDismiss = { selected in
@@ -117,10 +117,9 @@ extension SearchResults {
                 self.showListMenu(btn: btn, trackId: trackId!)
             }
         }
-        // Menu Styles
+
         popMenu.appearance.popMenuColor.backgroundColor = .gradient(fill: .blue, .yellow)
         
-        // Present menu controller
         present(popMenu, animated: true, completion: nil)
     }
     
@@ -176,8 +175,8 @@ extension SearchResults {
     }
     
     func translateData(obj: NSManagedObject) -> (SongList?) {
-        if let name = obj.value(forKey: "name"), let id = obj.value(forKey: "id"), let count = obj.value(forKey: "count"), let imgUrl = obj.value(forKey: "imgUrl"), let subscribed = obj.value(forKey: "subscribed") {
-            let songlist = SongList(name: name as! String, id: id as! Int, imgUrl: imgUrl as! URL, count: count as! Int, subscribed: subscribed as! Bool)
+        if let name = obj.value(forKey: "name"), let id = obj.value(forKey: "id"), let count = obj.value(forKey: "count"), let imgUrl = obj.value(forKey: "imgUrl"), let subscribed = obj.value(forKey: "subscribed"), let creator = obj.value(forKey: "creator") {
+            let songlist = SongList(name: name as! String, id: id as! Int, imgUrl: imgUrl as! URL, count: count as! Int, subscribed: subscribed as! Bool, creator: creator as! String)
             return songlist
         }
         return nil

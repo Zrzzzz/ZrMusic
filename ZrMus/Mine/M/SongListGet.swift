@@ -10,9 +10,7 @@ import Foundation
 
 // MARK: - SongListGet
 struct SongListGet: Codable {
-    let more: Bool
     let playlist: [Playlist]
-    let code: Int
 }
 
 // MARK: - Playlist
@@ -68,44 +66,5 @@ struct Playlist: Codable {
 
 // MARK: - Creator
 struct Creator: Codable {
-    let defaultAvatar: Bool
-    let province, authStatus: Int
-    let followed: Bool
-    let avatarURL: String
-    let accountStatus, gender, city, birthday: Int
-    let userID, userType: Int
-    let nickname, signature: String
-    let creatorDescription, detailDescription: Description
-    let avatarImgID, backgroundImgID: Double
-    let backgroundURL: String
-    let authority: Int
-    let mutual: Bool
-    let expertTags: [String]?
-    let experts: [String: String]?
-    let djStatus, vipType: Int
-    let remarkName: JSONNull?
-    let avatarImgIDStr, backgroundImgIDStr: String
-    let creatorAvatarImgIDStr: String?
-
-    enum CodingKeys: String, CodingKey {
-        case defaultAvatar, province, authStatus, followed
-        case avatarURL = "avatarUrl"
-        case accountStatus, gender, city, birthday
-        case userID = "userId"
-        case userType, nickname, signature
-        case creatorDescription = "description"
-        case detailDescription
-        case avatarImgID = "avatarImgId"
-        case backgroundImgID = "backgroundImgId"
-        case backgroundURL = "backgroundUrl"
-        case authority, mutual, expertTags, experts, djStatus, vipType, remarkName
-        case avatarImgIDStr = "avatarImgIdStr"
-        case backgroundImgIDStr = "backgroundImgIdStr"
-        case creatorAvatarImgIDStr = "avatarImgId_str"
-    }
-}
-
-enum Description: String, Codable {
-    case avex爱贝克思官方账号 = "avex爱贝克思官方账号"
-    case empty = ""
+    let nickname: String?
 }

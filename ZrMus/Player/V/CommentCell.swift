@@ -24,7 +24,7 @@ class CommentCell: UITableViewCell {
         
         avatarImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 50, height: 50))
         contentView.addSubview(avatarImg)
-        avatarImg.layer.cornerRadius = avatarImg.frame.width / 2
+        avatarImg.setCornerRadiusCircle()
         avatarImg.clipsToBounds = true
         
         nicknameLabel = UILabel(frame: CGRect(x: 80, y: 5, width: 300, height: 35))

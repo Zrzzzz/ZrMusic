@@ -23,127 +23,79 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F6133A42-A7B1-4C6D-99D9-74A12990EB4D"
+            uuid = "458B172A-BA84-4EFD-ADC0-1AD4FEB87297"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZrMus/Accounter/C/InfoChange.swift"
+            filePath = "ZrMus/Mine/C/Mine.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "genderCheck()"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "fold(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2B099E1A-82DB-4454-B085-4508E6DABFA8"
+            uuid = "AA57008A-9B2D-4D0C-AFA6-ECC70F2DE2FC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZrMus/Player/C/Comment.swift"
+            filePath = "ZrMus/Mine/C/Mine.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "getData()"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "fold(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B08CE0F5-41C4-4E77-B6C7-635D1966DA53"
+            uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZrMus/Player/C/Comment.swift"
+            filePath = "ZrMus/Mine/C/Mine.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
-            landmarkName = "send()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E7CB8F1B-F835-4466-B4BC-421019E441A8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZrMus/Player/C/Comment.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "send()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "76EB63CD-6480-453F-B039-34BCD7CF6AE0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZrMus/Player/C/Comment.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "send()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "03CC71ED-F1B8-4E4E-993A-E46EBB0DC8E1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZrMus/Player/C/Comment.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "send()"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "fold(sender:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "03CC71ED-F1B8-4E4E-993A-E46EBB0DC8E1 - 74e9752b18a70d0"
+                  uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424 - 510650a5c1edca69"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "ZrMus.Comment.send() -&gt; ()"
+                  symbolName = "ZrMus.Mine.fold(sender: __C.UIButton) -&gt; ()"
                   moduleName = "ZrMus"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Player/C/Comment.swift"
+                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Mine/C/Mine.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "195"
-                  endingLineNumber = "195"
-                  offsetFromSymbolStart = "2462">
+                  startingLineNumber = "94"
+                  endingLineNumber = "94"
+                  offsetFromSymbolStart = "431">
                </Location>
                <Location
-                  uuid = "03CC71ED-F1B8-4E4E-993A-E46EBB0DC8E1 - fc469881bf6bf827"
+                  uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424 - 86a14fb30befff6e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DefaultDataResponse) -&gt; () in ZrMus.Comment.send() -&gt; ()"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Bool in ZrMus.Mine.fold(sender: __C.UIButton) -&gt; ()"
                   moduleName = "ZrMus"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Player/C/Comment.swift"
+                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Mine/C/Mine.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "196"
-                  endingLineNumber = "196"
-                  offsetFromSymbolStart = "70">
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "28">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -151,32 +103,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C7A24B0F-9CA1-49CB-8DBB-2C8DA32B0AF8"
+            uuid = "70EF0839-C083-49D8-9F63-945BFFE3D3E0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZrMus/Player/C/Comment.swift"
+            filePath = "ZrMus/Mine/C/Mine.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
-            landmarkName = "send()"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "fold(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AB5F5521-4AC7-4EC2-9FC3-1BC59647AAA2"
+            uuid = "1487E570-B656-4B50-8230-1140B2BCCD24"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZrMus/Player/C/Comment.swift"
+            filePath = "ZrMus/Mine/C/Mine.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "send()"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "fold(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8185E862-F4B4-459F-9FA7-B2674942F337"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Mine/C/Mine.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "fold(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB9FFF48-9E51-4BF2-854D-4FC3FB1B3275"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Mine/C/Mine.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "fold(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

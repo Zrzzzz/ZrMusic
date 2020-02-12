@@ -18,15 +18,15 @@ class Mine: UIViewController {
     var tableView: UITableView!
     let ud = UserDefaults.standard
     let db = DataBase.shared
-    let reuseID = "id"
+    let cellid = "cellid"
     var localMusics: Int = 0
     
 //    两种歌单类型
     var myLists: [SongList] = []
     var subscribedLists: [SongList] = []
     
-//    这个用来判断列表是不是打开的
-    var selectedCellIndexPaths: [IndexPath] = []
+//    这个用来判断列表是不是打开的, 默认打开
+    var selectedCellIndexPaths: [Int] = [1, 2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +58,8 @@ extension Mine {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.register(ListCell.self, forCellReuseIdentifier: cellid)
     }
     
     @objc func newList() {
@@ -85,6 +87,18 @@ extension Mine {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    @objc func fold(sender: UIButton) {
+        let section = sender.tag
+        if selectedCellIndexPaths.contains(section) {
+            selectedCellIndexPaths.removeAll { (int) -> Bool in
+                int == section
+            }
+        }else{
+            selectedCellIndexPaths.append(section)
+        }
+        tableView.reloadSections(IndexSet(integer: section), with: .fade)
+    }
 }
 //MARK: - 数据管理
 extension Mine {
@@ -94,7 +108,7 @@ extension Mine {
         var url = manager.urls(for: .musicDirectory, in: .userDomainMask)[0] as URL
         url = url.appendingPathComponent("zrmusic")
         let contentOfPath = try? manager.contentsOfDirectory(atPath: url.path)
-        localMusics = contentOfPath!.count
+        localMusics = contentOfPath?.count ?? 0
     }
     
     func getData(someCloure: @escaping() -> Void) {
@@ -112,7 +126,7 @@ extension Mine {
                 
                 
                 for playList in playLists {
-                    let list = SongList(name: playList.name, id: playList.id, imgUrl: URL(string: playList.coverImgURL)!, count: playList.trackCount, subscribed: playList.subscribed)
+                    let list = SongList(name: playList.name, id: playList.id, imgUrl: URL(string: playList.coverImgURL)!, count: playList.trackCount, subscribed: playList.subscribed, creator: playList.creator.nickname)
 //                    db保存
                     self.saveList(list)
                 }
@@ -175,13 +189,14 @@ extension Mine {
         let managedObjectContext = db.persistentContainer.viewContext
 //        Step2: 建立一个entity
         let entity = NSEntityDescription.entity(forEntityName: "SongLists", in: managedObjectContext)
-        let songlists = NSManagedObject(entity: entity! , insertInto: managedObjectContext)
-//        Step3: 保存songlist到songlists
-        songlists.setValue(songlist.name, forKey: "name")
-        songlists.setValue(songlist.id, forKey: "id")
-        songlists.setValue(songlist.imgUrl, forKey: "imgUrl")
-        songlists.setValue(songlist.count, forKey: "count")
-        songlists.setValue(songlist.subscribed, forKey: "subscribed")
+        let newList = NSManagedObject(entity: entity! , insertInto: managedObjectContext)
+//        Step3: 保存songlist到newList
+        newList.setValue(songlist.name, forKey: "name")
+        newList.setValue(songlist.id, forKey: "id")
+        newList.setValue(songlist.imgUrl, forKey: "imgUrl")
+        newList.setValue(songlist.count, forKey: "count")
+        newList.setValue(songlist.subscribed, forKey: "subscribed")
+        newList.setValue(songlist.creator, forKey: "creator")
 //        Step4: 保存entity到托管对象中；如果保存失败抛出异常
         do {
             try managedObjectContext.save()
@@ -191,8 +206,8 @@ extension Mine {
     }
     
     func translateData(obj: NSManagedObject) -> (SongList?) {
-        if let name = obj.value(forKey: "name"), let id = obj.value(forKey: "id"), let count = obj.value(forKey: "count"), let imgUrl = obj.value(forKey: "imgUrl"), let subscribed = obj.value(forKey: "subscribed") {
-            let songlist = SongList(name: name as! String, id: id as! Int, imgUrl: imgUrl as! URL, count: count as! Int, subscribed: subscribed as! Bool)
+        if let name = obj.value(forKey: "name"), let id = obj.value(forKey: "id"), let count = obj.value(forKey: "count"), let imgUrl = obj.value(forKey: "imgUrl"), let subscribed = obj.value(forKey: "subscribed"), let creator = obj.value(forKey: "creator") {
+            let songlist = SongList(name: name as! String, id: id as! Int, imgUrl: imgUrl as! URL, count: count as! Int, subscribed: subscribed as! Bool, creator: creator as! String)
             return songlist
         }
         return nil
@@ -201,36 +216,73 @@ extension Mine {
 //MARK: - TableView协议
 extension Mine: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
+        case 1:
+            return selectedCellIndexPaths.contains(section) ? myLists.count : 0
         default:
-            return 2
+            return selectedCellIndexPaths.contains(section) ? subscribedLists.count : 0
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            return 80
-        default:
-//            看indexPath是否是展开的，返回不同的高度
-            if selectedCellIndexPaths.contains(indexPath) {
-//                获取歌单的个数
-                let count1 = myLists.count
-                let count2 = subscribedLists.count
-                switch indexPath.row {
-                case 0:
-                    return CGFloat(80 + count1 * 80)
-                default:
-                    return CGFloat(80 + count2 * 80)
-                }
+        return 60
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        } else {
+            return 50
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            return nil
+        } else {
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 50))
+            headerView.backgroundColor = .white
+            
+            let newListBtn = UIButton()
+            newListBtn.setImage(UIImage(named: "mine_new_list"), for: .normal)
+            newListBtn.addTarget(self, action: #selector(newList), for: .touchUpInside)
+            headerView.addSubview(newListBtn)
+            newListBtn.snp.makeConstraints { (make) in
+                make.width.height.equalTo(30)
+                make.centerY.equalTo(headerView.snp.centerY)
+                make.right.equalTo(headerView.snp.right).offset(-10)
             }
-            return 80
+            if section == 2 {
+                newListBtn.removeFromSuperview()
+            }
+            
+            let foldBtn = UIButton()
+            let imgName = selectedCellIndexPaths.contains(section) ? "list_arrow_down" : "list_arrow_right"
+            foldBtn.setImage(UIImage(named: imgName), for: .normal)
+            foldBtn.tag = section
+            headerView.addSubview(foldBtn)
+            foldBtn.addTarget(self, action: #selector(fold(sender:)), for: .touchUpInside)
+            foldBtn.snp.makeConstraints { (make) in
+                make.left.equalTo(headerView.snp.left).offset(5)
+                make.width.height.equalTo(30)
+                make.centerY.equalTo(headerView.snp.centerY)
+            }
+            
+            let label = UILabel()
+            label.text = section == 1 ? "我的歌单  (\(myLists.count))" : "收藏歌单  (\(subscribedLists.count))"
+            headerView.addSubview(label)
+            label.snp.makeConstraints { (make) in
+                make.centerY.equalTo(headerView.snp.centerY)
+                make.left.equalTo(foldBtn.snp.right).offset(5)
+                make.height.equalTo(30)
+            }
+            return headerView
         }
     }
     
@@ -238,61 +290,24 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
         
         switch indexPath.section {
         case 0:
-            let cell = ncCell()
-            cell.leftView.image = UIImage(named: "mine_music")
-            cell.titilLabel.text = "本地音乐"
-            cell.countLabel.text = "(\(localMusics))"
+            let cell: ListCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! ListCell
+            cell.imgView.image = UIImage(named: "mine_music")
+            cell.nameLabel.text = "本地音乐"
+            cell.creatorLabel.text = "\(localMusics)首歌"
             return cell
         default:
-//            分类解析
-            switch indexPath {
-//                IndexPath为[, ]形式，前面是section，后面是row
-            case [1, 0]:
-//                设定分类
-                let cell = listsCell(count: myLists.count, style: .default, reuseIdentifier: "cell1")
-//                弄一个添加歌单的按钮
-                let newListBtn = UIButton()
-                newListBtn.setImage(UIImage(named: "mine_new_list"), for: .normal)
-                newListBtn.addTarget(self, action: #selector(newList), for: .touchUpInside)
-                cell.contentView.addSubview(newListBtn)
-                newListBtn.snp.makeConstraints { (make) in
-                    make.width.height.equalTo(30)
-                    make.right.equalTo(cell.listsCountLabel.snp.left).offset(-5)
-                    make.centerY.equalTo(cell.listsCountLabel.snp.centerY)
-                }
-                cell.titleLabel.text = "创建歌单"
-//                箭头方向
-                if selectedCellIndexPaths.contains(indexPath) {
-                    cell.arrowImg.image = UIImage(named: "lC_arrow_down")?.withRenderingMode(.alwaysOriginal)
-                } else {
-                    cell.arrowImg.image = UIImage(named: "lC_arrow_right")?.withRenderingMode(.alwaysOriginal)
-                }
-//                描绘cell
-                cell.listsCountLabel.text = "(\(myLists.count))"
-                cell.reloadData(lists: myLists)
-                
-                
-                return cell
-
-            default:
-//                设定分类
-                let cell = listsCell(count: subscribedLists.count, style: .default, reuseIdentifier: "cell2")
-                cell.titleLabel.text = "收藏歌单"
-//                箭头方向
-                if selectedCellIndexPaths.contains(indexPath) {
-                    cell.arrowImg.image = UIImage(named: "lC_arrow_down")?.withRenderingMode(.alwaysOriginal)
-                } else {
-                    cell.arrowImg.image = UIImage(named: "lC_arrow_right")?.withRenderingMode(.alwaysOriginal)
-                }
-//                描绘cell
-                cell.listsCountLabel.text = "(\(subscribedLists.count))"
-                cell.reloadData(lists: subscribedLists)
-                
-                
-                return cell
+            let lists = indexPath.section == 1 ? myLists : subscribedLists
+            let list = lists[indexPath.row]
+            let cell: ListCell = tableView.dequeueReusableCell(withIdentifier: cellid) as! ListCell
+            if !lists.isEmpty {
+                cell.creatorLabel.text = indexPath.section == 1 ? "\(lists[indexPath.row].count)首歌" : "\(lists[indexPath.row].count)首歌, by \(list.creator)"
+                cell.imgView.sd_setImage(with: lists[indexPath.row].imgUrl, placeholderImage: UIImage(named: "default"))
+                cell.nameLabel.text = lists[indexPath.row].name
             }
+            return cell
         }
     }
+    
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -301,13 +316,11 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             tableView.deselectRow(at: indexPath, animated: true)
             navigationController?.pushViewController(LocalMusic(), animated: true)
         default:
-            tableView.deselectRow(at: indexPath, animated: true)
-            if let index = selectedCellIndexPaths.firstIndex(of: indexPath) {
-                selectedCellIndexPaths.remove(at: index)
-            }else{
-                selectedCellIndexPaths.append(indexPath)
-            }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            let vc = DetailedList()
+            let lists = indexPath.section == 1 ? myLists : subscribedLists
+            vc.listId = lists[indexPath.row].id
+            self.navigationController?.present(vc, animated: true)
         }
     }
+        
 }

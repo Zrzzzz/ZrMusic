@@ -50,11 +50,11 @@ class InfoChange: UIViewController {
 extension InfoChange {
     func drawUI() {
         nameTF = ZrTF(frame: CGRect(x: 0, y: 100, width: 200, height: 40))
-        nameTF.placeholder = delegate!.user.nickname
+        nameTF.placeholder = delegate!.user.profile?.nickname
         view.addSubview(nameTF)
         
         genderTF = ZrTF(frame: CGRect(x: 0, y: 200, width: 200, height: 40))
-        genderTF.placeholder = genderIToS(i: delegate!.user.gender!)
+        genderTF.placeholder = genderIToS(i: (delegate!.user.profile?.gender!)!)
         view.addSubview(genderTF)
         
         genderBtn = UIButton()
@@ -68,7 +68,7 @@ extension InfoChange {
         }
         
         birthTF = ZrTF(frame: CGRect(x: 0, y: 300, width: 200, height: 40))
-        birthTF.placeholder = String(describing: delegate!.user.birth!).timestampToDate()
+        birthTF.placeholder = delegate!.user.profile?.birthday!.timestampToDate()
         view.addSubview(birthTF)
         
         birthBtn = UIButton()
@@ -82,11 +82,11 @@ extension InfoChange {
         }
         
         provinceTF = ZrTF(frame: CGRect(x: 0, y: 400, width: 200, height: 40))
-        provinceTF.placeholder = delegate!.user.province
+        provinceTF.placeholder = delegate!.province
         view.addSubview(provinceTF)
         
         cityTF = ZrTF(frame: CGRect(x: 0, y: 500, width: 200, height: 40))
-        cityTF.placeholder = delegate!.user.city
+        cityTF.placeholder = delegate!.city
         view.addSubview(cityTF)
         
         signTF = ZrTF(frame: CGRect(x: 0, y: 600, width: 200, height: 40))
@@ -114,12 +114,13 @@ extension InfoChange {
     @objc func commit() {
         var pInt: String!
         var cInt: String!
-        
-        Alamofire.request(URL(string: "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((self.provinceTF.text)!)")!).responseJSON { (d) in
+        let url1 = "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((self.provinceTF.text)!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        Alamofire.request(URL(string: url1!)!).responseJSON { (d) in
             do {
                 let datas = try JSONDecoder().decode(LocationGet.self, from: d.data!)
                 pInt = datas.result?[0][0].id ?? ""
-                Alamofire.request(URL(string: "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((self.cityTF.text)!)")!).responseJSON { (d) in
+                let url2 = "https://apis.map.qq.com/ws/district/v1/search?&key=JQ7BZ-3ZJCX-7GV4S-7EFGP-BUKFZ-5RFC3&keyword=\((self.cityTF.text)!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                Alamofire.request(URL(string: url2!)!).responseJSON { (d) in
                     do {
                         let datas = try JSONDecoder().decode(LocationGet.self, from: d.data!)
                         cInt = datas.result?[0][0].id ?? ""
@@ -132,10 +133,10 @@ extension InfoChange {
                             url += "&signature=\((self.signTF.text)!)"
                         }
                         if self.provinceTF.text != "" {
-                            url += "&province=\(pInt)"
+                            url += "&province=\(pInt!)"
                         }
                         if self.cityTF.text != "" {
-                            url += "&city=\(cInt)"
+                            url += "&city=\(cInt!)"
                         }
                         if self.nameTF.text != "" {
                             url += "&nickname=\((self.nameTF.text)!)"
@@ -143,26 +144,25 @@ extension InfoChange {
                         if self.birthTF.text != "" {
                             url += "&birthday=\((self.birthTF.text)!.dateToTimeStamp())000"
                         }
-                        
                         Alamofire.request(URL(string: url)!)
                         if self.delegate != nil {
                             if self.genderTF.text != "" {
-                                self.delegate?.user.gender = self.genderSToI(s: (self.genderTF.text)!)
+                                self.delegate?.user.profile?.gender = self.genderSToI(s: (self.genderTF.text)!)
                             }
                             if self.signTF.text != "" {
-                                self.delegate?.user.signature = (self.signTF.text)!
+                                self.delegate?.user.profile?.signature = (self.signTF.text)!
                             }
                             if self.provinceTF.text != "" {
-                                self.delegate?.user.province = pInt
+                                self.delegate?.province = self.provinceTF.text!
                             }
                             if self.cityTF.text != "" {
-                                self.delegate?.user.city = cInt
+                                self.delegate?.city = self.cityTF.text!
                             }
                             if self.nameTF.text != "" {
-                                self.delegate?.user.nickname = (self.nameTF.text)!
+                                self.delegate?.user.profile?.nickname = (self.nameTF.text)!
                             }
                             if self.birthTF.text != "" {
-                                self.delegate?.user.birth = Int(String(describing: self.birthTF.text!).dateToTimeStamp())! * 1000
+                                self.delegate?.user.profile?.birthday = Int(String(describing: self.birthTF.text!).dateToTimeStamp()) * 1000
                             }
                         }
                         self.navigationController?.popViewController(animated: true)

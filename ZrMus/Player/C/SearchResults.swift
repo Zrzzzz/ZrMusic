@@ -29,7 +29,9 @@ class SearchResults: UITableViewController, UISearchBarDelegate{
         super.viewDidLoad()
 //        获取我的歌单
         fetchLists()
+        tableView.keyboardDismissMode = .onDrag
     }
+
     
 }
 

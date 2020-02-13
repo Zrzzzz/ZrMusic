@@ -52,7 +52,7 @@ extension DLCell2 {
         contentView.addSubview(creatorLabel)
         
         addBtn = UIButton(frame: CGRect(x: width - 40, y: 0, width: 30, height: 30))
-        addBtn.setImage(UIImage(systemName: "text.badge.plus")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        addBtn.setImage(UIImage(systemName: "text.badge.plus")?.withTintColor(DyColor(light: .white, dark: .red), renderingMode: .alwaysOriginal), for: .normal)
         addBtn.setImage(UIImage(systemName: "text.badge.plus")?.withRenderingMode(.alwaysOriginal).withTintColor(ZrColor(r: 166, g: 27, b: 41)), for: .highlighted)
         contentView.addSubview(addBtn)
     }

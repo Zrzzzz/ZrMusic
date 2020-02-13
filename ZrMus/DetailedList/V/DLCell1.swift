@@ -52,9 +52,9 @@ extension DLCell1 {
         
         downLoadBtn = UIButton(frame: CGRect(x: width - 150, y: 70, width: 50, height: 50))
         contentView.addSubview(downLoadBtn)
-        downLoadBtn.setImage(UIImage(systemName: "square.and.arrow.down")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        downLoadBtn.setImage(UIImage(systemName: "square.and.arrow.down")?.withTintColor(DyColor(light: .black, dark: .systemBlue), renderingMode: .alwaysOriginal), for: .normal)
         downLoadBtn.setTitle("下载", for: .normal)
-        downLoadBtn.setTitleColor(.black, for: .normal)
+        downLoadBtn.setTitleColor(DyColor(light: .black, dark: .systemBlue), for: .normal)
         downLoadBtn.titleLabel?.font = .boldSystemFont(ofSize: 12)
         downLoadBtn.setLayoutType(type: .topImage)
         
@@ -67,7 +67,9 @@ extension DLCell1 {
         deleteBtn.setLayoutType(type: .topImage)
         
         let topColor = ZrColor(r: CGFloat.random(in: 0...255), g: CGFloat.random(in: 0...255), b: CGFloat.random(in: 0...255))
-        let bottomColor = ZrColor(r: 255, g: 255, b: 255)
+        let bottomColor = UIColor { (trait) -> UIColor in
+            return trait.userInterfaceStyle == .dark ? UIColor.systemGray6 : UIColor.white
+        }
         let gradientLayer = CALayer.getGradientLayer(aColor: topColor, bColor: bottomColor, type: .UtoB)
         gradientLayer.frame.size = CGSize(width: width, height: 140)
         self.contentView.layer.insertSublayer(gradientLayer, at: 0)

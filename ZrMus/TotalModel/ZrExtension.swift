@@ -163,6 +163,11 @@ func ZrColor(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
     return UIColor(red: r / 255, green: g / 255, blue: b / 255, alpha: 1.0)
 }
 
+func DyColor(light: UIColor, dark: UIColor) -> UIColor {
+    return UIColor(dynamicProvider: { (trait) -> UIColor in
+        return trait.userInterfaceStyle != .dark ? light : dark
+    })
+}
 /// its rect will be insert at screen's center
 /// - Parameters:
 ///   - y:

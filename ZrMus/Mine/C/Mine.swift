@@ -126,7 +126,7 @@ extension Mine {
                 
                 
                 for playList in playLists {
-                    let list = SongList(name: playList.name, id: playList.id, imgUrl: URL(string: playList.coverImgURL)!, count: playList.trackCount, subscribed: playList.subscribed, creator: playList.creator.nickname)
+                    let list = SongList(name: playList.name, id: playList.id, imgUrl: URL(string: playList.coverImgURL)!, count: playList.trackCount, subscribed: playList.subscribed, creator: playList.creator.nickname!)
 //                    db保存
                     self.saveList(list)
                 }
@@ -247,10 +247,10 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             return nil
         } else {
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 50))
-            headerView.backgroundColor = .white
+            headerView.backgroundColor = DyColor(light: .white, dark: .systemGroupedBackground)
             
             let newListBtn = UIButton()
-            newListBtn.setImage(UIImage(named: "mine_new_list"), for: .normal)
+            newListBtn.setImage(UIImage(named: "mine_new_list")?.withTintColor(.darkText), for: .normal)
             newListBtn.addTarget(self, action: #selector(newList), for: .touchUpInside)
             headerView.addSubview(newListBtn)
             newListBtn.snp.makeConstraints { (make) in
@@ -264,7 +264,7 @@ extension Mine: UITableViewDataSource, UITableViewDelegate {
             
             let foldBtn = UIButton()
             let imgName = selectedCellIndexPaths.contains(section) ? "list_arrow_down" : "list_arrow_right"
-            foldBtn.setImage(UIImage(named: imgName), for: .normal)
+            foldBtn.setImage(UIImage(named: imgName)?.withTintColor(.label, renderingMode: .alwaysOriginal), for: .normal)
             foldBtn.tag = section
             headerView.addSubview(foldBtn)
             foldBtn.addTarget(self, action: #selector(fold(sender:)), for: .touchUpInside)

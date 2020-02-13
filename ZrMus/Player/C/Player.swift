@@ -76,7 +76,7 @@ extension Player: UISearchControllerDelegate {
     }
     
     func drawUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         let resultsTableViewController = SearchResults()
         
@@ -135,7 +135,7 @@ extension Player: UISearchControllerDelegate {
         }
         
         loopBtn = UIButton()
-        loopBtn.setImage(UIImage(systemName: "repeat.1")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        loopBtn.setImage(UIImage(systemName: "line.horizontal.3")?.withRenderingMode(.alwaysTemplate), for: .normal)
         loopBtn.addTarget(self, action: #selector(loopSwitch), for: .touchUpInside)
         view.addSubview(loopBtn)
         loopBtn.snp.makeConstraints { (make) in
@@ -182,6 +182,8 @@ extension Player: UISearchControllerDelegate {
         tableView = UITableView(frame: ZrRect(y: view.bounds.height / 2, width: view.bounds.width - 30, height: view.bounds.height / 2 - 100))
         tableView?.delegate = self
         tableView?.dataSource = self
+        tableView?.setCornerRadius(10)
+        tableView?.backgroundColor = .systemBackground
         view.addSubview(tableView!)
     }
     
@@ -290,7 +292,7 @@ extension Player {
     
     @objc func loopSwitch() {
         isLoop = isLoop ? false : true
-        loopBtn.setImage(UIImage(systemName: isLoop ? "repeat" : "repeat.1"), for: .normal)
+        loopBtn.setImage(UIImage(systemName: isLoop ? "repeat" : "line.horizontal.3"), for: .normal)
     }
     
     @objc func showComment() {
@@ -483,7 +485,7 @@ extension Player {
             rtimeLabel.text = "--:--"
             imgView.image = UIImage(named: "default")
             isLoop = false
-            loopBtn.setImage(UIImage(systemName: "repeat.1")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            loopBtn.setImage(UIImage(systemName: "line.horizontal.3")?.withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
 }
@@ -560,7 +562,7 @@ extension Player: UITableViewDataSource, UITableViewDelegate {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellid)
         let cell = tableView.dequeueReusableCell(withIdentifier: cellid)
         if curIndex == indexPath.row {
-            cell?.backgroundColor = ZrColor(r: 251, g: 185, b: 87)
+            cell?.backgroundColor = DyColor(light: ZrColor(r: 251, g: 185, b: 87), dark: .red)
         } else {
             cell?.backgroundColor = .clear
         }
@@ -581,6 +583,9 @@ extension Player: UITableViewDataSource, UITableViewDelegate {
         return true
     }
     
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "删除"
+    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {

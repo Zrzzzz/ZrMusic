@@ -127,7 +127,7 @@ extension String {
     func dateToTimeStamp()-> Int {
 
         let dfmatter = DateFormatter()
-        dfmatter.dateFormat="yyyy-MM-dd"
+        dfmatter.dateFormat = "yyyy-MM-dd"
         let date = dfmatter.date(from: self)
         
         let dateStamp: TimeInterval = date!.timeIntervalSince1970
@@ -145,11 +145,10 @@ extension Int {
         let timeStamp = self / 1000
         //转换为时间
         let timeInterval:TimeInterval = TimeInterval(timeStamp)
-        let date = NSDate(timeIntervalSince1970: timeInterval)
+        let date = Date(timeIntervalSince1970: timeInterval)
         //格式化输出
         let dformatter = DateFormatter()
         dformatter.dateFormat = "yyyy-MM-dd"
-        //这是年份的后两位
         let y = dformatter.string(from: date as Date)
         return y
     }

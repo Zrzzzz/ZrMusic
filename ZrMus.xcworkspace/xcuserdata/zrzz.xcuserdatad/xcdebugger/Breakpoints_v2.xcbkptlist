@@ -24,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "458B172A-BA84-4EFD-ADC0-1AD4FEB87297"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Mine/C/Mine.swift"
@@ -40,7 +40,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "AA57008A-9B2D-4D0C-AFA6-ECC70F2DE2FC"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Mine/C/Mine.swift"
@@ -56,7 +56,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Mine/C/Mine.swift"
@@ -68,29 +68,29 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424 - 510650a5c1edca69"
-                  shouldBeEnabled = "Yes"
+                  uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424 - 78c9a31776f28a0a"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "ZrMus.Mine.fold(sender: __C.UIButton) -&gt; ()"
                   moduleName = "ZrMus"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Mine/C/Mine.swift"
+                  urlString = "file:///Users/zrzz/Coding/iOS/ZrMusic/ZrMus/Mine/C/Mine.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
                   endingLineNumber = "94"
-                  offsetFromSymbolStart = "431">
+                  offsetFromSymbolStart = "417">
                </Location>
                <Location
-                  uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424 - 86a14fb30befff6e"
-                  shouldBeEnabled = "Yes"
+                  uuid = "C29184F0-3031-43AD-9DE5-A9C8435D3424 - af6ebc01bcf0bf0d"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Swift.Int) -&gt; Swift.Bool in ZrMus.Mine.fold(sender: __C.UIButton) -&gt; ()"
                   moduleName = "ZrMus"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zrzz/Programme/iOS/ZrMusic/ZrMus/Mine/C/Mine.swift"
+                  urlString = "file:///Users/zrzz/Coding/iOS/ZrMusic/ZrMus/Mine/C/Mine.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "95"
@@ -104,7 +104,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "70EF0839-C083-49D8-9F63-945BFFE3D3E0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Mine/C/Mine.swift"
@@ -120,7 +120,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "1487E570-B656-4B50-8230-1140B2BCCD24"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Mine/C/Mine.swift"
@@ -136,7 +136,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "8185E862-F4B4-459F-9FA7-B2674942F337"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Mine/C/Mine.swift"
@@ -152,7 +152,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FB9FFF48-9E51-4BF2-854D-4FC3FB1B3275"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZrMus/Mine/C/Mine.swift"
@@ -177,6 +177,102 @@
             startingLineNumber = "237"
             endingLineNumber = "237"
             landmarkName = "tableView(_:commit:forRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EC2C161B-9FD7-4A60-8E41-15EE98A88329"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Player/C/Comment.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "textViewDidChange(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94CC073C-716A-44DD-AC92-1D037D619390"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Player/C/Comment.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "textViewDidChange(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5937BE9-3A2B-4836-861E-10A71EDD1341"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Player/C/Comment.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "textViewDidChange(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EDB5A9F6-1ADB-4B2D-842A-F563DC93675A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Player/C/Comment.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "textViewDidChange(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BB6107CF-74F6-4489-AD13-AE5B29D15252"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Player/C/Comment.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "textViewDidChange(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74D21BFB-5218-4EB9-B7BA-66E74E2CF3C3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZrMus/Player/C/Comment.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "textViewDidChange(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

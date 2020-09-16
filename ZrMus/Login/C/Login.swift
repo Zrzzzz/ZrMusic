@@ -115,9 +115,9 @@ extension Login {
                     return
                 }
                 print("密码正确")
-    //                储存数据
+                //                储存数据
                 ud.set(datas.profile?.userId!, forKey: "uid")
-    //                可以通过
+                //                可以通过
                 print("进行跳转")
                 from.navigationController?.popToRootViewController(animated: true)
                 let t = UIApplication.shared.keyWindow?.rootViewController

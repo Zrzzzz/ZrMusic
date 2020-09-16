@@ -30,6 +30,10 @@ class Comment: UIViewController {
         getData()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
 }
 
 //MARK: - UI
@@ -65,6 +69,7 @@ extension Comment {
         // 防止圆角遮挡
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 5, right: 5)
         textView.font = .systemFont(ofSize: 18)
+        textView.delegate = self
         textView.snp.updateConstraints { (make) in
             make.left.equalTo(commentView.snp.left).offset(10)
             make.centerY.equalTo(commentView.snp.centerY)
